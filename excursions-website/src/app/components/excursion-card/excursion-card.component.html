@@ -1,3 +1,11 @@
-<div class="excursion-card"*ngFor="let ex of excursionsData">
-    {{ex.name}}
+<div class="excursion-card">
+    <img src={{excursion.img}} alt={{excursion.name}}>
+    <h3>{{excursion.name}}</h3>
+    <p>{{excursion.country}}</p>
+    <p>{{excursion.startDate}} - {{excursion.endDate}}</p>
+    <p>{{excursion.unitPrice | currency}}</p>
+    <p>Positions left: {{excursion.maxParticipants - currentParticipants}}</p>
+    <p>{{excursion.description}}</p>
+    <button (click)="changeCurrentParticipants(1)" [disabled]="currentParticipants == excursion.maxParticipants">+</button>
+    <button (click)="changeCurrentParticipants(-1)" [disabled]="currentParticipants == 0">-</button>
 </div>

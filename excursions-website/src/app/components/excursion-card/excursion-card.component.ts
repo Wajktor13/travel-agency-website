@@ -9,8 +9,12 @@ import { ExcursionData } from 'src/app/shared/models/excursions-data';
 })
 
 export class ExcursionCardComponent {
-
+  public currentParticipants: number = 0
   constructor(){}
 
-  @Input() excursionsData: ExcursionData[] = []
+  @Input() excursion: ExcursionData = {name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxParticipants: 0, description: '', img: ''}
+
+  changeCurrentParticipants(diff: number){
+    this.currentParticipants += diff
+  }
 }
