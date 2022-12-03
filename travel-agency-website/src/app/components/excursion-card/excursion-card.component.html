@@ -6,9 +6,9 @@
     <p>{{excursion.country | uppercase}}</p>
     <p>From {{excursion.startDate}} to {{excursion.endDate}}</p>
     <p>{{excursion.unitPrice | currency}}</p>
+    <p>{{excursion.description}}</p>
     <p *ngIf="leftInStock > 0; else outOfStock">In stock: {{leftInStock}}</p>
     <ng-template #outOfStock>Out of stock!</ng-template>
-    <p>{{excursion.description}}</p>
     <button (click)="changeReservationCounter(1)" [disabled]="reservationCounter == excursion.maxInStock">+</button>
     <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0">-</button>
 </div>
