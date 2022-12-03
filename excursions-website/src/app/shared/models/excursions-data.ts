@@ -6,4 +6,5 @@ export type ExcursionData = {
     unitPrice: number,
     maxParticipants: number,
     description: string,
+    img: string
 }
