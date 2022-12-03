@@ -1,1 +1,3 @@
-<app-excursion-card [excursionsData]="excursionsData"></app-excursion-card>
+<section class="excursion-cards-list">
+    <app-excursion-card *ngFor="let exc of excursionsData" [excursion]=exc></app-excursion-card>
+</section>
