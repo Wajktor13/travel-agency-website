@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
-import { ExcursionDataFetcherService } from 'src/app/services/excursion-data-fetcher/excursion-data-fetcher.service';
+import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { MinMaxPriceService } from 'src/app/services/min-max-price/min-max-price.service';
 import { CartManagerService } from 'src/app/services/cart-manager/cart-manager.service';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
@@ -15,9 +15,9 @@ import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data
 export class ExcursionCardsListComponent {
   public excursionsData: ExcursionData[] = []
 
-  constructor(private excursionDataFetcher: ExcursionDataFetcherService, private minMaxPriceService: MinMaxPriceService, private cartManager: CartManagerService){
+  constructor(private excursionDataManager: ExcursionDataManagerService, private minMaxPriceService: MinMaxPriceService, private cartManager: CartManagerService){
 
-    excursionDataFetcher.excursionsData.subscribe(
+    excursionDataManager.excursionsData.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,
         error: (err: any) => console.log(err)

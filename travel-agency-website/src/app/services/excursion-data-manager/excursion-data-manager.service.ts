@@ -8,7 +8,7 @@ import { ExcursionData } from '../../shared/models/excursions-data';
   providedIn: 'root'
 })
 
-export class ExcursionDataFetcherService {
+export class ExcursionDataManagerService {
   private DATA_URL:string = 'http://localhost:3000/excursion-data'
   public excursionsData: Observable<ExcursionData[]>
 
