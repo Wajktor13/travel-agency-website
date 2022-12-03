@@ -1,11 +1,14 @@
-<div class="excursion-card">
+<div class="excursion-card" [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice(),
+ 'low-stock-3' : leftInStock == 3, 'low-stock-2' : leftInStock == 2, 'low-stock-1' : leftInStock == 1, 'low-stock-0' : leftInStock == 0}">
     <img src={{excursion.img}} alt={{excursion.name}}>
-    <h3>{{excursion.name}}</h3>
-    <p>{{excursion.country}}</p>
-    <p>{{excursion.startDate}} - {{excursion.endDate}}</p>
+    <div (click)="removeButtonClicked(excursion)" id="remove-card-button"></div>
+    <h3>{{excursion.name | uppercase}}</h3>
+    <p>{{excursion.country | uppercase}}</p>
+    <p>From {{excursion.startDate}} to {{excursion.endDate}}</p>
     <p>{{excursion.unitPrice | currency}}</p>
-    <p>Positions left: {{excursion.maxParticipants - currentParticipants}}</p>
+    <p *ngIf="leftInStock > 0; else outOfStock">In stock: {{leftInStock}}</p>
+    <ng-template #outOfStock>Out of stock!</ng-template>
     <p>{{excursion.description}}</p>
-    <button (click)="changeCurrentParticipants(1)" [disabled]="currentParticipants == excursion.maxParticipants">+</button>
-    <button (click)="changeCurrentParticipants(-1)" [disabled]="currentParticipants == 0">-</button>
+    <button (click)="changeReservationCounter(1)" [disabled]="reservationCounter == excursion.maxInStock">+</button>
+    <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0">-</button>
 </div>

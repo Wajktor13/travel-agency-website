@@ -1,17 +1,17 @@
 {
     "excursion-data" : 
     [
-        {"name": "Mountain Trip", "country": "Poland", "startDate": "12-05-2023", "endDate": "20-05-2023", "unitPrice": 2999, "maxParticipants": 12, "description": "super trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
-        {"name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxParticipants": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}
+        {"id": 1, "name": "Mountain Trip", "country": "Poland", "startDate": "12-05-2023", "endDate": "20-05-2023", "unitPrice": 3999, "maxInStock": 12, "description": "super trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
+        {"id": 2, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
+        {"id": 3, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 7999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
+        {"id": 4, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
+        {"id": 5, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
+        {"id": 6, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 1999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
+        {"id": 7, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
+        {"id": 8, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 2999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
+        {"id": 9, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
+        {"id": 10, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"},
+        {"id": 11, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}, 
+        {"id": 12, "name": "Seaside Holidays", "country": "Croatia", "startDate": "21-12-2022", "endDate": "31-12-2022", "unitPrice": 3999, "maxInStock": 5, "description": "nice trip", "img": "https://i.imgur.com/0fKt7Kz.jpeg"}
     ]
 }

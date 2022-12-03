@@ -1,0 +1,17 @@
+.cart{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    background-color: rgba(128, 128, 128, 0.751);
+}
+
+.cart img{
+    width: 60px;
+}
+
+#counter{
+    margin-left: 10px;
+    font-size: 40px;
+}
