@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {FormsModule} from '@angular/forms'
+
 import { ExcursionCardComponent } from './components/excursion-card/excursion-card.component';
 import { ExcursionDataManagerService } from './services/excursion-data-manager/excursion-data-manager.service';
-import {HttpClientModule} from '@angular/common/http';
 import { ExcursionCardsListComponent } from './components/excursion-cards-list/excursion-cards-list.component'
 import { MinMaxPriceService } from './services/min-max-price/min-max-price.service';
 import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
@@ -26,7 +27,8 @@ import { CartComponent } from './components/cart/cart.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     ExcursionDataManagerService,
