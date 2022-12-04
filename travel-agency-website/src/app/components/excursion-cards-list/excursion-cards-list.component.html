@@ -1,3 +1,6 @@
-<section class="excursion-cards-list-section">
-    <app-excursion-card class="excursion-cards-list" (removeExcursionCardEvent)="removeExcursionCard($event)" *ngFor="let exc of excursionsData" [excursion]=exc></app-excursion-card>
+<section>
+    <app-filter-excursions></app-filter-excursions>
+    <div class="excursion-cards-list-div">
+        <app-excursion-card class="excursion-cards-list" (removeExcursionCardEvent)="removeExcursionCard($event)" *ngFor="let exc of excursionsData | filterExcursions: {minPrice: selectedMinPrice, maxPrice: selectedMaxPrice}" [excursion]=exc></app-excursion-card>
+    </div>
 </section>

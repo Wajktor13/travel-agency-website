@@ -1,0 +1,17 @@
+<section id="filters-section">
+    <h3>Filters:</h3>
+    
+    <div>
+        <div>
+            <label for="min-price-range">Min price:</label>
+            <input type="range" min={{minPrice}} max={{maxPrice}} id="min-price-range" oninput="this.nextElementSibling.value = this.value" [(ngModel)]="selectedMinPrice" (input)="changeSelectedMinPrice($event)">
+            <output for="min-price-range" value={{minPrice}}></output>
+        </div>
+        <div>
+            <label for="max-price-range">Max price:</label>
+            <input type="range" min={{minPrice}} max={{maxPrice}} id="max-price-range" oninput="this.nextElementSibling.value = this.value" [(ngModel)]="selectedMaxPrice" (input)="changeSelectedMaxPrice($event)">
+            <output for="min-price-range" value={{maxPrice}}></output>
+        </div>
+    </div>
+
+</section>
