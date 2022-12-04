@@ -13,8 +13,8 @@
     <div id="buttons-container">
         <div (click)="removeButtonClicked(excursion)" id="remove-card-button"></div>
         <div id="reservation-buttons">
-            <button (click)="changeReservationCounter(1)" [disabled]="reservationCounter == excursion.maxInStock">+</button>
-            <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0">-</button>
+            <button (click)="changeReservationCounter(1)" [disabled]="reservationCounter == excursion.maxInStock" class="add-reservation-button">+</button>
+            <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0" class="remove-reservation-button">-</button>
         </div>
     </div>
 </div>

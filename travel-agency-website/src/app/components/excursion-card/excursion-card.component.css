@@ -7,7 +7,8 @@
     height: 500px;
     border-radius: 10px;
     margin: 20px;
-    box-shadow: 0px 0px 21px 5px rgb(72, 72, 72);
+    box-shadow: 0px 0px 11px 5px rgb(120, 120, 120);
+    background-color: white;
 }
 
 .excursion-card img{
@@ -35,15 +36,15 @@
 }
 
 .low-stock-3{
-    background-color: rgba(125, 255, 4, 0.855);
+    background-color: rgba(238, 255, 4, 0.888);
 }
 
 .low-stock-2{
-    background-color: rgba(242, 255, 0, 0.938);
+    background-color: rgba(255, 179, 0, 0.938);
 }
 
 .low-stock-1{
-    background-color: rgba(255, 128, 0, 0.9);
+    background-color: rgba(255, 115, 0, 0.9);
 }
 
 .low-stock-0{
@@ -61,7 +62,7 @@
     background-color: red;
     border: 1px solid black;
     border-radius: 10%;
-    transition: transform 0.4s;
+    transition: transform 0.35s;
 }
 
 #remove-card-button:hover{
@@ -70,7 +71,7 @@
 }
 
 #remove-card-button:active{
-    filter: brightness(0.8);
+    transform: scale(0.8);
 }
 
 #buttons-container{
@@ -90,4 +91,22 @@
 #reservation-buttons button{
     font-size: 30px;
     margin-bottom: 10px;
+    transition: transform 0.35s;
+}
+
+.add-reservation-button{
+    background-color: rgb(48, 233, 2);
+}
+
+.remove-reservation-button{
+    background-color: rgb(226, 48, 48);
+}
+
+#reservation-buttons button:hover{
+    cursor: pointer;
+    transform: scale(1.15);
+}
+
+#reservation-buttons button:active{
+    transform: scale(0.8);
 }

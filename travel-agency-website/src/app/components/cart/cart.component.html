@@ -1,1 +1,11 @@
-<p>cart works!</p>
+<div id="cart">
+    <div class="cart-item" *ngFor="let excursion of filteredCartDetails()">
+        <img src={{excursion.img}}>
+        <p>{{excursion.name}}, {{excursion.country}}</p>
+        <p>{{excursion.unitPrice}}$ x {{getReservations(excursion.id)}}</p>
+    </div>
+    <div id="summary">
+        <p>Total reservations: {{totalReservations}}</p>
+        <p>Total price: {{totalPrice}}$</p>
+    </div>
+</div>

@@ -11,7 +11,7 @@ import { ExcursionData } from '../../shared/models/excursions-data';
 export class ExcursionDataManagerService {
   private DATA_URL:string = 'http://localhost:3000/excursion-data'
   private fetchedData: Observable<ExcursionData[]>
-  public excursionsData: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([]as ExcursionData[])
+  public excursionsData: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([] as ExcursionData[])
   public minUnitPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   public maxUnitPrice: BehaviorSubject<number> = new BehaviorSubject(0)
   public minAvailableID: BehaviorSubject<number> = new BehaviorSubject(-1)
