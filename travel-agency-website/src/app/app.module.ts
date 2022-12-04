@@ -8,7 +8,9 @@ import { ExcursionDataManagerService } from './services/excursion-data-manager/e
 import {HttpClientModule} from '@angular/common/http';
 import { ExcursionCardsListComponent } from './components/excursion-cards-list/excursion-cards-list.component'
 import { MinMaxPriceService } from './services/min-max-price/min-max-price.service';
-import { CartManagerService } from './services/cart-manager/cart-manager.service';
+import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
+import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
+import { ExcursionCardsStateHolderService } from './services/excursion-cards-state-holder/excursion-cards-state-holder.service';
 import { CartComponent } from './components/cart/cart.component';
 
 
@@ -17,6 +19,8 @@ import { CartComponent } from './components/cart/cart.component';
     AppComponent,
     ExcursionCardComponent,
     ExcursionCardsListComponent,
+    CartPreviewComponent,
+    AddExcursionFormComponent,
     CartComponent
   ],
   imports: [
@@ -27,7 +31,7 @@ import { CartComponent } from './components/cart/cart.component';
   providers: [
     ExcursionDataManagerService,
     MinMaxPriceService,
-    CartManagerService],
+    ExcursionCardsStateHolderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

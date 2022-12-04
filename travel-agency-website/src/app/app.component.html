@@ -1,2 +1,14 @@
-<app-cart></app-cart>
-<app-excursion-cards-list></app-excursion-cards-list>
+<nav>
+    <div (click)="navigateToExcursions()">Excursions</div>
+    <div (click)="navigateToExcursionForm()">Add Excursion</div>
+    <div (click)="navigateToCart()" id="nav-cart">
+        <app-cart-preview></app-cart-preview>
+    </div>
+</nav>
+
+<section>
+    <router-outlet></router-outlet>
+</section>
+
+
+

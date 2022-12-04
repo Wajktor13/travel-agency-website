@@ -1,3 +1,3 @@
-<section class="excursion-cards-list">
-    <app-excursion-card (removeExcursionCardEvent)="removeExcursionCard($event)" *ngFor="let exc of excursionsData" [excursion]=exc></app-excursion-card>
+<section class="excursion-cards-list-section">
+    <app-excursion-card class="excursion-cards-list" (removeExcursionCardEvent)="removeExcursionCard($event)" *ngFor="let exc of excursionsData" [excursion]=exc></app-excursion-card>
 </section>
