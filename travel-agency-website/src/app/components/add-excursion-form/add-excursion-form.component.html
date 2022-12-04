@@ -1,7 +1,7 @@
 <form #addExcursionForm="ngForm" (submit)="submitClicked(addExcursionForm.value)">
     <div class="input-wrapper">
         <label for="id-input">ID:</label>
-        <input type="number" name="id" id="id-input" value={{lowestFreeID}} placeholder={{lowestFreeID}} ngModel disabled>
+        <input type="number" name="id" id="id-input" value={{minAvailableID}} placeholder={{minAvailableID}} ngModel disabled>
     </div>
     <div class="input-wrapper">
         <label for="name-input">Name:</label>

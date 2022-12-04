@@ -13,12 +13,12 @@ export class CartPreviewComponent {
   totalReservationsCounter: number = 0
 
   constructor(private stateHolder: ExcursionCardsStateHolderService){
-    stateHolder.excursionCardsSave.subscribe(
+    stateHolder.reservationsCounterSave.subscribe(
       {
-        next: (excursionCardsSave: Map<number, {reservationsCounter:number, price: number}>) =>{
+        next: (excursionCardsSave: Map<number, number>) =>{
           this.totalReservationsCounter = 0
-          for (let [id, data] of excursionCardsSave){
-            this.totalReservationsCounter += data.reservationsCounter
+          for (let [id, reservationsCounter] of excursionCardsSave){
+            this.totalReservationsCounter += reservationsCounter
           }
         }
       }

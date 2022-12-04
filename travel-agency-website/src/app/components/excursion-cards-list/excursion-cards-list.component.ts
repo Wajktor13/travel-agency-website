@@ -29,6 +29,5 @@ export class ExcursionCardsListComponent {
     let toRemove: RemoveExcursionData = event
     this.excursionDataManager.removeFromExcursionsData(toRemove.excursionData)
     this.stateHolder.remove(toRemove.excursionData.id)
-    console.log(this.stateHolder.excursionCardsSave)
   }
 }
