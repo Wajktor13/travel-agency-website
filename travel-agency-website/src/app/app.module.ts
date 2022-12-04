@@ -10,7 +10,7 @@ import { ExcursionDataManagerService } from './services/excursion-data-manager/e
 import { ExcursionCardsListComponent } from './components/excursion-cards-list/excursion-cards-list.component'
 import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
 import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
-import { ExcursionCardsStateHolderService } from './services/excursion-cards-state-holder/excursion-cards-state-holder.service';
+import { CartService } from './services/cart/cart.service';
 import { CartComponent } from './components/cart/cart.component';
 
 
@@ -31,7 +31,7 @@ import { CartComponent } from './components/cart/cart.component';
   ],
   providers: [
     ExcursionDataManagerService,
-    ExcursionCardsStateHolderService],
+    CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

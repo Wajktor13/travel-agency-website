@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ExcursionCardsStateHolderService } from 'src/app/services/excursion-cards-state-holder/excursion-cards-state-holder.service';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 
 
@@ -12,12 +12,12 @@ import { ExcursionCardsStateHolderService } from 'src/app/services/excursion-car
 export class CartPreviewComponent {
   totalReservationsCounter: number = 0
 
-  constructor(private stateHolder: ExcursionCardsStateHolderService){
-    stateHolder.reservationsCounterSave.subscribe(
+  constructor(private cartService: CartService){
+    cartService.cart.subscribe(
       {
-        next: (excursionCardsSave: Map<number, number>) =>{
+        next: (cart: Map<number, number>) =>{
           this.totalReservationsCounter = 0
-          for (let [id, reservationsCounter] of excursionCardsSave){
+          for (let [id, reservationsCounter] of cart){
             this.totalReservationsCounter += reservationsCounter
           }
         }
