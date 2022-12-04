@@ -1,1 +1,39 @@
-<p>add-excursion-form works!</p>
+<form #addExcursionForm="ngForm" (submit)="submitClicked(addExcursionForm.value)">
+    <div class="input-wrapper">
+        <label for="id-input">ID:</label>
+        <input type="number" name="id" id="id-input" value={{lowestFreeID}} placeholder={{lowestFreeID}} ngModel disabled>
+    </div>
+    <div class="input-wrapper">
+        <label for="name-input">Name:</label>
+        <input type="text" name="name" id="name-input" placeholder="for ex. Scandinavian Northern Lights" ngModel>
+    </div>
+    <div class="input-wrapper">
+        <label for="country-input">Country:</label>
+        <input type="text" name="country" id="country-input" placeholder="for ex. Norway" ngModel>
+    </div>
+    <div class="input-wrapper">
+        <label for="start-date-input">Start date:</label>
+        <input type="date" name="startDate" id="start-date-input" ngModel>
+    </div>
+    <div class="input-wrapper">
+        <label for="end-date-input">End date:</label>
+        <input type="date" name="endDate" id="end-date-input" ngModel>
+    </div>
+    <div class="input-wrapper">
+        <label for="unit-price-input">Unit price $:</label>
+        <input type="number" name="unitPrice" id="unit-price-input" placeholder="for ex. 1999" ngModel>
+    </div>
+    <div class="input-wrapper">
+        <label for="max-in-stock-input">In stock:</label>
+        <input type="number" name="maxInStock" id="max-in-stock-input" placeholder="for.ex 12" ngModel>
+    </div>
+    <div class="input-wrapper">
+        <label for="description-input">Description:</label>
+        <input type="text" name="description" id="description-input" placeholder="for ex. Great excursion for aurora hunters" ngModel>
+    </div>
+    <div class="input-wrapper">
+        <label for="img-input">Image url:</label>
+        <input type="text" name="img" id="img-input" placeholder="for ex. https://www.routesnorth.com/wp-content/uploads/2019/09/4-pexels-photo-2113557.jpg" ngModel>
+    </div>
+    <button type="submit">SUBMIT</button>
+</form>

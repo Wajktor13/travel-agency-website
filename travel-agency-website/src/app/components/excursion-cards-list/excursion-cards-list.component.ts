@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
-import { MinMaxPriceService } from 'src/app/services/min-max-price/min-max-price.service';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
+import { ExcursionCardsStateHolderService } from 'src/app/services/excursion-cards-state-holder/excursion-cards-state-holder.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data
 export class ExcursionCardsListComponent {
   public excursionsData: ExcursionData[] = []
 
-  constructor(private excursionDataManager: ExcursionDataManagerService, private minMaxPriceService: MinMaxPriceService){
+  constructor(private excursionDataManager: ExcursionDataManagerService, private stateHolder: ExcursionCardsStateHolderService){
 
     excursionDataManager.excursionsData.subscribe(
       {
@@ -26,9 +26,9 @@ export class ExcursionCardsListComponent {
   }
 
   removeExcursionCard(event: any){
-    let removeExcursionData: RemoveExcursionData = event
-    this.excursionsData = this.excursionsData.filter(excursion => excursion.id != removeExcursionData.excursionData.id)
-    this.minMaxPriceService.removePrice(removeExcursionData.excursionData.unitPrice)
-    this.excursionDataManager.setExcursionsData(this.excursionsData)
+    let toRemove: RemoveExcursionData = event
+    this.excursionDataManager.removeFromExcursionsData(toRemove.excursionData)
+    this.stateHolder.remove(toRemove.excursionData.id)
+    console.log(this.stateHolder.excursionCardsSave)
   }
 }

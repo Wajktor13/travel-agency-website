@@ -8,7 +8,6 @@ import {FormsModule} from '@angular/forms'
 import { ExcursionCardComponent } from './components/excursion-card/excursion-card.component';
 import { ExcursionDataManagerService } from './services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionCardsListComponent } from './components/excursion-cards-list/excursion-cards-list.component'
-import { MinMaxPriceService } from './services/min-max-price/min-max-price.service';
 import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
 import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
 import { ExcursionCardsStateHolderService } from './services/excursion-cards-state-holder/excursion-cards-state-holder.service';
@@ -32,7 +31,6 @@ import { CartComponent } from './components/cart/cart.component';
   ],
   providers: [
     ExcursionDataManagerService,
-    MinMaxPriceService,
     ExcursionCardsStateHolderService],
   bootstrap: [AppComponent]
 })

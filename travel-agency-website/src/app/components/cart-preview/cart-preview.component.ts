@@ -12,15 +12,13 @@ import { ExcursionCardsStateHolderService } from 'src/app/services/excursion-car
 export class CartPreviewComponent {
   totalReservationsCounter: number = 0
 
-  constructor(private cardsStateHolder: ExcursionCardsStateHolderService){
-    cardsStateHolder.reservationsCounterSave.subscribe(
+  constructor(private stateHolder: ExcursionCardsStateHolderService){
+    stateHolder.excursionCardsSave.subscribe(
       {
-        next: (data: Map<number, number>) => {
+        next: (excursionCardsSave: Map<number, {reservationsCounter:number, price: number}>) =>{
           this.totalReservationsCounter = 0
-          for (let resrvationCounter of data.values()){
-            {
-              this.totalReservationsCounter += resrvationCounter
-            }
+          for (let [id, data] of excursionCardsSave){
+            this.totalReservationsCounter += data.reservationsCounter
           }
         }
       }

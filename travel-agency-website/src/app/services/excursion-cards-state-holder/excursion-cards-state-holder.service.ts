@@ -7,23 +7,47 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class ExcursionCardsStateHolderService {
-  public reservationsCounterSave: BehaviorSubject<Map<number, number>> = new BehaviorSubject(new Map<number, number>)
+  public excursionCardsSave: BehaviorSubject<Map<number, {reservationsCounter:number, price: number}>> = new BehaviorSubject(new Map<number, {reservationsCounter:number, price: number}>)
+  public minUnitPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
+  public maxUnitPrice: BehaviorSubject<number> = new BehaviorSubject(0)
 
-  constructor() {}
-
-  updateReservationsCounterSave(id:number, newReservationsCounterValue: number){
-    let current: Map<number, number> = this.reservationsCounterSave.getValue()
-    current.set(id, newReservationsCounterValue)
-    this.reservationsCounterSave.next(current)
+  constructor() {
+    this.excursionCardsSave.subscribe(
+      {
+        next: (excursionCardsSave: Map<number, {reservationsCounter:number, price: number}>) =>{
+          this.updateMinMaxPrice(excursionCardsSave)
+        },
+        error: (err: any) => console.log(err)  
+      }
+    )
   }
 
-  contains(id: number): boolean{
-    return this.reservationsCounterSave.getValue().has(id)
+  public add(id:number, newReservationsCounterValue: number, unitPrice: number){
+    let currentSave: Map<number, {reservationsCounter:number, price: number}> = this.excursionCardsSave.getValue()
+    currentSave.set(id, {reservationsCounter: newReservationsCounterValue, price: unitPrice})
+    this.excursionCardsSave.next(currentSave)
   }
 
-  delete(id: number): void{
-    let current: Map<number, number> = this.reservationsCounterSave.getValue()
-    current.delete(id)
-    this.reservationsCounterSave.next(current)
+  public contains(id: number): boolean{
+    return this.excursionCardsSave.getValue().has(id)
+  }
+
+  public remove(id: number): void{
+    let currentSave: Map<number, {reservationsCounter:number, price: number}> = this.excursionCardsSave.getValue()
+    currentSave.delete(id)
+    this.excursionCardsSave.next(currentSave)
+  }
+
+  private updateMinMaxPrice(excursionCardsSave: Map<number, {reservationsCounter:number, price: number}>){
+    let minPrice: number = Infinity
+    let maxPrice: number = 0
+
+    for (let [id, data] of excursionCardsSave){
+      minPrice = Math.min(minPrice, data.price)
+      maxPrice = Math.max(maxPrice, data.price)
+    }
+
+    this.minUnitPrice.next(minPrice)
+    this.maxUnitPrice.next(maxPrice)
   }
 }

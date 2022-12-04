@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ExcursionCardsStateHolderService } from 'src/app/services/excursion-cards-state-holder/excursion-cards-state-holder.service';
-import { MinMaxPriceService } from 'src/app/services/min-max-price/min-max-price.service';
+import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
 
@@ -11,7 +11,7 @@ import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data
   styleUrls: ['./excursion-card.component.css'],
 })
 
-export class ExcursionCardComponent implements OnInit, OnChanges{
+export class ExcursionCardComponent implements OnChanges{
   static minPrice: number = Infinity
   static maxPrice: number = 0
   public reservationCounter: number = 0
@@ -20,38 +20,30 @@ export class ExcursionCardComponent implements OnInit, OnChanges{
   @Input() excursion: ExcursionData = {id: 0, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
-  constructor(private minMaxPriceService: MinMaxPriceService, private stateHolder: ExcursionCardsStateHolderService){
-    minMaxPriceService.minPrice.subscribe(
+  constructor(private stateHolder: ExcursionCardsStateHolderService, private dataManager: ExcursionDataManagerService){
+    stateHolder.minUnitPrice.subscribe(
       {
-        next: (price) => ExcursionCardComponent.minPrice = price,
-        error: (err: any) => console.log(err)
-      }
-
-    )
-
-    minMaxPriceService.maxPrice.subscribe(
-      {
-        next: (price) => ExcursionCardComponent.maxPrice = price,
+        next: (price: number) => ExcursionCardComponent.minPrice = price,
         error: (err: any) => console.log(err)
       }
     )
-  }
 
-  ngOnInit(): void {
-
-    setTimeout(() => {
-      this.minMaxPriceService.addPrice(this.excursion.unitPrice)
-    });
+    stateHolder.maxUnitPrice.subscribe(
+      {
+        next: (price: number) => ExcursionCardComponent.maxPrice = price,
+        error: (err: any) => console.log(err)
+      }
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.stateHolder.contains(this.excursion.id)){
-      this.stateHolder.updateReservationsCounterSave(this.excursion.id, 0)
+      this.stateHolder.add(this.excursion.id, 0, this.excursion.unitPrice)
     }
 
-    this.stateHolder.reservationsCounterSave.subscribe(
+    this.stateHolder.excursionCardsSave.subscribe(
       {
-        next: (data) => this.reservationCounter = data.get(this.excursion.id)!,
+        next: (data) => this.reservationCounter = data.get(this.excursion.id)?.reservationsCounter!,
         error: (err: any) => console.log(err)
       }
     )
@@ -60,7 +52,7 @@ export class ExcursionCardComponent implements OnInit, OnChanges{
   }
 
   changeReservationCounter(diff: number): void{
-    this.stateHolder.updateReservationsCounterSave(this.excursion.id, this.reservationCounter + diff)
+    this.stateHolder.add(this.excursion.id, this.reservationCounter + diff, this.excursion.unitPrice)
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter
   }
 
@@ -74,6 +66,6 @@ export class ExcursionCardComponent implements OnInit, OnChanges{
 
   removeButtonClicked(toRemove: ExcursionData){
     this.removeExcursionCardEvent.emit({excursionData : toRemove, reserved: this.reservationCounter})
-    this.stateHolder.delete(toRemove.id)
+    this.stateHolder.remove(toRemove.id)
   }
 }
