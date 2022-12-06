@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ExcursionData } from '../shared/models/excursions-data';
-import { FilterExcursionData } from '../shared/models/filter-excursion-data';
+import { FilterArguments } from '../shared/models/filter-arguments';
 
 
 @Pipe({
@@ -8,8 +8,40 @@ import { FilterExcursionData } from '../shared/models/filter-excursion-data';
 })
 export class FilterExcursionsPipe implements PipeTransform {
 
-  transform(excursionsData: ExcursionData[], args: FilterExcursionData): ExcursionData[] {
-    return excursionsData.filter(e => e.unitPrice >= args.minPrice && e.unitPrice <= args.maxPrice)
+  transform(excursionsData: ExcursionData[], args: FilterArguments): ExcursionData[] {
+    return excursionsData.filter((e) => {
+      return this.priceFilter(e, args.minPrice, args.maxPrice) && this.dateFilter(e, args.fromDate, args.toDate)
+
+      }
+    )
   }
 
+  priceFilter(e: ExcursionData, minPrice: number, maxPrice: number): boolean{
+    return e.unitPrice >= minPrice && e.unitPrice <= maxPrice
+  }
+
+  dateFilter(e: ExcursionData, selectedFromDate: string, selectedToDate: string): boolean{
+    let selectedFromDateMs: number = Date.parse(selectedFromDate)
+    let selectedToDateMs: number = Date.parse(selectedToDate)
+    let eFromDateMS: number = Date.parse(e.startDate)
+    let eToDateMS: number = Date.parse(e.endDate)
+    return true
+    if (!isNaN(selectedFromDateMs) && !isNaN(selectedToDateMs)){
+
+      return eFromDateMS >= selectedFromDateMs && eToDateMS <= selectedToDateMs
+
+    } else if (!isNaN(selectedFromDateMs)){
+
+      return eFromDateMS >= selectedFromDateMs
+
+    } else if (!isNaN(selectedToDateMs)){
+
+      return eToDateMS <= selectedToDateMs
+
+    } else {
+
+      return true
+
+    }
+  }
 }

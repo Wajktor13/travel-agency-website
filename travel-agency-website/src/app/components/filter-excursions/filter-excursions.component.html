@@ -1,17 +1,27 @@
 <section id="filters-section">
     <h3>Filters:</h3>
     
-    <div>
+    <div id="price-inputs-wrapper">
         <div>
             <label for="min-price-range">Min price:</label>
-            <input type="range" min={{minPrice}} max={{maxPrice}} id="min-price-range" oninput="this.nextElementSibling.value = this.value" [(ngModel)]="selectedMinPrice" (input)="changeSelectedMinPrice($event)">
+            <input type="range" min={{minPrice}} max={{maxPrice}} id="min-price-range" oninput="this.nextElementSibling.value = this.value" (input)="changeSelectedMinPrice($event)" value={{selectedMinPrice}}>
             <output for="min-price-range" value={{selectedMinPrice}}></output>
         </div>
         <div>
             <label for="max-price-range">Max price:</label>
-            <input type="range" min={{minPrice}} max={{maxPrice}} id="max-price-range" oninput="this.nextElementSibling.value = this.value" [(ngModel)]="selectedMaxPrice" (input)="changeSelectedMaxPrice($event)" value={{maxPrice}}>
+            <input type="range" min={{minPrice}} max={{maxPrice}} id="max-price-range" oninput="this.nextElementSibling.value = this.value" (input)="changeSelectedMaxPrice($event)" value={{selectedMaxPrice}}>
             <output for="min-price-range" value={{selectedMaxPrice}}></output>
         </div>
+    </div>
+
+    <div>
+        <label for="from-date-input">From date:</label>
+        <input type="date" id="start-date-input" (input)="changeSelectedFromDate($event)" value={{filterService.getSelectedFromDate()}}>
+    </div>
+
+    <div>
+        <label for="to-date-input">To date:</label>
+        <input type="date" id="end-date-input" (input)="changeSelectedToDate($event)" value={{filterService.getSelectedToDate()}}>
     </div>
 
 </section>

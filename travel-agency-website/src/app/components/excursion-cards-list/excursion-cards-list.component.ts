@@ -19,7 +19,7 @@ export class ExcursionCardsListComponent {
   public selectedMaxPrice: number = Infinity
 
   constructor(private excursionDataManager: ExcursionDataManagerService, private cartService: CartService, 
-    private filterService: FilterExcursionsService){
+    public filterService: FilterExcursionsService){
 
     excursionDataManager.excursionsData.subscribe(
       {

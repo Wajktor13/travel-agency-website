@@ -83,6 +83,15 @@ header{
     font-size: 25px;
 }
 
+main{
+    min-height: 88vh;
+}
+
+footer{
+    background-color: gray;
+    height: 50px;
+}
+
 @media (max-width: 800px) {
     #nav-wrapper{
         flex-wrap: wrap;

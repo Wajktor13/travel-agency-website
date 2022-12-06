@@ -8,6 +8,8 @@ export class FilterExcursionsService {
 
   public selectedMinPrice: BehaviorSubject<number> = new BehaviorSubject(0)
   public selectedMaxPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
+  private selectedFromDate: string = ''
+  private selectedToDate: string = ''
 
   constructor() { }
 
@@ -25,5 +27,21 @@ export class FilterExcursionsService {
 
   public setSelectedMaxPrice(newSelectedMaxPrice: number){
     this.selectedMaxPrice.next(newSelectedMaxPrice)
+  }
+
+  public getSelectedFromDate(): string{
+    return this.selectedFromDate
+  }
+
+  public getSelectedToDate(): string{
+    return this.selectedToDate
+  }
+
+  public setSelectedFromDate(newSelectedFromDate: string){
+    this.selectedFromDate = newSelectedFromDate
+  }
+
+  public setSelectedToDate(newSelectedToDate: string){
+    this.selectedToDate = newSelectedToDate
   }
 }
