@@ -54,7 +54,7 @@ export class CartComponent {
     return this.cart.get(id)
   }
 
-  public getCartDetails(id: number){
+  public getExcursionDetails(id: number){
     for (let excursion of this.excursionsData){
       if (excursion.id == id){
         return excursion
@@ -64,12 +64,12 @@ export class CartComponent {
     return null
   }
 
-  public filteredCartDetails(): ExcursionData[]{
+  public getExcursionsWithReservations(): ExcursionData[]{
     let cartDetails: ExcursionData[] = []
 
     for (let [id, reservations] of this.cart){
       if (reservations > 0){
-        cartDetails.push(this.getCartDetails(id) as ExcursionData)
+        cartDetails.push(this.getExcursionDetails(id) as ExcursionData)
       }
     }
 

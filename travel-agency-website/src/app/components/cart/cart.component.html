@@ -1,5 +1,5 @@
 <div id="cart">
-    <div class="cart-item" *ngFor="let excursion of filteredCartDetails()">
+    <div class="cart-item" *ngFor="let excursion of getExcursionsWithReservations()">
         <img src={{excursion.img}}>
         <p>{{excursion.name}}, {{excursion.country}}</p>
         <p>{{excursion.unitPrice}}$ x {{getReservations(excursion.id)}}</p>

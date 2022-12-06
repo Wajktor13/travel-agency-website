@@ -9,7 +9,7 @@
         </div>
         <div>
             <label for="max-price-range">Max price:</label>
-            <input type="range" min={{minPrice}} max={{maxPrice}} id="max-price-range" oninput="this.nextElementSibling.value = this.value" [(ngModel)]="selectedMaxPrice" (input)="changeSelectedMaxPrice($event)">
+            <input type="range" min={{minPrice}} max={{maxPrice}} id="max-price-range" oninput="this.nextElementSibling.value = this.value" [(ngModel)]="selectedMaxPrice" (input)="changeSelectedMaxPrice($event)" value={{maxPrice}}>
             <output for="min-price-range" value={{maxPrice}}></output>
         </div>
     </div>

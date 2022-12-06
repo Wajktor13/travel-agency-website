@@ -66,6 +66,5 @@ export class ExcursionCardComponent implements OnChanges{
 
   removeButtonClicked(toRemove: ExcursionData){
     this.removeExcursionCardEvent.emit({excursionData : toRemove, reserved: this.reservationCounter})
-    this.cartService.remove(toRemove.id)
   }
 }

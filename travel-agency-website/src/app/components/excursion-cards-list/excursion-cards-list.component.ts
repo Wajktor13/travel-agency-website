@@ -15,8 +15,8 @@ import { FilterExcursionsService } from 'src/app/services/filter-excursions/filt
 
 export class ExcursionCardsListComponent {
   public excursionsData: ExcursionData[] = []
-  public selectedMinPrice: number = -1
-  public selectedMaxPrice: number = 2**20
+  public selectedMinPrice: number = 0
+  public selectedMaxPrice: number = Infinity
 
   constructor(private excursionDataManager: ExcursionDataManagerService, private cartService: CartService, 
     private filterService: FilterExcursionsService){
