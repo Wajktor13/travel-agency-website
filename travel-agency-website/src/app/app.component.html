@@ -1,19 +1,21 @@
 <header>
-    <input type="checkbox" id="nav-btn-checkbox">
-    <label for="nav-btn-checkbox">
-        <div id="nav-btn">
-            <div class="nav-btn-bar" id="bar1"></div>
-            <div class="nav-btn-bar" id="bar2"></div>
-            <div class="nav-btn-bar" id="bar3"></div>
-        </div>
-    </label>
-    <nav id="nav-flex-container">
-        <div class="nav-tile" (click)="navigateToExcursions()">Excursions</div>
-        <div class="nav-tile" (click)="navigateToExcursionForm()">Add Excursion</div>
-        <div class="nav-tile" (click)="navigateToCart()" id="nav-cart">
-            <app-cart-preview></app-cart-preview>
-        </div>
-    </nav>
+    <div id="nav-wrapper">
+        <input type="checkbox" id="nav-btn-checkbox">
+        <label for="nav-btn-checkbox">
+            <div id="nav-btn">
+                <div class="nav-btn-bar" id="bar1"></div>
+                <div class="nav-btn-bar" id="bar2"></div>
+                <div class="nav-btn-bar" id="bar3"></div>
+            </div>
+        </label>
+        <nav id="nav-flex-container">
+            <div class="nav-tile" (click)="navigateToExcursions()">Excursions</div>
+            <div class="nav-tile" (click)="navigateToExcursionForm()">Add Excursion</div>
+            <div class="nav-tile" (click)="navigateToCart()" id="nav-cart">
+                <app-cart-preview></app-cart-preview>
+            </div>
+        </nav>
+    </div>
 </header>
 
 <section>

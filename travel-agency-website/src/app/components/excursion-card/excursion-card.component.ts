@@ -17,7 +17,7 @@ export class ExcursionCardComponent implements OnChanges{
   public reservationCounter: number = 0
   public leftInStock: number = 0
 
-  @Input() excursion: ExcursionData = {id: 0, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
+  @Input() excursion: ExcursionData = {id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
   constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService){
@@ -34,12 +34,6 @@ export class ExcursionCardComponent implements OnChanges{
         error: (err: any) => console.log(err)
       }
     )
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!this.cartService.contains(this.excursion.id)){
-      this.cartService.add(this.excursion.id, 0)
-    }
 
     this.cartService.cart.subscribe(
       {
@@ -47,12 +41,22 @@ export class ExcursionCardComponent implements OnChanges{
         error: (err: any) => console.log(err)
       }
     )
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.cartService.isInCart(this.excursion.id)){
+      let cart = this.cartService.getCart()
+      this.reservationCounter = cart.get(this.excursion.id)!
+      this.leftInStock = this.excursion.maxInStock - this.reservationCounter
+    } else if (this.excursion.id != -1){
+      this.cartService.addToCart(this.excursion.id, 0)
+    }
 
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter
   }
 
   changeReservationCounter(diff: number): void{
-    this.cartService.add(this.excursion.id, this.reservationCounter + diff)
+    this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter
   }
 

@@ -64,8 +64,9 @@ export class ExcursionDataManagerService {
   }
 
   public validateExcursionData(excursion: ExcursionData): boolean{
-    return !this.existsInExcursionsData(excursion) && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.maxInStock) &&
-    this.validateDescription(excursion.description) && this.validateImg(excursion.img)
+    return !this.existsInExcursionsData(excursion) 
+    // && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.maxInStock) &&
+    // this.validateDescription(excursion.description) && this.validateImg(excursion.img)
   }
 
   private validateName(name: string): boolean{
@@ -121,7 +122,6 @@ export class ExcursionDataManagerService {
     let i = 0
     let data: ExcursionData[] = this.getExcursionsData()
     data.sort((e1, e2) => e1.id - e2.id)
-    console.log(data)
     for (let excursion of data){
       if (excursion.id != i){
         break

@@ -11,17 +11,21 @@ export class CartService {
 
   constructor() {}
 
-  add(id:number, newReservationsCounter: number){
+  getCart(): Map<number, number>{
+    return this.cart.getValue()
+  }
+
+  addToCart(id:number, newReservationsCounter: number){
     let current: Map<number, number> = this.cart.getValue()
     current.set(id, newReservationsCounter)
     this.cart.next(current)
   }
 
-  contains(id: number): boolean{
+  isInCart(id: number): boolean{
     return this.cart.getValue().has(id)
   }
 
-  remove(id: number): void{
+  removeFromCart(id: number): void{
     let current: Map<number, number> = this.cart.getValue()
     current.delete(id)
     this.cart.next(current)
