@@ -10,27 +10,23 @@ import { ExcursionData } from 'src/app/shared/models/excursions-data';
 })
 
 export class AddExcursionFormComponent {
-  public minAvailableID:number = -1
 
   constructor(private dataManager: ExcursionDataManagerService, private router: Router){
-    dataManager.minAvailableID.subscribe(
-      {
-        next: (id: number) => this.minAvailableID = id,
-        error: (error: any) => console.log(error)
-      }
-    )
+  }
+
+  getMinAvailableID(): number{
+    return this.dataManager.getMinAvailableID()
   }
 
   submitClicked(data: any){
-    data["id"] = this.minAvailableID
+    data["id"] = this.getMinAvailableID()
     let newExcursionData: ExcursionData = data as ExcursionData
 
     if (this.dataManager.validateExcursionData(newExcursionData)){
       this.dataManager.addToExcursionsData(newExcursionData)
-      this.router.navigate(['/excursions'])
       alert("Success!")
     } else{
-      alert("Wrong data!")
+      alert("Wrong data or excursion the same excursion already exists!")
     }
   }
 }

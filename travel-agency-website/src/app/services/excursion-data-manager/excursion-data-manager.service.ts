@@ -14,7 +14,6 @@ export class ExcursionDataManagerService {
   public excursionsData: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([] as ExcursionData[])
   public minUnitPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   public maxUnitPrice: BehaviorSubject<number> = new BehaviorSubject(0)
-  public minAvailableID: BehaviorSubject<number> = new BehaviorSubject(-1)
 
   constructor(private httpClient: HttpClient) { 
     this.fetchedData = httpClient.get<ExcursionData[]>(this.DATA_URL)
@@ -30,11 +29,14 @@ export class ExcursionDataManagerService {
       {
         next: (excursionsData: ExcursionData[]) =>{
           this.updateMinMaxPrice(excursionsData)
-          this.updateMinAvailableID(excursionsData)
         },
         error: (err: any) => console.log(err)  
       }
     )
+  }
+
+  private existsInExcursionsData(excursion: ExcursionData): boolean{
+    return this.getExcursionsData().includes(excursion)
   }
 
   public removeFromExcursionsData(toRemove: ExcursionData){
@@ -61,10 +63,9 @@ export class ExcursionDataManagerService {
     return this.getExcursionsData().length
   }
 
-  public validateExcursionData(excursionData: ExcursionData): boolean{
-    return  this.validateName(excursionData.name) && this.validateCountry(excursionData.country) && 
-    this.validateStartDate(excursionData.startDate) && this.validateEndDate(excursionData.startDate, excursionData.endDate) && this.validateUnitPrice(excursionData.unitPrice) && this.validateInStock(excursionData.maxInStock) &&
-    this.validateDescription(excursionData.description) && this.validateImg(excursionData.img)
+  public validateExcursionData(excursion: ExcursionData): boolean{
+    return !this.existsInExcursionsData(excursion) && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.maxInStock) &&
+    this.validateDescription(excursion.description) && this.validateImg(excursion.img)
   }
 
   private validateName(name: string): boolean{
@@ -116,16 +117,18 @@ export class ExcursionDataManagerService {
     this.maxUnitPrice.next(maxPrice)
   }
 
-  private updateMinAvailableID(excursionsData: ExcursionData[]){
+  public getMinAvailableID(): number{
     let i = 0
-    excursionsData.sort((e1, e2) => e1.id - e2.id)
-    for (let excursion of excursionsData){
+    let data: ExcursionData[] = this.getExcursionsData()
+    data.sort((e1, e2) => e1.id - e2.id)
+    console.log(data)
+    for (let excursion of data){
       if (excursion.id != i){
         break
       }
       i++
     }
 
-    this.minAvailableID.next(i)
+    return i
   }
 }
