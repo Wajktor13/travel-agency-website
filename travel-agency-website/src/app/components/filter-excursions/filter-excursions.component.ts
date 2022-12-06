@@ -11,34 +11,58 @@ import { FilterExcursionsService } from 'src/app/services/filter-excursions/filt
 })
 
 export class FilterExcursionsComponent {
-  public minPrice: number = Infinity
-  public maxPrice:number = 0
+  public minPrice: number = 0
+  public maxPrice:number = Infinity
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
 
   constructor(private dataManager: ExcursionDataManagerService, private filterService: FilterExcursionsService){
+    filterService.selectedMaxPrice.subscribe(
+      {
+        next: (price: number) => this.selectedMaxPrice = price,
+        error: (err: any) => console.log(err)
+      }
+    )
+
+    filterService.selectedMinPrice.subscribe(
+      {
+        next: (price: number) => this.selectedMinPrice = price,
+        error: (err: any) => console.log(err)
+      }
+    )
+    
     dataManager.maxUnitPrice.subscribe(
       {
-        next: (price: number) => this.maxPrice = price,
+        next: (price: number) => 
+        {
+          this.maxPrice = price
+          if (this.selectedMaxPrice == 0 || this.selectedMaxPrice == Infinity){
+            this.filterService.setSelectedMaxPrice(price)
+          }
+        },
         error: (err: any) => console.log(err)
       }
     )
 
     dataManager.minUnitPrice.subscribe(
       {
-        next: (price: number) => this.minPrice = price,
+        next: (price: number) => 
+        {
+          this.minPrice = price
+          if (this.selectedMinPrice == 0 || this.selectedMinPrice == Infinity){
+            this.filterService.setSelectedMinPrice(price)
+          }
+        },
         error: (err: any) => console.log(err)
       }
     )
   }
 
   changeSelectedMinPrice(event: any){
-    this.selectedMinPrice = event.target.value
-    this.filterService.setSelectedMinPrice(this.selectedMinPrice)
+    this.filterService.setSelectedMinPrice(event.target.value)
   }
 
   changeSelectedMaxPrice(event: any){
-    this.selectedMaxPrice = event.target.value
-    this.filterService.setSelectedMaxPrice(this.selectedMaxPrice)
+    this.filterService.setSelectedMaxPrice(event.target.value)
   }
 }

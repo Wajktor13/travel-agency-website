@@ -6,10 +6,18 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FilterExcursionsService {
 
-  public selectedMinPrice: BehaviorSubject<number> = new BehaviorSubject(-1)
-  public selectedMaxPrice: BehaviorSubject<number> = new BehaviorSubject(2**20)
+  public selectedMinPrice: BehaviorSubject<number> = new BehaviorSubject(0)
+  public selectedMaxPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
 
   constructor() { }
+
+  public getSelectedMinPrice(): number{
+    return this.selectedMinPrice.getValue()
+  }
+
+  public getSelectedMaxPrice(): number{
+    return this.selectedMaxPrice.getValue()
+  }
 
   public setSelectedMinPrice(newSelectedMinPrice: number){
     this.selectedMinPrice.next(newSelectedMinPrice)
