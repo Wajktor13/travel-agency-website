@@ -10,17 +10,5 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'travel-agency-website';
   
-  constructor(private router: Router){}
-
-  navigateToExcursions(){
-    this.router.navigate(['/excursions'])
-  }
-
-  navigateToCart(){
-    this.router.navigate(['/cart'])
-  }
-
-  navigateToExcursionForm(){
-    this.router.navigate(['/add-excursion-form'])
-  }
+  constructor(){}
 }

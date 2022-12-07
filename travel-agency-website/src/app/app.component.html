@@ -9,11 +9,12 @@
             </div>
         </label>
         <nav id="nav-flex-container">
-            <div class="nav-tile" (click)="navigateToExcursions()">Excursions</div>
-            <div class="nav-tile" (click)="navigateToExcursionForm()">Add Excursion</div>
-            <div class="nav-tile" (click)="navigateToCart()" id="nav-cart">
+            <a class="nav-tile" href="/home">home</a>
+            <a class="nav-tile" routerLink="/excursions">Excursions</a>
+            <a class="nav-tile" routerLink="add-excursion-form">Add Excursion</a>
+            <a class="nav-tile" routerLink="/cart" id="nav-cart">
                 <app-cart-preview></app-cart-preview>
-            </div>
+            </a>
         </nav>
     </div>
 </header>
