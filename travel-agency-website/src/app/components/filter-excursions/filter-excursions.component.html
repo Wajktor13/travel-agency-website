@@ -14,14 +14,16 @@
         </div>
     </div>
 
-    <div>
-        <label for="from-date-input">From date:</label>
-        <input type="date" id="start-date-input" (input)="changeSelectedFromDate($event)" value={{filterService.getSelectedFromDate()}}>
-    </div>
+    <div id="date-inputs-warapper">
+        <div>
+            <label for="from-date-input">From date:</label>
+            <input type="date" id="start-date-input" (input)="changeSelectedFromDate($event)" value={{filterService.getSelectedFromDate()}}>
+        </div>
 
-    <div>
-        <label for="to-date-input">To date:</label>
-        <input type="date" id="end-date-input" (input)="changeSelectedToDate($event)" value={{filterService.getSelectedToDate()}}>
+        <div>
+            <label for="to-date-input">To date:</label>
+            <input type="date" id="end-date-input" (input)="changeSelectedToDate($event)" value={{filterService.getSelectedToDate()}}>
+        </div>
     </div>
 
     <div>
