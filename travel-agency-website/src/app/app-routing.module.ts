@@ -3,12 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { ExcursionCardsListComponent } from './components/excursion-cards-list/excursion-cards-list.component';
 import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
 import { CartComponent } from './components/cart/cart.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+
 
 
 const routes: Routes = [
   {path: 'excursions', component: ExcursionCardsListComponent},
   {path: 'cart', component: CartComponent},
-  {path: 'add-excursion-form', component: AddExcursionFormComponent}
+  {path: 'add-excursion-form', component: AddExcursionFormComponent},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({

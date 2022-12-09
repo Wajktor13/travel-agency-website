@@ -15,6 +15,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { FilterExcursionsPipe } from './pipes/filter-excursions.pipe';
 import { FilterExcursionsComponent } from './components/filter-excursions/filter-excursions.component';
 import { FilterExcursionsService } from './services/filter-excursions/filter-excursions.service';
+import { HomeComponent } from './components/home/home.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { FilterExcursionsService } from './services/filter-excursions/filter-exc
     AddExcursionFormComponent,
     CartComponent,
     FilterExcursionsPipe,
-    FilterExcursionsComponent
+    FilterExcursionsComponent,
+    PageNotFoundComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
