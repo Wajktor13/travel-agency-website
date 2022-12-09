@@ -4,6 +4,7 @@ import { ExcursionCardsListComponent } from './components/excursion-cards-list/e
 import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
 import { CartComponent } from './components/cart/cart.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 
@@ -11,6 +12,8 @@ const routes: Routes = [
   {path: 'excursions', component: ExcursionCardsListComponent},
   {path: 'cart', component: CartComponent},
   {path: 'add-excursion-form', component: AddExcursionFormComponent},
+  {path: 'home', component: HomeComponent},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];
 
