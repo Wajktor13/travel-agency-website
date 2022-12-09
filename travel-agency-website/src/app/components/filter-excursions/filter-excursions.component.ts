@@ -16,7 +16,7 @@ export class FilterExcursionsComponent {
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
 
-  constructor(private dataManager: ExcursionDataManagerService, public filterService: FilterExcursionsService){
+  constructor(public dataManager: ExcursionDataManagerService, public filterService: FilterExcursionsService){
     filterService.selectedMaxPrice.subscribe(
       {
         next: (price: number) => this.selectedMaxPrice = price,
@@ -72,5 +72,17 @@ export class FilterExcursionsComponent {
 
   changeSelectedToDate(event: any){
     this.filterService.setSelectedToDate(event.target.value)
+  }
+
+  changeSelectedCountry(event: any){
+    this.filterService.setSelectedCountry(event.target.value)
+  }
+
+  resetFilters(): void{
+    this.filterService.setSelectedMinPrice(this.minPrice)
+    this.filterService.setSelectedMaxPrice(this.maxPrice)
+    this.filterService.setSelectedFromDate('')
+    this.filterService.setSelectedToDate('')
+    this.filterService.setSelectedCountry('all')
   }
 }

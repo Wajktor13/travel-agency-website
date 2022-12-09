@@ -3,4 +3,5 @@ export type FilterArguments = {
     maxPrice: number
     fromDate: string
     toDate: string
+    country: string
 }

@@ -18,10 +18,10 @@ export class ExcursionCardsListComponent {
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
 
-  constructor(private excursionDataManager: ExcursionDataManagerService, private cartService: CartService, 
+  constructor(private dataManager: ExcursionDataManagerService, private cartService: CartService, 
     public filterService: FilterExcursionsService){
 
-    excursionDataManager.excursionsData.subscribe(
+    dataManager.excursionsData.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,
         error: (err: any) => console.log(err)
@@ -46,7 +46,7 @@ export class ExcursionCardsListComponent {
 
   removeExcursionCard(event: any){
     let toRemove: RemoveExcursionData = event
-    this.excursionDataManager.removeFromExcursionsData(toRemove.excursionData)
+    this.dataManager.removeFromExcursionsData(toRemove.excursionData)
     this.cartService.removeFromCart(toRemove.excursionData.id)
   }
 }

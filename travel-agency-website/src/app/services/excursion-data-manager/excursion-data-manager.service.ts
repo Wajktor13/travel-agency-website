@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ExcursionData } from '../../shared/models/excursions-data';
 
 
@@ -63,10 +63,14 @@ export class ExcursionDataManagerService {
     return this.getExcursionsData().length
   }
 
+  public getCountries(): string[]{
+    return this.getExcursionsData().map(e => e.country)
+  }
+
   public validateExcursionData(excursion: ExcursionData): boolean{
     return !this.existsInExcursionsData(excursion) 
-    // && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.maxInStock) &&
-    // this.validateDescription(excursion.description) && this.validateImg(excursion.img)
+    && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.maxInStock) &&
+    this.validateDescription(excursion.description) && this.validateImg(excursion.img)
   }
 
   private validateName(name: string): boolean{

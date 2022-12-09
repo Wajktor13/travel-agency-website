@@ -10,6 +10,7 @@ export class FilterExcursionsService {
   public selectedMaxPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   private selectedFromDate: string = ''
   private selectedToDate: string = ''
+  private selectedCountry: string = 'all'
 
   constructor() { }
 
@@ -37,11 +38,19 @@ export class FilterExcursionsService {
     return this.selectedToDate
   }
 
+  public getSelectedCountry(): string{
+    return this.selectedCountry
+  }
+
   public setSelectedFromDate(newSelectedFromDate: string){
     this.selectedFromDate = newSelectedFromDate
   }
 
   public setSelectedToDate(newSelectedToDate: string){
     this.selectedToDate = newSelectedToDate
+  }
+
+  public setSelectedCountry(newSelectedCountry: string){
+    this.selectedCountry = newSelectedCountry
   }
 }
