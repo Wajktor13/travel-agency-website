@@ -18,6 +18,7 @@ import { FilterExcursionsComponent } from './components/filter-excursions/filter
 import { FilterExcursionsService } from './services/filter-excursions/filter-excursions.service';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     FilterExcursionsPipe,
     FilterExcursionsComponent,
     PageNotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    ReservationsHistoryComponent
   ],
   imports: [
     BrowserModule,
