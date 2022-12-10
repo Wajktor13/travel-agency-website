@@ -64,7 +64,7 @@ export class ExcursionDataManagerService {
   }
 
   public getCountries(): string[]{
-    return this.getExcursionsData().map(e => e.country)
+    return this.getExcursionsData().map(e => e.country).filter((value, i, arr) => arr.indexOf(value) == i)
   }
 
   public getMinPrice(): number{
