@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms'
 import { GoogleMapsModule } from '@angular/google-maps'
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { ExcursionCardComponent } from './components/excursion-card/excursion-card.component';
 import { ExcursionDataManagerService } from './services/excursion-data-manager/excursion-data-manager.service';
@@ -20,6 +23,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 
 
 @NgModule({
@@ -42,7 +46,9 @@ import { NotificationsComponent } from './components/notifications/notifications
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [
     ExcursionDataManagerService,

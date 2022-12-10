@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ExcursionData } from '../../shared/models/excursions-data';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 @Injectable({
@@ -15,8 +16,8 @@ export class ExcursionDataManagerService {
   public minUnitPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   public maxUnitPrice: BehaviorSubject<number> = new BehaviorSubject(0)
 
-  constructor(private httpClient: HttpClient) { 
-    this.fetchedData = httpClient.get<ExcursionData[]>(this.DATA_URL)
+  constructor(private httpClient: HttpClient, private db: AngularFirestore) { 
+    this.fetchedData = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
 
     this.fetchedData.subscribe(
       {
@@ -45,10 +46,8 @@ export class ExcursionDataManagerService {
     this.setExcursionsData(currentExcursionsData)
   }
 
-  public addToExcursionsData(toAdd: ExcursionData){
-    let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
-    currentExcursionsData.push(toAdd)
-    this.setExcursionsData(currentExcursionsData)
+  public addToExcursionsDataDB(toAdd: ExcursionData){
+    this.db.collection('excursions').doc(toAdd.id.toString()).set(toAdd);
   }
 
   public setExcursionsData(newExcursionsData: ExcursionData[]){
