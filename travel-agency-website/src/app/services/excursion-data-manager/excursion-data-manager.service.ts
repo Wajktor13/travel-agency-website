@@ -67,6 +67,14 @@ export class ExcursionDataManagerService {
     return this.getExcursionsData().map(e => e.country)
   }
 
+  public getMinPrice(): number{
+    return this.minUnitPrice.getValue()
+  }
+
+  public getMaxPrice(): number{
+    return this.maxUnitPrice.getValue()
+  }
+
   public validateExcursionData(excursion: ExcursionData): boolean{
     return !this.existsInExcursionsData(excursion) 
     && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.maxInStock) &&

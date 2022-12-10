@@ -53,4 +53,12 @@ export class FilterExcursionsService {
   public setSelectedCountry(newSelectedCountry: string){
     this.selectedCountry = newSelectedCountry
   }
+
+  resetFilters(minPrice: number, maxPrice: number): void{
+    this.setSelectedMinPrice(minPrice)
+    this.setSelectedMaxPrice(maxPrice)
+    this.setSelectedFromDate('')
+    this.setSelectedToDate('')
+    this.setSelectedCountry('all')
+  }
 }

@@ -79,10 +79,6 @@ export class FilterExcursionsComponent {
   }
 
   resetFilters(): void{
-    this.filterService.setSelectedMinPrice(this.minPrice)
-    this.filterService.setSelectedMaxPrice(this.maxPrice)
-    this.filterService.setSelectedFromDate('')
-    this.filterService.setSelectedToDate('')
-    this.filterService.setSelectedCountry('all')
+    this.filterService.resetFilters(this.minPrice, this.maxPrice)
   }
 }

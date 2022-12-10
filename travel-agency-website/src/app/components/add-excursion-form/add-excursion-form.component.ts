@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
 
 @Component({
@@ -11,7 +12,7 @@ import { ExcursionData } from 'src/app/shared/models/excursions-data';
 
 export class AddExcursionFormComponent {
 
-  constructor(private dataManager: ExcursionDataManagerService, private router: Router){
+  constructor(private dataManager: ExcursionDataManagerService, private filterService: FilterExcursionsService){
   }
 
   getMinAvailableID(): number{
@@ -24,6 +25,7 @@ export class AddExcursionFormComponent {
 
     if (this.dataManager.validateExcursionData(newExcursionData)){
       this.dataManager.addToExcursionsData(newExcursionData)
+      this.filterService.resetFilters(this.dataManager.getMinPrice(), this.dataManager.getMaxPrice())
       alert("Success!")
     } else{
       alert("Wrong data or excursion the same excursion already exists!")
