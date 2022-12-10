@@ -19,6 +19,7 @@ import { FilterExcursionsService } from './services/filter-excursions/filter-exc
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ReservationsHistoryComponent } from './components/reservations-history/
     FilterExcursionsComponent,
     PageNotFoundComponent,
     HomeComponent,
-    ReservationsHistoryComponent
+    ReservationsHistoryComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
