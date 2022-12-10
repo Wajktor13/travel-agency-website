@@ -58,27 +58,27 @@ export class FilterExcursionsComponent {
     )
   }
 
-  changeSelectedMinPrice(event: any){
+  public changeSelectedMinPrice(event: any){
     this.filterService.setSelectedMinPrice(event.target.value)
   }
 
-  changeSelectedMaxPrice(event: any){
+  public changeSelectedMaxPrice(event: any){
     this.filterService.setSelectedMaxPrice(event.target.value)
   }
 
-  changeSelectedFromDate(event: any){
+  public changeSelectedFromDate(event: any){
     this.filterService.setSelectedFromDate(event.target.value)
   }
 
-  changeSelectedToDate(event: any){
+  public changeSelectedToDate(event: any){
     this.filterService.setSelectedToDate(event.target.value)
   }
 
-  changeSelectedCountry(event: any){
+  public changeSelectedCountry(event: any){
     this.filterService.setSelectedCountry(event.target.value)
   }
 
-  resetFilters(): void{
+  public resetFilters(): void{
     this.filterService.resetFilters(this.minPrice, this.maxPrice)
   }
 }

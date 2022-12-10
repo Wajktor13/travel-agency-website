@@ -54,7 +54,7 @@ export class FilterExcursionsService {
     this.selectedCountry = newSelectedCountry
   }
 
-  resetFilters(minPrice: number, maxPrice: number): void{
+  public resetFilters(minPrice: number, maxPrice: number): void{
     this.setSelectedMinPrice(minPrice)
     this.setSelectedMaxPrice(maxPrice)
     this.setSelectedFromDate('')

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ExcursionData } from '../shared/models/excursions-data';
-import { FilterArguments } from '../shared/models/filter-arguments';
+import { ExcursionData } from '../../shared/models/excursions-data';
+import { FilterArguments } from '../../shared/models/filter-arguments';
 
 
 @Pipe({
@@ -16,11 +16,11 @@ export class FilterExcursionsPipe implements PipeTransform {
     )
   }
 
-  priceFilter(e: ExcursionData, minPrice: number, maxPrice: number): boolean{
+  private priceFilter(e: ExcursionData, minPrice: number, maxPrice: number): boolean{
     return e.unitPrice >= minPrice && e.unitPrice <= maxPrice
   }
 
-  dateFilter(e: ExcursionData, selectedFromDate: string, selectedToDate: string): boolean{
+  private dateFilter(e: ExcursionData, selectedFromDate: string, selectedToDate: string): boolean{
     let selectedFromDateMs: number = Date.parse(selectedFromDate)
     let selectedToDateMs: number = Date.parse(selectedToDate)
     let eFromDateMS: number = Date.parse(e.startDate)
@@ -45,7 +45,7 @@ export class FilterExcursionsPipe implements PipeTransform {
     }
   }
 
-  countryFilter(e: ExcursionData, selectedCountry: string){
+  private countryFilter(e: ExcursionData, selectedCountry: string){
     return e.country == selectedCountry || selectedCountry == 'all'
   }
 }

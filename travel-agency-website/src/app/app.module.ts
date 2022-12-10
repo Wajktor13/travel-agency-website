@@ -13,7 +13,7 @@ import { CartPreviewComponent } from './components/cart-preview/cart-preview.com
 import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
 import { CartService } from './services/cart/cart.service';
 import { CartComponent } from './components/cart/cart.component';
-import { FilterExcursionsPipe } from './pipes/filter-excursions.pipe';
+import { FilterExcursionsPipe } from './pipes/filter-excursions-pipe/filter-excursions.pipe';
 import { FilterExcursionsComponent } from './components/filter-excursions/filter-excursions.component';
 import { FilterExcursionsService } from './services/filter-excursions/filter-excursions.service';
 import { HomeComponent } from './components/home/home.component';

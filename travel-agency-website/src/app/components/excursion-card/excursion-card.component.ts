@@ -43,7 +43,7 @@ export class ExcursionCardComponent implements OnChanges{
     )
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (this.cartService.isInCart(this.excursion.id)){
       let cart = this.cartService.getCart()
       this.reservationCounter = cart.get(this.excursion.id)!
@@ -55,20 +55,20 @@ export class ExcursionCardComponent implements OnChanges{
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter
   }
 
-  changeReservationCounter(diff: number): void{
+  public changeReservationCounter(diff: number): void{
     this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter
   }
 
-  getMinPrice(): number{
+  public getMinPrice(): number{
     return ExcursionCardComponent.minPrice
   }
   
-  getMaxPrice(): number{
+  public getMaxPrice(): number{
     return ExcursionCardComponent.maxPrice
   }
 
-  removeButtonClicked(toRemove: ExcursionData){
+  public removeButtonClicked(toRemove: ExcursionData){
     this.removeExcursionCardEvent.emit({excursionData : toRemove, reserved: this.reservationCounter})
   }
 }

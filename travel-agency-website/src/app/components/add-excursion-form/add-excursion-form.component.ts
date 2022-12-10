@@ -15,11 +15,11 @@ export class AddExcursionFormComponent {
   constructor(private dataManager: ExcursionDataManagerService, private filterService: FilterExcursionsService){
   }
 
-  getMinAvailableID(): number{
+  public getMinAvailableID(): number{
     return this.dataManager.getMinAvailableID()
   }
 
-  submitClicked(data: any){
+  public submitClicked(data: any){
     data["id"] = this.getMinAvailableID()
     let newExcursionData: ExcursionData = data as ExcursionData
 
