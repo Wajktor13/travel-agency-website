@@ -143,4 +143,14 @@ export class ExcursionDataManagerService {
 
     return i
   }
+
+  public getPrice(id: number): number{
+    for (let excursion of this.getExcursionsData()){
+      if (excursion.id == id){
+        return excursion.unitPrice
+      }
+    }
+
+    return 0
+  }
 }

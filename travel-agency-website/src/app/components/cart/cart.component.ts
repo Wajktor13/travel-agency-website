@@ -32,22 +32,12 @@ export class CartComponent {
            this.totalReservations = 0
            for (let [id, reservations] of this.cart){
             this.totalReservations += reservations
-            this.totalPrice += this.getPrice(id) * reservations
+            this.totalPrice += this.dataManager.getPrice(id) * reservations
            }
           },
         error: (err: any) => console.log(err)
       }
     )
-  }
-
-  public getPrice(id: number): number{
-    for (let excursion of this.excursionsData){
-      if (excursion.id == id){
-        return excursion.unitPrice
-      }
-    }
-
-    return 0
   }
 
   public getReservations(id: number){

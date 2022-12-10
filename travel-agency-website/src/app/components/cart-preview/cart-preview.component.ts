@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 
 
 
@@ -10,17 +11,22 @@ import { CartService } from 'src/app/services/cart/cart.service';
 })
 
 export class CartPreviewComponent {
-  totalReservationsCounter: number = 0
+  public totalReservationsCounter: number = 0
+  public totalCartValue: number = 0
 
-  constructor(private cartService: CartService){
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService){
+
     cartService.cart.subscribe(
       {
-        next: (cart: Map<number, number>) =>{
-          this.totalReservationsCounter = 0
-          for (let [id, reservationsCounter] of cart){
-            this.totalReservationsCounter += reservationsCounter
-          }
-        }
+        next: (cartData: Map<number, number>) =>{
+           this.totalCartValue = 0
+           this.totalReservationsCounter = 0
+           for (let [id, reservations] of cartData){
+            this.totalReservationsCounter += reservations
+            this.totalCartValue += this.dataManager.getPrice(id) * reservations
+           }
+          },
+        error: (err: any) => console.log(err)
       }
     )
   }
