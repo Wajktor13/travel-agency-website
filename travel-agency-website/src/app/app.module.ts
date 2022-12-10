@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms'
+import { GoogleMapsModule } from '@angular/google-maps'
 
 import { ExcursionCardComponent } from './components/excursion-card/excursion-card.component';
 import { ExcursionDataManagerService } from './services/excursion-data-manager/excursion-data-manager.service';
@@ -36,7 +37,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    GoogleMapsModule
   ],
   providers: [
     ExcursionDataManagerService,
