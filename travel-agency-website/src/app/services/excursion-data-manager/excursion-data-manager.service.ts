@@ -86,7 +86,7 @@ export class ExcursionDataManagerService {
   }
 
   private validateCountry(country: string): boolean{
-    return /^[a-zA-Z]+$/.test(country) && country.length >= 4
+    return /^[A-Z][a-z ]*$/.test(country) && country.length >= 4
   }
 
   private validateDate(date: string): boolean{
@@ -98,7 +98,7 @@ export class ExcursionDataManagerService {
   }
 
   private validateEndDate(startDate: string, endDate: string): boolean{
-    return this.validateDate(endDate)
+    return this.validateDate(endDate) && new Date(startDate) < new Date(endDate)
   }
 
   private validateUnitPrice(price: number): boolean{
