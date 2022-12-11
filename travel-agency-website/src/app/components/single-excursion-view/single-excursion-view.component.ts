@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
@@ -17,7 +17,7 @@ export class SingleExcursionViewComponent implements OnInit{
   public id: any = -1
   public excursion: ExcursionData = {id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
 
-  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService){
+  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router){
     this.dataManager.excursionsData.subscribe(
       {
         next: (data) => {
@@ -52,5 +52,6 @@ export class SingleExcursionViewComponent implements OnInit{
   public removeButtonClicked(){
     this.dataManager.removeFromExcursionsDB(this.excursion)
     this.cartService.removeFromCart(parseInt(this.id))
+    this.router.navigate(['excursions'])
   }
 }
