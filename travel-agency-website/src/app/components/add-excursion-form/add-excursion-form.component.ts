@@ -25,7 +25,7 @@ export class AddExcursionFormComponent {
 
     if (this.dataManager.validateExcursionData(newExcursionData)){
       this.dataManager.addToExcursionsDB(newExcursionData)
-      this.filterService.resetFilters(this.dataManager.getMinPrice(), this.dataManager.getMaxPrice())
+      this.filterService.resetFilters(this.dataManager.getMinPrice(), Math.max(this.dataManager.getMaxPrice(), newExcursionData.unitPrice))
       alert("Success!")
     } else{
       alert("Wrong data or excursion the same excursion already exists!")
