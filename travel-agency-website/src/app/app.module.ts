@@ -24,6 +24,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
     PageNotFoundComponent,
     HomeComponent,
     ReservationsHistoryComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    SingleExcursionViewComponent
   ],
   imports: [
     BrowserModule,

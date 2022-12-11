@@ -152,4 +152,14 @@ export class ExcursionDataManagerService {
 
     return 0
   }
+
+  getExcursionDataById(id: number): ExcursionData{
+    for (let excursion of this.getExcursionsData()){
+      if (excursion.id == id){
+        return excursion
+      }
+    }
+
+    return {id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
+  }
 }

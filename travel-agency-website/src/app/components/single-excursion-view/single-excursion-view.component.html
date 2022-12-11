@@ -1,0 +1,30 @@
+<div id="excursion">
+    <div id="info">
+
+        <img src={{excursion.img}} width="800px">
+
+        <div>
+
+            <div id="details">
+                <h3>{{excursion.name | uppercase}}</h3>
+                <p>Location: {{excursion.country | uppercase}}</p>
+                <p>{{excursion.description}}</p>
+                <p>When: from <u>{{excursion.startDate}}</u> to <u>{{excursion.endDate}}</u></p>
+                <p>Price: {{excursion.unitPrice | currency}}</p>
+                <p *ngIf="leftInStock > 0; else outOfStock">In stock: {{leftInStock}}</p>
+                <ng-template #outOfStock class="out-of-stock">
+                    <p>Out of stock!</p>
+                </ng-template>
+            </div>
+        
+        </div>
+
+    </div>
+
+    <div id="buttons-container">
+        <div id="remove-card-button" (click)="removeButtonClicked()"></div>
+        <button [disabled]="reservationCounter == excursion.maxInStock" class="add-reservation-button reservation-button" (click)="changeReservationCounter(1)">+</button>
+        <button [disabled]="reservationCounter == 0" class="remove-reservation-button reservation-button" (click)="changeReservationCounter(-1)">-</button>
+    </div>
+
+</div>

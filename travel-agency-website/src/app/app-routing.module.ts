@@ -6,6 +6,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
+import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
 
 
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'add-excursion-form', component: AddExcursionFormComponent},
   {path: 'home', component: HomeComponent},
   {path: 'reservations-history', component: ReservationsHistoryComponent},
+  {path: 'excursion/:id', component: SingleExcursionViewComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];

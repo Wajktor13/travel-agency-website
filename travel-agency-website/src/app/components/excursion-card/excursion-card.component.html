@@ -1,5 +1,5 @@
-<div class="excursion-card" [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice(),
- 'low-stock-3' : leftInStock == 3, 'low-stock-2' : leftInStock == 2, 'low-stock-1' : leftInStock == 1, 'low-stock-0' : leftInStock == 0}">
+<div class="excursion-card" [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice(), 'low-stock-3' : leftInStock == 3, 'low-stock-2' : leftInStock == 2, 'low-stock-1' : leftInStock == 1, 'low-stock-0' : leftInStock == 0}">
+
     <img src={{excursion.img}} alt={{excursion.name}}>
     <h3>{{excursion.name | uppercase}}</h3>
     <p>{{excursion.country | uppercase}}</p>
@@ -10,11 +10,18 @@
     <ng-template #outOfStock class="out-of-stock">
         <p>Out of stock!</p>
     </ng-template>
+
     <div id="buttons-container">
+        
         <div (click)="removeButtonClicked(excursion)" id="remove-card-button"></div>
+
+        <button (click)="navigateToSingleExcursionView()">see more</button>
+
         <div id="reservation-buttons">
             <button (click)="changeReservationCounter(1)" [disabled]="reservationCounter == excursion.maxInStock" class="add-reservation-button">+</button>
             <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0" class="remove-reservation-button">-</button>
         </div>
+
     </div>
+
 </div>

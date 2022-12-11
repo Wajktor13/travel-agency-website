@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
@@ -20,7 +21,7 @@ export class ExcursionCardComponent implements OnChanges{
   @Input() excursion: ExcursionData = {id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService){
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router){
     dataManager.minUnitPrice.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.minPrice = price,
@@ -70,5 +71,9 @@ export class ExcursionCardComponent implements OnChanges{
 
   public removeButtonClicked(toRemove: ExcursionData){
     this.removeExcursionCardEvent.emit({excursionData : toRemove, reserved: this.reservationCounter})
+  }
+
+  public navigateToSingleExcursionView(): void{
+    this.router.navigate(['excursion/', this.excursion.id])
   }
 }

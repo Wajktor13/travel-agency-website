@@ -26,8 +26,18 @@ export class CartService {
   }
 
   public removeFromCart(id: number): void{
+    console.log(id)
     let current: Map<number, number> = this.cart.getValue()
     current.delete(id)
     this.cart.next(current)
+  }
+
+  public getReservationsOf(id: number){
+    let c = this.getCart()
+    if (c.get(id) != undefined){
+      return c.get(id)
+    }
+
+    return 0
   }
 }
