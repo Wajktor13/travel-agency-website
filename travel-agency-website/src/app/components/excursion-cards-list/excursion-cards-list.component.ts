@@ -46,7 +46,7 @@ export class ExcursionCardsListComponent {
 
   public removeExcursionCard(event: any){
     let toRemove: RemoveExcursionData = event
-    this.dataManager.removeFromExcursionsData(toRemove.excursionData)
+    this.dataManager.removeFromExcursionsDB(toRemove.excursionData)
     this.cartService.removeFromCart(toRemove.excursionData.id)
   }
 }

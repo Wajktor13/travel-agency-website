@@ -24,7 +24,7 @@ export class AddExcursionFormComponent {
     let newExcursionData: ExcursionData = data as ExcursionData
 
     if (this.dataManager.validateExcursionData(newExcursionData)){
-      this.dataManager.addToExcursionsDataDB(newExcursionData)
+      this.dataManager.addToExcursionsDB(newExcursionData)
       this.filterService.resetFilters(this.dataManager.getMinPrice(), this.dataManager.getMaxPrice())
       alert("Success!")
     } else{

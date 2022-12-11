@@ -50,7 +50,7 @@ export class SingleExcursionViewComponent implements OnInit{
   }
 
   public removeButtonClicked(){
-    this.dataManager.removeFromExcursionsData(this.excursion)
+    this.dataManager.removeFromExcursionsDB(this.excursion)
     this.cartService.removeFromCart(parseInt(this.id))
   }
 }

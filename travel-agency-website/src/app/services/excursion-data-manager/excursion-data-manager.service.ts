@@ -40,13 +40,17 @@ export class ExcursionDataManagerService {
     return this.getExcursionsData().includes(excursion)
   }
 
-  public removeFromExcursionsData(toRemove: ExcursionData){
+  public removeFromExcursionsDB(toRemove: ExcursionData){
+
+    // uncomment below line to enable permanent deletion of data from db
+    // this.db.collection('excursions').doc(toRemove.id.toString()).delete()
+    
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
     currentExcursionsData = currentExcursionsData.filter(e => e.id != toRemove.id)
     this.setExcursionsData(currentExcursionsData)
   }
 
-  public addToExcursionsDataDB(toAdd: ExcursionData){
+  public addToExcursionsDB(toAdd: ExcursionData){
     this.db.collection('excursions').doc(toAdd.id.toString()).set(toAdd);
   }
 
