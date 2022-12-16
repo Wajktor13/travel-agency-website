@@ -1,4 +1,14 @@
 <div id="cart">
+    <div *ngIf="getExcursionsWithReservations().length > 0; else empty_cart">
+        <p class="cart-info">
+            Your cart:
+        </p>
+    </div>
+    <ng-template class="cart-info" #empty_cart>
+        <p class="cart-info">
+            Your cart is Empty
+        </p>
+    </ng-template>
     <div class="cart-item" *ngFor="let excursion of getExcursionsWithReservations()">
         <img src={{excursion.img}}>
         <p>{{excursion.name}}, {{excursion.country}}</p>

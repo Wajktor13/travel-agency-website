@@ -9,16 +9,46 @@
             </div>
         </label>
         <nav id="nav-flex-container">
-            <a class="nav-tile" routerLink="home">home</a>
-            <a class="nav-tile" routerLink="excursions">Excursions</a>
-            <a class="nav-tile" routerLink="add-excursion-form">Add Excursion</a>
-            <a class="nav-tile" routerLink="reservations-history">Reservations History</a>
-            <a class="nav-tile" >
-                <app-notifications></app-notifications>
-            </a>
-            <a class="nav-tile" routerLink="cart" id="nav-cart">
-                <app-cart-preview></app-cart-preview>
-            </a>
+            
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-home">
+            <label class="nav-tile" for="radio-home">
+                <a  id="logo-div" (click)="navigateToHome()">Wonderful Excursions</a>
+            </label>
+
+
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-excursions">
+            <label class="nav-tile" for="radio-excursions">
+                <a (click)="navigateToExcursions()">Excursions</a>
+            </label>
+
+
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-add-excursions">
+            <label class="nav-tile" for="radio-add-excursions">
+                <a (click)="navigateToAddExcursionForm()">Add Excursion</a>
+            </label>
+
+            
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-reservation-history">
+            <label class="nav-tile" for="radio-reservation-history">
+                <a (click)="navigateToAddReservationsHistory()">Reservations History</a>
+            </label>
+
+
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-notification">
+            <label class="nav-tile" for="radio-notification">
+                <a>
+                    <app-notifications></app-notifications>
+                </a>
+            </label>
+
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-cart-preview">
+            <label class="nav-tile" for="radio-cart-preview">
+                <a (click)="navigateToCart()" id="nav-cart">
+                    <app-cart-preview></app-cart-preview>
+                </a>
+            </label>
+
+
         </nav>
     </div>
 </header>
@@ -62,6 +92,7 @@
         </div>
 
     </div>
+    
     <hr>
 
     <p>© 2022 | Wiktor Wilkusz. All rights reserved</p>

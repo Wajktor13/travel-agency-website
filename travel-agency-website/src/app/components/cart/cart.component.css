@@ -1,12 +1,19 @@
 #cart{
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin: auto;
 }
 
+.cart-info{
+    font-size: 22px;
+    padding-left: 20px;
+    display: block;
+}
+
 .cart-item{
-    width: 100%;
+    width: 90%;
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,8 +37,9 @@
 #summary{
     align-self: flex-end;
     font-size: 22px;
+    padding: 20px;
 }
 
-#summary p{
+#summary p, .cart-info{
     border-bottom: 1px solid gray;
 }
