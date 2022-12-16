@@ -26,7 +26,6 @@ export class CartService {
   }
 
   public removeFromCart(id: number): void{
-    console.log(id)
     let current: Map<number, number> = this.cart.getValue()
     current.delete(id)
     this.cart.next(current)
