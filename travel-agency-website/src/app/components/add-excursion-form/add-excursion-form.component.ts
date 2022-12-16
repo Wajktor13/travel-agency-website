@@ -11,7 +11,8 @@ import { ExcursionData } from 'src/app/shared/models/excursions-data';
 })
 
 export class AddExcursionFormComponent {
-
+  info: string = " (lowest available)"
+  
   constructor(private dataManager: ExcursionDataManagerService, private filterService: FilterExcursionsService){
   }
 
