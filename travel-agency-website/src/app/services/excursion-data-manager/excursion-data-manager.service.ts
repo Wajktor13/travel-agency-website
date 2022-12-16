@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ExcursionData } from '../../shared/models/excursions-data';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
@@ -10,13 +9,12 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 
 export class ExcursionDataManagerService {
-  private DATA_URL:string = 'http://localhost:3000/excursion-data'
   private fetchedData: Observable<ExcursionData[]>
   public excursionsData: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([] as ExcursionData[])
   public minUnitPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   public maxUnitPrice: BehaviorSubject<number> = new BehaviorSubject(0)
 
-  constructor(private httpClient: HttpClient, private db: AngularFirestore) { 
+  constructor(private db: AngularFirestore) { 
     this.fetchedData = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
 
     this.fetchedData.subscribe(
@@ -42,7 +40,10 @@ export class ExcursionDataManagerService {
 
   public removeFromExcursionsDB(toRemove: ExcursionData){
 
-    // uncomment below line to enable permanent deletion of data from db
+    /*
+     uncomment below line to enable permanent deletion of data from database
+    */
+
     // this.db.collection('excursions').doc(toRemove.id.toString()).delete()
     
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
@@ -147,17 +148,16 @@ export class ExcursionDataManagerService {
     return i
   }
 
-  public getPrice(id: number): number{
-    for (let excursion of this.getExcursionsData()){
-      if (excursion.id == id){
-        return excursion.unitPrice
-      }
+  public getPriceByID(id: number): number{
+    let e: ExcursionData = this.getExcursionDataByID(id)
+    if (e.id == id){
+      return e.unitPrice
     }
 
     return 0
   }
 
-  getExcursionDataById(id: number): ExcursionData{
+  getExcursionDataByID(id: number): ExcursionData{
     for (let excursion of this.getExcursionsData()){
       if (excursion.id == id){
         return excursion

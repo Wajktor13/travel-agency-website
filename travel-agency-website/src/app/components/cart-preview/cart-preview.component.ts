@@ -23,7 +23,7 @@ export class CartPreviewComponent {
            this.totalReservationsCounter = 0
            for (let [id, reservations] of cartData){
             this.totalReservationsCounter += reservations
-            this.totalCartValue += this.dataManager.getPrice(id) * reservations
+            this.totalCartValue += this.dataManager.getPriceByID(id) * reservations
            }
           },
         error: (err: any) => console.log(err)

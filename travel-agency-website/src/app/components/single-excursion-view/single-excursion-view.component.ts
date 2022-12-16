@@ -21,7 +21,7 @@ export class SingleExcursionViewComponent implements OnInit{
     this.dataManager.excursionsData.subscribe(
       {
         next: (data) => {
-          this.excursion = this.dataManager.getExcursionDataById(this.id)
+          this.excursion = this.dataManager.getExcursionDataByID(this.id)
           this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
           this.leftInStock = this.excursion.maxInStock - this.reservationCounter
         },
@@ -39,7 +39,7 @@ export class SingleExcursionViewComponent implements OnInit{
 
   ngOnInit(){
     this.id = this.route.snapshot.paramMap.get('id')
-    this.excursion = this.dataManager.getExcursionDataById(this.id)
+    this.excursion = this.dataManager.getExcursionDataByID(this.id)
     this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter
   }

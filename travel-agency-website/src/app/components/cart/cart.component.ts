@@ -32,7 +32,7 @@ export class CartComponent {
            this.totalReservations = 0
            for (let [id, reservations] of this.cart){
             this.totalReservations += reservations
-            this.totalPrice += this.dataManager.getPrice(id) * reservations
+            this.totalPrice += this.dataManager.getPriceByID(id) * reservations
            }
           },
         error: (err: any) => console.log(err)
