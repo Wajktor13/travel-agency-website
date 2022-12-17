@@ -11,6 +11,9 @@ export class FilterExcursionsService {
   private selectedFromDate: string = ''
   private selectedToDate: string = ''
   private selectedCountry: string = 'all'
+  private selectedMinStars: number = 1
+  private selectedMaxStars: number = 5
+  private selectedNoReviews: boolean = true
 
   constructor() { }
 
@@ -42,16 +45,40 @@ export class FilterExcursionsService {
     return this.selectedCountry
   }
 
-  public setSelectedFromDate(newSelectedFromDate: string){
+  public getSelectedMinStars(): number{
+    return this.selectedMinStars
+  }
+
+  public getSelectedMaxStars(): number{
+    return this.selectedMaxStars
+  }
+
+  public getSelectedNoReviews(): boolean{
+    return this.selectedNoReviews
+  }
+
+  public setSelectedFromDate(newSelectedFromDate: string): void{
     this.selectedFromDate = newSelectedFromDate
   }
 
-  public setSelectedToDate(newSelectedToDate: string){
+  public setSelectedToDate(newSelectedToDate: string): void{
     this.selectedToDate = newSelectedToDate
   }
 
-  public setSelectedCountry(newSelectedCountry: string){
+  public setSelectedCountry(newSelectedCountry: string): void{
     this.selectedCountry = newSelectedCountry
+  }
+
+  public setSelectedMinStars(newSelectedMinStars: number): void{
+    this.selectedMinStars = newSelectedMinStars
+  }
+
+  public setSelectedMaxStars(newSelectedMaxStars: number): void{
+    this.selectedMaxStars = newSelectedMaxStars
+  }
+
+  public setSelectedNoReviews(newSelectedNoReviews: boolean): void{
+    this.selectedNoReviews = newSelectedNoReviews
   }
 
   public resetFilters(minPrice: number, maxPrice: number): void{

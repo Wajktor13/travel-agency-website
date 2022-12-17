@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from '../../shared/models/excursions-data';
 import { FilterArguments } from '../../shared/models/filter-arguments';
 
@@ -6,11 +7,14 @@ import { FilterArguments } from '../../shared/models/filter-arguments';
 @Pipe({
   name: 'filterExcursions'
 })
+
 export class FilterExcursionsPipe implements PipeTransform {
+
+  constructor(private reviewsService: ReviewsService){}
 
   transform(excursionsData: ExcursionData[], args: FilterArguments): ExcursionData[] {
     return excursionsData.filter((e) => {
-      return this.priceFilter(e, args.minPrice, args.maxPrice) && this.dateFilter(e, args.fromDate, args.toDate) && this.countryFilter(e, args.country)
+      return this.priceFilter(e, args.minPrice, args.maxPrice) && this.dateFilter(e, args.fromDate, args.toDate) && this.countryFilter(e, args.country) && this.starsFilter(e, args.minStars, args.maxStars, args.noReviews)
 
       }
     )
@@ -47,5 +51,11 @@ export class FilterExcursionsPipe implements PipeTransform {
 
   private countryFilter(e: ExcursionData, selectedCountry: string){
     return e.country == selectedCountry || selectedCountry == 'all'
+  }
+
+  private starsFilter(e: ExcursionData, minStars: number, maxStars: number, noReviews: boolean){
+    let stars: number = this.reviewsService.getAverageStarsByID(e.id)
+
+    return stars >= minStars && stars <= maxStars || (noReviews && stars == 0)
   }
 }

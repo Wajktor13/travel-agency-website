@@ -1,6 +1,6 @@
 <section>
     <app-filter-excursions></app-filter-excursions>
     <div class="excursion-cards-list-div">
-        <app-excursion-card class="excursion-cards-list" (removeExcursionCardEvent)="removeExcursionCard($event)" *ngFor="let exc of excursionsData | filterExcursions: {minPrice: selectedMinPrice, maxPrice: selectedMaxPrice, fromDate: filterService.getSelectedFromDate(), toDate: filterService.getSelectedToDate(), country: filterService.getSelectedCountry()}" [excursion]=exc></app-excursion-card>
+        <app-excursion-card class="excursion-cards-list" (removeExcursionCardEvent)="removeExcursionCard($event)" *ngFor="let exc of excursionsData | filterExcursions: {minPrice: selectedMinPrice, maxPrice: selectedMaxPrice, fromDate: filterService.getSelectedFromDate(), toDate: filterService.getSelectedToDate(), country: filterService.getSelectedCountry(), minStars: filterService.getSelectedMinStars(), maxStars: filterService.getSelectedMaxStars(), noReviews: filterService.getSelectedNoReviews()}" [excursion]=exc></app-excursion-card>
     </div>
 </section>

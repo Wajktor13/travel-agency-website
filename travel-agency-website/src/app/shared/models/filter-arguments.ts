@@ -4,4 +4,7 @@ export type FilterArguments = {
     fromDate: string
     toDate: string
     country: string
+    minStars: number
+    maxStars: number
+    noReviews: boolean
 }
