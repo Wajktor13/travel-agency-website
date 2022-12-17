@@ -87,5 +87,8 @@ export class FilterExcursionsService {
     this.setSelectedFromDate('')
     this.setSelectedToDate('')
     this.setSelectedCountry('all')
+    this.selectedMinStars = 1
+    this.selectedMaxStars = 5
+    this.selectedNoReviews = true
   }
 }
