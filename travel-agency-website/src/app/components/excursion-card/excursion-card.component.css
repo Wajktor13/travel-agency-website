@@ -17,6 +17,10 @@
     border-radius: 50%;
 }
 
+.preview-img:hover{
+    cursor: pointer;
+}
+
 .excursion-card p, h3, .stars{
     margin: 0 10px 10px 10px;
     text-align: center;
@@ -100,4 +104,10 @@
 
 #reservation-buttons button:active, #remove-card-button:active{
     transform: scale(0.8);
+}
+
+.stars span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

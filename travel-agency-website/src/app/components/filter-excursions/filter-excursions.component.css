@@ -7,3 +7,17 @@
     align-items: center;
     border: 2px solid black;
 }
+
+@media screen and (max-width: 1000px){
+    #filters-section{
+        flex-direction: column;
+    }
+
+    #price-inputs-wrapper, #date-inputs-warapper, #country-input-wrapper{
+        margin-bottom: 40px;
+    }
+
+    button{
+        margin-bottom: 20px;
+    }
+}

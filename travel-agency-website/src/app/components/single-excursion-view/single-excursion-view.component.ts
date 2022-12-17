@@ -74,8 +74,18 @@ export class SingleExcursionViewComponent implements OnInit{
   }
 
   public reviewFormSubmitted(){
-    this.reviesService.addReview({id:this.id, nick: this.reviewNick, date: this.reviewDate,
-    stars: parseInt(this.reviewStars), text: this.reviewText})
+    let newReview: ReviewData = {id:this.id, nick: this.reviewNick, date: this.reviewDate,
+      stars: parseInt(this.reviewStars), text: this.reviewText}
+
+    if (this.reviesService.validateReview(newReview)){
+      this.reviesService.addReview(newReview)
+      this.reviewNick = ''
+      this.reviewDate = ''
+      this.reviewStars = '0'
+      this.reviewText = ''
+    } else{
+      alert('Wrong input!')
+    }
   }
 
   public numSequence(n: number): Array<number> {

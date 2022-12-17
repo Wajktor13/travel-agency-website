@@ -53,16 +53,13 @@
             <div class="review" *ngFor="let review of reviews">
 
                 <div class="review-header">
-                    <p class="nick">{{review.nick}}</p>
+                    <p class="nick">{{review.nick}} | attended: {{review.date}}</p>
                 </div>
 
                 <div class="stars-date-div">
                     <div class="stars-div">
                         <img *ngFor="let f of numSequence(review.stars)" src="../../../assets/images/star.png" alt="star" width="20px">
                     </div>
-                    <p>
-                        | attended: {{review.date}}
-                    </p>
                 </div>
 
                 <div>
