@@ -1,22 +1,26 @@
-<div id="excursion">
-    <div id="info">
+<section id="excursion">
 
-        <img src={{excursion.img}} width="800px">
+    <span id="title">
+        <h1>{{excursion.name}}</h1>
+        <p>{{excursion.description}}</p>
+    </span>
 
-        <div>
 
-            <div id="details">
-                <h3>{{excursion.name | uppercase}}</h3>
-                <p>Location: {{excursion.country | uppercase}}</p>
-                <p>{{excursion.description}}</p>
-                <p>When: from <u>{{excursion.startDate}}</u> to <u>{{excursion.endDate}}</u></p>
-                <p>Price: {{excursion.unitPrice | currency}}</p>
-                <p *ngIf="leftInStock > 0; else outOfStock">In stock: {{leftInStock}}</p>
-                <ng-template #outOfStock class="out-of-stock">
-                    <p>Out of stock!</p>
-                </ng-template>
-            </div>
-        
+    <div id="slider-details-container">
+
+        <div id="slider">
+            <img src={{excursion.img}} width="700px" height="400px">
+        </div>
+
+        <div id="info">
+            <h3>Details:</h3>
+            <p>Location: {{excursion.country}}</p>
+            <p>When: from {{excursion.startDate}} to {{excursion.endDate}}</p>
+            <p>Price: {{excursion.unitPrice | currency}}</p>
+            <p *ngIf="leftInStock > 0; else outOfStock">In stock: {{leftInStock}}</p>
+            <ng-template #outOfStock class="out-of-stock">
+                <p>Out of stock!</p>
+            </ng-template>
         </div>
 
     </div>
@@ -27,4 +31,17 @@
         <button [disabled]="reservationCounter == 0" class="remove-reservation-button reservation-button" (click)="changeReservationCounter(-1)">-</button>
     </div>
 
-</div>
+    <div id="long-description">
+
+        <h2>Description:</h2>
+
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium eum perferendis placeat dicta, numquam ea earum accusantium sunt eaque eligendi, quod neque! Explicabo neque tempora recusandae sed cum eum aliquid. Rem dolorem minus nemo harum eos saepe repellat soluta tenetur. Dolorum assumenda aperiam eaque eveniet, illum dolorem sed praesentium obcaecati veniam eligendi perferendis reprehenderit dolore? Quisquam dolore non deleniti obcaecati architecto at nesciunt consequuntur nobis libero, incidunt dignissimos molestiae adipisci expedita! Rem repellendus necessitatibus atque qui minima! Beatae, harum nam! Qui dicta voluptas laborum cumque dolor iste amet a deleniti ut, nam doloribus ab velit reiciendis veritatis inventore tenetur laboriosam! Reprehenderit, explicabo. Quidem amet animi deleniti possimus rem eligendi ab minus aliquid nisi explicabo voluptatum ratione, officia et esse est non. Veniam pariatur eligendi facere dolore sapiente sequi tenetur dicta, blanditiis quam, numquam id laudantium quibusdam repudiandae nostrum adipisci animi eveniet laborum! Repellat voluptatem id quo impedit. Perferendis quam, quod explicabo quasi molestias doloremque quisquam illum cumque vel optio dolores ratione suscipit fuga perspiciatis nemo quos, culpa, minima dolorem maiores? Illum doloremque corrupti quibusdam nesciunt enim labore qui expedita, pariatur ipsum esse quas sit nemo. Molestias, corporis culpa quo doloribus error cum aspernatur dolorum laudantium, adipisci non odit officiis soluta.
+        </p>
+    </div>
+
+    <div>
+        REVIEWS
+    </div>
+
+</section>
