@@ -23,6 +23,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
+import { ReviewsService } from './services/reviews/reviews.service';
 
 
 @NgModule({
@@ -52,7 +53,9 @@ import { SingleExcursionViewComponent } from './components/single-excursion-view
   providers: [
     ExcursionDataManagerService,
     CartService,
-    FilterExcursionsService],
+    FilterExcursionsService,
+    ReviewsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

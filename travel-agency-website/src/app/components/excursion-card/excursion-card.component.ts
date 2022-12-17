@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitte
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
 
@@ -21,7 +22,7 @@ export class ExcursionCardComponent implements OnChanges{
   @Input() excursion: ExcursionData = {id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router){
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService){
     dataManager.minUnitPrice.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.minPrice = price,
@@ -75,5 +76,13 @@ export class ExcursionCardComponent implements OnChanges{
 
   public navigateToSingleExcursionView(): void{
     this.router.navigate(['excursion/', this.excursion.id])
+  }
+
+  public numSequence(n: number): Array<number> {
+    return Array(n);
+  }
+
+  public getAverageStars(): number{
+    return this.reviewsService.getAverageStarsByID(this.excursion.id)
   }
 }
