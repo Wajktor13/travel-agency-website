@@ -74,11 +74,11 @@ export class CartComponent {
 
   public bookButtonClicked(): void{
     let d: Date = new Date()
-    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + '|' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':' + d.getMinutes()
     
     for (let cartItem of this.cart){
       if (cartItem[1] > 0){
-        this.reservationHistory.addToHistory({excursionData: this.getExcursionDetails(cartItem[0])!, reservationDate: currentDate, status: 'new', reservations: cartItem[1]})
+        this.reservationHistory.addToHistory({excursionData: this.getExcursionDetails(cartItem[0])!, reservationDate: currentDate, status: "upcoming", reservations: cartItem[1]})
       }
     }
 

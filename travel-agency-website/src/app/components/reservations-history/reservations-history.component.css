@@ -12,29 +12,35 @@
 }
 
 .cart-item{
-    width: 90%;
     margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
+    width: 90%;
     border: 2px solid black;
     border-radius: 15px;
-    margin-top: 15px;
-    padding: 10px;
+    margin-top: 40px;
+    padding: 20px;
     font-size: 22px;
     background-color: white;
 }
 
-.cart-item img{
+.main-reservation-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.main-reservation-info img{
     display: block;
-    width: 140px;
-    height: 100px;
+    width: 300px;
+    height: 200px;
     margin: 5px;
     border-radius: 15px;
 }
 
-.cart-item img:hover{
+.main-reservation-info img:hover{
     cursor: pointer;
     filter: brightness(0.85);
 }
@@ -47,4 +53,8 @@
 
 #summary p, .cart-info{
     border-bottom: 1px solid gray;
+}
+
+.details{
+    font-size: 18px;
 }

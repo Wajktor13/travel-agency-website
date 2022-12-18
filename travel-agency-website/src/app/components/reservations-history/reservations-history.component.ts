@@ -13,7 +13,7 @@ import { ReservationData } from 'src/app/shared/models/reservation-data';
 })
 
 export class ReservationsHistoryComponent {
-  public history: ReservationData[]= []
+  public history: ReservationData[] = []
   
   constructor(private reservationHistory: ReservationHistoryService, private router: Router){
     reservationHistory.history.subscribe(
@@ -22,18 +22,6 @@ export class ReservationsHistoryComponent {
         error: (err: any) => console.log(err)
       }
     )
-  }
-
-  public getExcursionsWithReservations(): ExcursionData[]{
-    let historyDetails: ExcursionData[] = []
-
-    for (let reservation of this.history){
-      if (reservation.reservations > 0){
-        historyDetails.push(reservation.excursionData)
-      }
-    }
-
-    return historyDetails
   }
 
   public navigateToSingleExcursionView(id: number): void{

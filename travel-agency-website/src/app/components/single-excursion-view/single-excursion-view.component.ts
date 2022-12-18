@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
 import { ReviewData } from 'src/app/shared/models/review-data';
@@ -27,13 +28,13 @@ export class SingleExcursionViewComponent implements OnInit{
 
   public date: Date = new Date()
 
-  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService){
+  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService, private reservationHistory: ReservationHistoryService){
     this.dataManager.excursionsData.subscribe(
       {
         next: (data) => {
           this.excursion = this.dataManager.getExcursionDataByID(this.id)
           this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
-          this.leftInStock = this.excursion.maxInStock - this.reservationCounter
+          this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
         },
         error: (err) => console.log(err)
       }
@@ -59,12 +60,12 @@ export class SingleExcursionViewComponent implements OnInit{
     this.reviews = this.reviesService.getReviewsByID(this.id)
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
     this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
-    this.leftInStock = this.excursion.maxInStock - this.reservationCounter
+    this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
   }
 
   public changeReservationCounter(diff: number): void{
     this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
-    this.leftInStock = this.excursion.maxInStock - this.reservationCounter
+    this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
   }
 
   public removeButtonClicked(){
@@ -90,5 +91,9 @@ export class SingleExcursionViewComponent implements OnInit{
 
   public numSequence(n: number): Array<number> {
     return Array(n);
+  }
+
+  public getReservationsFromHistory(id: number): number{
+    return this.reservationHistory.getReservationsByID(this.excursion.id)
   }
 }

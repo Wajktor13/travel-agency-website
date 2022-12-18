@@ -1,6 +1,6 @@
 <div id="cart">
 
-    <div *ngIf="getExcursionsWithReservations().length > 0; else empty_cart">
+    <div *ngIf="history.length > 0; else empty_cart">
         <p class="cart-info">
             Your reservations:
         </p>
@@ -12,9 +12,25 @@
         </p>
     </ng-template>
 
-    <div class="cart-item" *ngFor="let excursion of getExcursionsWithReservations()">
-        <img src={{excursion.img}} (click)="navigateToSingleExcursionView(excursion.id)">
-        <p>{{excursion.name}}, {{excursion.country}}</p>
-        <p>{{excursion.unitPrice}}$ x ?</p>
+    <div class="cart-item" *ngFor="let reservation of history">
+
+        <div class="main-reservation-info">
+            <img src={{reservation.excursionData.img}} (click)="navigateToSingleExcursionView(reservation.excursionData.id)">
+            <p>{{reservation.excursionData.name}}, {{reservation.excursionData.country}}</p>
+            <p></p>
+        </div>
+
+        <div class="reservation-details">
+            <h4>Reservation details:</h4>
+            <div class="details">
+                <p>Reservation date: {{reservation.reservationDate}}</p>
+                <p>Total reservations: {{reservation.reservations}}</p>
+                <p>Unit price: {{reservation.excursionData.unitPrice | currency}}</p>
+                <p>Total price: {{reservation.excursionData.unitPrice * reservation.reservations | currency}}</p>
+                <p>From {{reservation.excursionData.startDate}} to {{reservation.excursionData.endDate}}</p>
+                <p>Status: {{reservation.status}}</p>
+            </div>
+        </div>
+
     </div>
 </div>
