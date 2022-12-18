@@ -14,11 +14,11 @@ import { ReviewData } from 'src/app/shared/models/review-data';
   styleUrls: ['./single-excursion-view.component.css']
 })
 
-export class SingleExcursionViewComponent implements OnInit{
+export class SingleExcursionViewComponent implements OnInit {
   public reservationCounter: number = 0
   public leftInStock: number = 0
   public id: any = -1
-  public excursion: ExcursionData = {id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
+  public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: '' }
 
   public reviewNick: string = ''
   public reviewDate: string = ''
@@ -28,7 +28,7 @@ export class SingleExcursionViewComponent implements OnInit{
 
   public date: Date = new Date()
 
-  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService, private reservationHistory: ReservationHistoryService){
+  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService, private reservationHistory: ReservationHistoryService) {
     this.dataManager.excursionsData.subscribe(
       {
         next: (data) => {
@@ -55,7 +55,7 @@ export class SingleExcursionViewComponent implements OnInit{
     )
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id')
     this.reviews = this.reviesService.getReviewsByID(this.id)
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
@@ -63,28 +63,30 @@ export class SingleExcursionViewComponent implements OnInit{
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
   }
 
-  public changeReservationCounter(diff: number): void{
+  public changeReservationCounter(diff: number): void {
     this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
     this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
   }
 
-  public removeButtonClicked(){
+  public removeButtonClicked() {
     this.dataManager.removeFromExcursionsDB(this.excursion)
     this.cartService.removeFromCart(parseInt(this.id))
     this.router.navigate(['excursions'])
   }
 
-  public reviewFormSubmitted(){
-    let newReview: ReviewData = {id:this.id, nick: this.reviewNick, date: this.reviewDate,
-      stars: parseInt(this.reviewStars), text: this.reviewText}
+  public reviewFormSubmitted() {
+    let newReview: ReviewData = {
+      id: this.id, nick: this.reviewNick, date: this.reviewDate,
+      stars: parseInt(this.reviewStars), text: this.reviewText
+    }
 
-    if (this.reviesService.validateReview(newReview)){
+    if (this.reviesService.validateReview(newReview)) {
       this.reviesService.addReview(newReview)
       this.reviewNick = ''
       this.reviewDate = ''
       this.reviewStars = '0'
       this.reviewText = ''
-    } else{
+    } else {
       alert('Wrong input!')
     }
   }
@@ -93,7 +95,7 @@ export class SingleExcursionViewComponent implements OnInit{
     return Array(n);
   }
 
-  public getReservationsFromHistory(id: number): number{
+  public getReservationsFromHistory(id: number): number {
     return this.reservationHistory.getReservationsByID(this.excursion.id)
   }
 }

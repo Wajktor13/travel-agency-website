@@ -9,35 +9,35 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
   public cart: BehaviorSubject<Map<number, number>> = new BehaviorSubject(new Map<number, number>)
 
-  constructor() {}
+  constructor() { }
 
-  public getCart(): Map<number, number>{
+  public getCart(): Map<number, number> {
     return this.cart.getValue()
   }
 
-  public addToCart(id:number, newReservationsCounter: number){
+  public addToCart(id: number, newReservationsCounter: number) {
     let current: Map<number, number> = this.cart.getValue()
     current.set(id, newReservationsCounter)
     this.cart.next(current)
   }
 
-  public isInCart(id: number): boolean{
+  public isInCart(id: number): boolean {
     return this.cart.getValue().has(id)
   }
 
-  public removeFromCart(id: number): void{
+  public removeFromCart(id: number): void {
     let current: Map<number, number> = this.cart.getValue()
     current.delete(id)
     this.cart.next(current)
   }
 
-  public removeAllFromCart(): void{
+  public removeAllFromCart(): void {
     this.cart.next(new Map<number, number>)
   }
 
-  public getReservationsOf(id: number){
+  public getReservationsOf(id: number) {
     let c = this.getCart()
-    if (c.get(id) != undefined){
+    if (c.get(id) != undefined) {
       return c.get(id)
     }
 

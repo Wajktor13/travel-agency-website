@@ -9,26 +9,26 @@ import { Router } from '@angular/router';
 
 export class AppComponent {
   title = 'travel-agency-website';
-  
-  constructor(private router: Router){}
 
-  navigateToHome(): void{
+  constructor(private router: Router) { }
+
+  navigateToHome(): void {
     this.router.navigate(['home'])
   }
 
-  navigateToExcursions(): void{
+  navigateToExcursions(): void {
     this.router.navigate(['excursions'])
   }
 
-  navigateToAddExcursionForm(): void{
+  navigateToAddExcursionForm(): void {
     this.router.navigate(['add-excursion-form'])
   }
 
-  navigateToAddReservationsHistory(): void{
+  navigateToAddReservationsHistory(): void {
     this.router.navigate(['reservations-history'])
   }
 
-  navigateToCart(): void{
+  navigateToCart(): void {
     this.router.navigate(['cart'])
   }
 }

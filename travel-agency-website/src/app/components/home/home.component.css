@@ -1,17 +1,17 @@
-#about{
+#about {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#about h1{
+#about h1 {
     font-size: 70px;
     font-family: Brush Script MT, Brush Script Std, cursive;
     color: rgb(68, 59, 54);
 }
 
-#about p{
+#about p {
     width: 60%;
 }
 

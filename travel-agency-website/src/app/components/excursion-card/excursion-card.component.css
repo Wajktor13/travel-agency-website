@@ -1,4 +1,4 @@
-.excursion-card{
+.excursion-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,52 +11,56 @@
     background-color: white;
 }
 
-.preview-img{
+.preview-img {
     aspect-ratio: 1 / 1;
     width: 40%;
     border-radius: 50%;
 }
 
-.preview-img:hover{
+.preview-img:hover {
     cursor: pointer;
     filter: brightness(0.85);
 }
 
-.excursion-card p, h3, .stars{
+.excursion-card p,
+h3,
+.stars {
     margin: 0 10px 10px 10px;
     text-align: center;
 }
 
-.excursion-card p, .out-of-stock p, .stars{
+.excursion-card p,
+.out-of-stock p,
+.stars {
     width: 80%;
     border-bottom: 1px solid rgba(128, 128, 128, 0.498);
 }
 
-.min-price-card{
+.min-price-card {
     box-shadow: 0px 0px 21px 5px rgba(233, 25, 0, 1);
 }
 
-.max-price-card{
+.max-price-card {
     box-shadow: 0px 0px 21px 5px rgba(91, 237, 27, 1);
 }
 
-.low-stock-3{
+.low-stock-3 {
     background-color: rgba(238, 255, 4, 0.888);
 }
 
-.low-stock-2{
+.low-stock-2 {
     background-color: rgba(255, 179, 0, 0.938);
 }
 
-.low-stock-1{
+.low-stock-1 {
     background-color: rgba(255, 115, 0, 0.9);
 }
 
-.low-stock-0{
+.low-stock-0 {
     background-color: rgba(255, 0, 0, 0.887);
 }
 
-#remove-card-button{
+#remove-card-button {
     width: 40px;
     height: 40px;
     margin: 20px;
@@ -70,7 +74,7 @@
     transition: transform 0.35s;
 }
 
-#buttons-container{
+#buttons-container {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -78,36 +82,38 @@
     align-items: center;
 }
 
-#reservation-buttons{
+#reservation-buttons {
     display: flex;
     flex-direction: column;
     margin-right: 20px;
 }
 
-#reservation-buttons button{
+#reservation-buttons button {
     font-size: 30px;
     margin-bottom: 10px;
     transition: transform 0.35s;
 }
 
-.add-reservation-button{
+.add-reservation-button {
     background-color: rgb(60, 255, 0);
 }
 
-.remove-reservation-button{
+.remove-reservation-button {
     background-color: rgb(226, 48, 48);
 }
 
-#reservation-buttons button:hover, #remove-card-button:hover{
+#reservation-buttons button:hover,
+#remove-card-button:hover {
     cursor: pointer;
     transform: scale(1.15);
 }
 
-#reservation-buttons button:active, #remove-card-button:active{
+#reservation-buttons button:active,
+#remove-card-button:active {
     transform: scale(0.8);
 }
 
-.stars span{
+.stars span {
     display: flex;
     justify-content: center;
     align-items: center;

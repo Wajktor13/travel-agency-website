@@ -15,8 +15,6 @@ export class FilterExcursionsComponent {
   public maxPrice:number = Infinity
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
-  private selectedMinStars: number = 1
-  private selectedMaxStars: number = 5
 
   constructor(public dataManager: ExcursionDataManagerService, public filterService: FilterExcursionsService){
     filterService.selectedMaxPrice.subscribe(

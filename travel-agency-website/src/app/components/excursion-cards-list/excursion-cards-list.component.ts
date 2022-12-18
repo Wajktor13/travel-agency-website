@@ -3,7 +3,6 @@ import { ExcursionData } from 'src/app/shared/models/excursions-data';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
 import { CartService } from 'src/app/services/cart/cart.service';
-import {FilterExcursionsPipe} from 'src/app/pipes/filter-excursions-pipe/filter-excursions.pipe'
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
 
 

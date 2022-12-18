@@ -11,20 +11,20 @@ import { SingleExcursionViewComponent } from './components/single-excursion-view
 
 
 const routes: Routes = [
-  {path: 'excursions', component: ExcursionCardsListComponent},
-  {path: 'cart', component: CartComponent},
-  {path: 'add-excursion-form', component: AddExcursionFormComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'reservations-history', component: ReservationsHistoryComponent},
-  {path: 'excursion/:id', component: SingleExcursionViewComponent},
-  {path: '', redirectTo: '/home', pathMatch: 'full' },
-  {path: '**', component: PageNotFoundComponent}
+  { path: 'excursions', component: ExcursionCardsListComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'add-excursion-form', component: AddExcursionFormComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'reservations-history', component: ReservationsHistoryComponent },
+  { path: 'excursion/:id', component: SingleExcursionViewComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes), 
-    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled'})],
+    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 })
 

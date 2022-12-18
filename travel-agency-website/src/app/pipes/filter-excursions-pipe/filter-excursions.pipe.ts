@@ -10,35 +10,35 @@ import { FilterArguments } from '../../shared/models/filter-arguments';
 
 export class FilterExcursionsPipe implements PipeTransform {
 
-  constructor(private reviewsService: ReviewsService){}
+  constructor(private reviewsService: ReviewsService) { }
 
   transform(excursionsData: ExcursionData[], args: FilterArguments): ExcursionData[] {
     return excursionsData.filter((e) => {
       return this.priceFilter(e, args.minPrice, args.maxPrice) && this.dateFilter(e, args.fromDate, args.toDate) && this.countryFilter(e, args.country) && this.starsFilter(e, args.minStars, args.maxStars, args.noReviews)
 
-      }
+    }
     )
   }
 
-  private priceFilter(e: ExcursionData, minPrice: number, maxPrice: number): boolean{
+  private priceFilter(e: ExcursionData, minPrice: number, maxPrice: number): boolean {
     return e.unitPrice >= minPrice && e.unitPrice <= maxPrice
   }
 
-  private dateFilter(e: ExcursionData, selectedFromDate: string, selectedToDate: string): boolean{
+  private dateFilter(e: ExcursionData, selectedFromDate: string, selectedToDate: string): boolean {
     let selectedFromDateMs: number = Date.parse(selectedFromDate)
     let selectedToDateMs: number = Date.parse(selectedToDate)
     let eFromDateMS: number = Date.parse(e.startDate)
     let eToDateMS: number = Date.parse(e.endDate)
 
-    if (!isNaN(selectedFromDateMs) && !isNaN(selectedToDateMs)){
+    if (!isNaN(selectedFromDateMs) && !isNaN(selectedToDateMs)) {
 
       return eFromDateMS >= selectedFromDateMs && eToDateMS <= selectedToDateMs
 
-    } else if (!isNaN(selectedFromDateMs)){
+    } else if (!isNaN(selectedFromDateMs)) {
 
       return eFromDateMS >= selectedFromDateMs
 
-    } else if (!isNaN(selectedToDateMs)){
+    } else if (!isNaN(selectedToDateMs)) {
 
       return eToDateMS <= selectedToDateMs
 
@@ -49,11 +49,11 @@ export class FilterExcursionsPipe implements PipeTransform {
     }
   }
 
-  private countryFilter(e: ExcursionData, selectedCountry: string){
+  private countryFilter(e: ExcursionData, selectedCountry: string) {
     return e.country == selectedCountry || selectedCountry == 'all'
   }
 
-  private starsFilter(e: ExcursionData, minStars: number, maxStars: number, noReviews: boolean){
+  private starsFilter(e: ExcursionData, minStars: number, maxStars: number, noReviews: boolean) {
     let stars: number = this.reviewsService.getAverageStarsByID(e.id)
 
     return stars >= minStars && stars <= maxStars || (noReviews && stars == 0)

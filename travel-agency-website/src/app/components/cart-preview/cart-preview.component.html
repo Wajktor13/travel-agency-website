@@ -1,7 +1,10 @@
 <div id="cart-preview" [ngStyle]="{'background-color': totalReservationsCounter < 10 ? 'red' : 'rgb(60, 255, 0)'}">
+
     <img src="../../../assets/images/shopping_cart.png" alt="shopping cart">
+
     <div id="counter">
         <p>{{totalReservationsCounter}}</p>
         <p>{{totalCartValue | currency}}</p>
     </div>
+    
 </div>

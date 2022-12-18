@@ -17,8 +17,8 @@ export class CartComponent {
   public cart: Map<number, number> = new Map<number, number>()
   public totalPrice: number = 0
   public totalReservations: number = 0
-  
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService){
+
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
     dataManager.excursionsData.subscribe(
       {
         next: (data: ExcursionData[]) => this.excursionsData = data,
@@ -28,27 +28,27 @@ export class CartComponent {
 
     cartService.cart.subscribe(
       {
-        next: (cartData: Map<number, number>) =>{
-           this.cart = cartData
-           this.totalPrice = 0
-           this.totalReservations = 0
-           for (let [id, reservations] of this.cart){
+        next: (cartData: Map<number, number>) => {
+          this.cart = cartData
+          this.totalPrice = 0
+          this.totalReservations = 0
+          for (let [id, reservations] of this.cart) {
             this.totalReservations += reservations
             this.totalPrice += this.dataManager.getPriceByID(id) * reservations
-           }
-          },
+          }
+        },
         error: (err: any) => console.log(err)
       }
     )
   }
 
-  public getReservations(id: number){
+  public getReservations(id: number) {
     return this.cart.get(id)
   }
 
-  public getExcursionDetails(id: number){
-    for (let excursion of this.excursionsData){
-      if (excursion.id == id){
+  public getExcursionDetails(id: number) {
+    for (let excursion of this.excursionsData) {
+      if (excursion.id == id) {
         return excursion
       }
     }
@@ -56,11 +56,11 @@ export class CartComponent {
     return null
   }
 
-  public getExcursionsWithReservations(): ExcursionData[]{
+  public getExcursionsWithReservations(): ExcursionData[] {
     let cartDetails: ExcursionData[] = []
 
-    for (let [id, reservations] of this.cart){
-      if (reservations > 0){
+    for (let [id, reservations] of this.cart) {
+      if (reservations > 0) {
         cartDetails.push(this.getExcursionDetails(id) as ExcursionData)
       }
     }
@@ -68,17 +68,17 @@ export class CartComponent {
     return cartDetails
   }
 
-  public navigateToSingleExcursionView(id: number): void{
+  public navigateToSingleExcursionView(id: number): void {
     this.router.navigate(['excursion/', id])
   }
 
-  public bookButtonClicked(): void{
+  public bookButtonClicked(): void {
     let d: Date = new Date()
     let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':' + d.getMinutes()
-    
-    for (let cartItem of this.cart){
-      if (cartItem[1] > 0){
-        this.reservationHistory.addToHistory({excursionData: this.getExcursionDetails(cartItem[0])!, reservationDate: currentDate, status: "upcoming", reservations: cartItem[1]})
+
+    for (let cartItem of this.cart) {
+      if (cartItem[1] > 0) {
+        this.reservationHistory.addToHistory({ excursionData: this.getExcursionDetails(cartItem[0])!, reservationDate: currentDate, status: "upcoming", reservations: cartItem[1] })
       }
     }
 
