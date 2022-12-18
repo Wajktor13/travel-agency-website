@@ -48,3 +48,8 @@
 #summary p, .cart-info{
     border-bottom: 1px solid gray;
 }
+
+#book-button{
+    margin: auto;
+    width: 20%;
+}

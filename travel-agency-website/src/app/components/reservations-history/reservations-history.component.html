@@ -1,1 +1,20 @@
-<p>reservations-history works!</p>
+<div id="cart">
+
+    <div *ngIf="getExcursionsWithReservations().length > 0; else empty_cart">
+        <p class="cart-info">
+            Your reservations:
+        </p>
+    </div>
+
+    <ng-template class="cart-info" #empty_cart>
+        <p class="cart-info">
+            You don't have any reservations yet!
+        </p>
+    </ng-template>
+
+    <div class="cart-item" *ngFor="let excursion of getExcursionsWithReservations()">
+        <img src={{excursion.img}} (click)="navigateToSingleExcursionView(excursion.id)">
+        <p>{{excursion.name}}, {{excursion.country}}</p>
+        <p>{{excursion.unitPrice}}$ x {{getReservations(excursion.id)}}</p>
+    </div>
+</div>

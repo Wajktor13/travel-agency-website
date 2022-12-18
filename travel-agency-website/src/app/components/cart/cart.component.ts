@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
 
 
@@ -17,7 +18,7 @@ export class CartComponent {
   public totalPrice: number = 0
   public totalReservations: number = 0
   
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router){
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService){
     dataManager.excursionsData.subscribe(
       {
         next: (data: ExcursionData[]) => this.excursionsData = data,
@@ -69,5 +70,18 @@ export class CartComponent {
 
   public navigateToSingleExcursionView(id: number): void{
     this.router.navigate(['excursion/', id])
+  }
+
+  public bookButtonClicked(): void{
+    let d: Date = new Date()
+    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + '|' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+    
+    for (let cartItem of this.cart){
+      if (cartItem[1] > 0){
+        this.reservationHistory.addToHistory({id: cartItem[0], reservationDate: currentDate, status: 'new', reservations: cartItem[1]})
+      }
+    }
+
+    this.cartService.removeAllFromCart()
   }
 }
