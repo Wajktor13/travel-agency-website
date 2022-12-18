@@ -22,12 +22,9 @@ export class ReservationHistoryService {
     this.history.next(current)
   }
 
-  public getHistoryByID(id: number): ReservationData{
-    for (let reservation of this.getHistory()){
-      if (reservation.id == id){
-        return reservation
-      }
-    }
-    return {id: -1,reservationDate: '', status: '', reservations: -1}
+  public getReservationsByID(id: number): number{
+  let reservationList = this.getHistory().filter(r => r.id == id).map(r => r.reservations)
+
+  return reservationList.reduce((a, b) => a + b, 0)
   }
 }

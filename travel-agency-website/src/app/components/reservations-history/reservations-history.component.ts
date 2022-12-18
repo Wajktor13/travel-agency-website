@@ -32,11 +32,7 @@ export class ReservationsHistoryComponent {
       }
     )
   }
-
-  public getReservations(id: number){
-    return this.reservationHistory.getHistoryByID(id).reservations
-  }
-
+  
   public getExcursionDetails(id: number){
     for (let excursion of this.excursionsData){
       if (excursion.id == id){

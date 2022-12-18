@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitte
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
@@ -22,7 +23,7 @@ export class ExcursionCardComponent implements OnChanges{
   @Input() excursion: ExcursionData = {id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService){
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService){
     dataManager.minUnitPrice.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.minPrice = price,
@@ -49,17 +50,16 @@ export class ExcursionCardComponent implements OnChanges{
     if (this.cartService.isInCart(this.excursion.id)){
       let cart = this.cartService.getCart()
       this.reservationCounter = cart.get(this.excursion.id)!
-      this.leftInStock = this.excursion.maxInStock - this.reservationCounter
     } else if (this.excursion.id != -1){
       this.cartService.addToCart(this.excursion.id, 0)
     }
 
-    this.leftInStock = this.excursion.maxInStock - this.reservationCounter
+    this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.excursion.id)
   }
 
   public changeReservationCounter(diff: number): void{
     this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
-    this.leftInStock = this.excursion.maxInStock - this.reservationCounter
+    this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.excursion.id)
   }
 
   public getMinPrice(): number{
@@ -84,5 +84,9 @@ export class ExcursionCardComponent implements OnChanges{
 
   public getAverageStars(): number{
     return this.reviewsService.getAverageStarsByID(this.excursion.id)
+  }
+
+  public getReservationsFromHistory(id: number): number{
+    return this.reservationHistory.getReservationsByID(this.excursion.id)
   }
 }

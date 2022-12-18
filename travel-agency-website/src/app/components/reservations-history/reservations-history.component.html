@@ -15,6 +15,6 @@
     <div class="cart-item" *ngFor="let excursion of getExcursionsWithReservations()">
         <img src={{excursion.img}} (click)="navigateToSingleExcursionView(excursion.id)">
         <p>{{excursion.name}}, {{excursion.country}}</p>
-        <p>{{excursion.unitPrice}}$ x {{getReservations(excursion.id)}}</p>
+        <p>{{excursion.unitPrice}}$ x ?</p>
     </div>
 </div>
