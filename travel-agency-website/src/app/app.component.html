@@ -35,19 +35,21 @@
 
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-notification">
-            <label class="nav-tile" for="radio-notification">
+            <label class="nav-tile" id="notification-label" for="radio-notification">
                 <a>
-                    <app-notifications></app-notifications>
+                    <img src="../assets/images/bell.png" alt="" width="25px">
+                    <div id="notifications-widget">
+                        <app-notifications></app-notifications>
+                    </div>
                 </a>
             </label>
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-cart-preview">
-            <label class="nav-tile" for="radio-cart-preview">
+            <label class="nav-tile nav-cart-label" for="radio-cart-preview">
                 <a (click)="navigateToCart()" id="nav-cart">
                     <app-cart-preview></app-cart-preview>
                 </a>
             </label>
-
 
         </nav>
     </div>
@@ -95,7 +97,7 @@
     
     <hr>
 
-    <p>© 2022 | Wiktor Wilkusz. All rights reserved</p>
+    <p id="footer-bottom">© 2022 | Wiktor Wilkusz. All rights reserved</p>
 
 </footer>
 
