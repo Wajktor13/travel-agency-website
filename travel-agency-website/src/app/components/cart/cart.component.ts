@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionData } from 'src/app/shared/models/excursions-data';
@@ -16,7 +17,7 @@ export class CartComponent {
   public totalPrice: number = 0
   public totalReservations: number = 0
   
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService){
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router){
     dataManager.excursionsData.subscribe(
       {
         next: (data: ExcursionData[]) => this.excursionsData = data,
@@ -64,5 +65,9 @@ export class CartComponent {
     }
 
     return cartDetails
+  }
+
+  public navigateToSingleExcursionView(id: number): void{
+    this.router.navigate(['excursion/', id])
   }
 }

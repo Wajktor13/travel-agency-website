@@ -24,6 +24,7 @@ import { ReservationsHistoryComponent } from './components/reservations-history/
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
 import { ReviewsService } from './services/reviews/reviews.service';
+import { ReservationHistoryService } from './services/reservation-history/reservation-history.service';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { ReviewsService } from './services/reviews/reviews.service';
     ExcursionDataManagerService,
     CartService,
     FilterExcursionsService,
-    ReviewsService
+    ReviewsService,
+    ReservationHistoryService
   ],
   bootstrap: [AppComponent]
 })

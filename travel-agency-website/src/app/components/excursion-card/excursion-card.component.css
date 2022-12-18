@@ -19,6 +19,7 @@
 
 .preview-img:hover{
     cursor: pointer;
+    filter: brightness(0.85);
 }
 
 .excursion-card p, h3, .stars{
