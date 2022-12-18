@@ -23,7 +23,7 @@ export class ReservationHistoryService {
   }
 
   public getReservationsByID(id: number): number{
-  let reservationList = this.getHistory().filter(r => r.id == id).map(r => r.reservations)
+  let reservationList = this.getHistory().filter(r => r.excursionData.id == id).map(r => r.reservations)
 
   return reservationList.reduce((a, b) => a + b, 0)
   }

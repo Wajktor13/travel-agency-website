@@ -78,7 +78,7 @@ export class CartComponent {
     
     for (let cartItem of this.cart){
       if (cartItem[1] > 0){
-        this.reservationHistory.addToHistory({id: cartItem[0], reservationDate: currentDate, status: 'new', reservations: cartItem[1]})
+        this.reservationHistory.addToHistory({excursionData: this.getExcursionDetails(cartItem[0])!, reservationDate: currentDate, status: 'new', reservations: cartItem[1]})
       }
     }
 
