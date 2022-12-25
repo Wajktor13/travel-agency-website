@@ -31,4 +31,8 @@ export class AppComponent {
   navigateToCart(): void {
     this.router.navigate(['cart'])
   }
+
+  navigateToLoginRegister(): void{
+    this.router.navigate(['login-register'])
+  }
 }

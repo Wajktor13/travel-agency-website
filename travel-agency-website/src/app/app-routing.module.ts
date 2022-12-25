@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HomeComponent } from './components/home/home.component';
 import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
 import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
+import { LoginRegisterComponent } from './components/login-register/login-register.component';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'reservations-history', component: ReservationsHistoryComponent },
   { path: 'excursion/:id', component: SingleExcursionViewComponent },
+  { path: 'login-register', component: LoginRegisterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

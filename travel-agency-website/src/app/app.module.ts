@@ -25,6 +25,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
 import { ReviewsService } from './services/reviews/reviews.service';
 import { ReservationHistoryService } from './services/reservation-history/reservation-history.service';
+import { LoginRegisterComponent } from './components/login-register/login-register.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ReservationHistoryService } from './services/reservation-history/reserv
     HomeComponent,
     ReservationsHistoryComponent,
     NotificationsComponent,
-    SingleExcursionViewComponent
+    SingleExcursionViewComponent,
+    LoginRegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -92,6 +92,21 @@ export class FilterExcursionsComponent {
   }
 
   public resetFilters(): void{
+    let noReviewsCheckbox = document.getElementById("no-reviews-input") as HTMLInputElement
+    let countryInput = document.getElementById("country-input") as HTMLInputElement
+    let minStarsRange = document.getElementById("min-stars-range") as HTMLInputElement
+    let maxStarsRange = document.getElementById("max-stars-range") as HTMLInputElement
+    let minStarsOutput = document.getElementById("min-stars-output") as HTMLInputElement
+    let maxStarsOutput = document.getElementById("max-stars-output") as HTMLInputElement
+    
+
     this.filterService.resetFilters(this.minPrice, this.maxPrice)
+
+    noReviewsCheckbox.checked = true
+    countryInput.value = "all"
+    minStarsRange.value = "1"
+    minStarsOutput.value = "1"
+    maxStarsRange.value = "5"
+    maxStarsOutput.value = "5"
   }
 }

@@ -48,14 +48,14 @@
             <label for="min-stars-range">Min stars:</label>
             <input type="range" min=1 max=5 id="min-stars-range" step="0.1"
                 oninput="this.nextElementSibling.value = this.value" value=1 (input)="changeSelectedMinStars($event)">
-            <output for="min-stars-range">1</output>
+            <output for="min-stars-range" id="min-stars-output">1</output>
         </div>
 
         <div>
             <label for="max-stars-range">Max stars:</label>
             <input type="range" min=1 max=5 step="0.1" id="max-stars-range"
                 oninput="this.nextElementSibling.value = this.value" value=5 (input)="changeSelectedMaxStars($event)">
-            <output for="max-stars-range">5</output>
+            <output for="max-stars-range" id="max-stars-output">5</output>
         </div>
 
         <div>
