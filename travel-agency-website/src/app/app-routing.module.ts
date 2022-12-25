@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
 import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
+import { AuthGuard } from './guard/auth.guard';
 
 
 
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'add-excursion-form', component: AddExcursionFormComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'reservations-history', component: ReservationsHistoryComponent },
+  { path: 'reservations-history', component: ReservationsHistoryComponent, canActivate: [AuthGuard] },
   { path: 'excursion/:id', component: SingleExcursionViewComponent },
   { path: 'login-register', component: LoginRegisterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },

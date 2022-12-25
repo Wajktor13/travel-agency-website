@@ -26,6 +26,7 @@ import { SingleExcursionViewComponent } from './components/single-excursion-view
 import { ReviewsService } from './services/reviews/reviews.service';
 import { ReservationHistoryService } from './services/reservation-history/reservation-history.service';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
+import { AuthService } from './services/auth/auth.service';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { LoginRegisterComponent } from './components/login-register/login-regist
     CartService,
     FilterExcursionsService,
     ReviewsService,
-    ReservationHistoryService
+    ReservationHistoryService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

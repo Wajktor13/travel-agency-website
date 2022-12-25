@@ -1,0 +1,39 @@
+#login-register-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#login-register-section form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 400px;
+    height: 300px;
+}
+
+.login-register-input{
+    height: 15%;
+    width: 100%;
+}
+
+.submit-button{
+    background-color: rgb(68, 59, 54);
+    color: white;
+    width: 40%;
+    height: 40px;
+    border-radius: 15px;
+    border: 1px solid black;
+    transition: transform 0.4s;
+}
+
+.submit-button:hover{
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.submit-button:active{
+    filter: brightness(0.8);
+}
