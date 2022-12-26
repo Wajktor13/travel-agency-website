@@ -1,27 +1,36 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanDeactivate, CanLoad, CanMatch, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanDeactivate, CanLoad, CanMatch, Route, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserRoles } from 'src/app/shared/models/user-roles';
 
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad, CanMatch {
+export class RoleGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad, CanMatch {
 
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private authService: AuthService){}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isLoggedIn()){
+    
+    let requiredRoles: UserRoles = route.data as UserRoles
+    let currentUserRoles: UserRoles = this.authService.getCurrentUser().roles
+
+    if (requiredRoles.customer && currentUserRoles.customer){
+      return true
+    } else if (requiredRoles.manager && currentUserRoles.manager){
+      return true
+    } else if (requiredRoles.admin && currentUserRoles.admin){
       return true
     } else{
-      alert('Available for logged in users only.')
-      // this.router.navigate(['login-register'])
+      alert("You don't have permission to view this site.")
       return false
     }
+    
   }
 
   canActivateChild(

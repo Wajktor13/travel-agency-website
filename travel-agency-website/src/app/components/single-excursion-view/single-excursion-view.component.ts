@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
@@ -28,7 +29,7 @@ export class SingleExcursionViewComponent implements OnInit {
 
   public date: Date = new Date()
 
-  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService, private reservationHistory: ReservationHistoryService) {
+  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
     this.dataManager.excursionsData.subscribe(
       {
         next: (data) => {
@@ -64,8 +65,16 @@ export class SingleExcursionViewComponent implements OnInit {
   }
 
   public changeReservationCounter(diff: number): void {
-    this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
-    this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
+    if (this.authService.isLoggedIn() && this.authService.getCurrentUser().roles.customer) {
+      this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
+      this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
+
+    } else if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['login-register'])
+      
+    } else{
+      alert("Not avaialble for manager / admin")
+    }
   }
 
   public removeButtonClicked() {
@@ -97,5 +106,16 @@ export class SingleExcursionViewComponent implements OnInit {
 
   public getReservationsFromHistory(id: number): number {
     return this.reservationHistory.getReservationsByID(this.excursion.id)
+  }
+
+  public checkRolesForRemovingExcursions(): boolean {
+    if (this.authService.isLoggedIn()) {
+      let currentUserRoles = this.authService.getCurrentUser().roles
+      if (currentUserRoles.admin || currentUserRoles.manager) {
+        return true
+      }
+    }
+
+    return false
   }
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
+import { UserData } from './shared/models/user-data';
+import { UserRoles } from './shared/models/user-roles';
 
 @Component({
   selector: 'app-root',
@@ -9,52 +11,89 @@ import { AuthService } from './services/auth/auth.service';
 })
 
 export class AppComponent {
-  title = 'travel-agency-website';
   public isLoggedIn: boolean = false
-  public nickname: string = 'logged out'
 
   constructor(private router: Router, private authService: AuthService) {
-    this.authService.isLoggedIn.subscribe(
+    this.authService.isLoggedIn$.subscribe(
       {
         next: (value) => this.isLoggedIn = value,
         error: (err) => console.log(err)
       }
     )
-
-    this.authService.nickname.subscribe(
-      {
-        next: (nickname) => this.nickname = nickname,
-        error: (err) => console.log(err)
-      })
    }
 
-  navigateToHome(): void {
+  public navigateToHome(): void {
     this.router.navigate(['home'])
   }
 
-  navigateToExcursions(): void {
+  public navigateToExcursions(): void {
     this.router.navigate(['excursions'])
   }
 
-  navigateToAddExcursionForm(): void {
+  public navigateToAddExcursionForm(): void {
     this.router.navigate(['add-excursion-form'])
   }
 
-  navigateToAddReservationsHistory(): void {
+  public navigateToAddReservationsHistory(): void {
     this.router.navigate(['reservations-history'])
   }
 
-  navigateToCart(): void {
+  public navigateToCart(): void {
     this.router.navigate(['cart'])
   }
 
-  navigateToLoginRegister(): void{
+  public navigateToLoginRegister(): void{
     this.router.navigate(['login-register'])
   }
 
-  logOutButtonClicked(): void{
+  public navigateToAdminPanel(): void{
+    this.router.navigate(['admin-panel'])
+  }
+
+  public logOutButtonClicked(): void{
     this.authService.logout()
     alert("Successfully logged out!")
     this.router.navigate(['home'])
+  }
+
+  public checkRolesForAddingExcursions(): boolean{
+    if (this.authService.isLoggedIn()){
+      let currentUserRoles: UserRoles = this.authService.getCurrentUser().roles
+      return currentUserRoles.manager || currentUserRoles.admin
+    } else{
+      return false
+    }
+  }
+
+  public checkRolesForReservationsHistory(): boolean{
+    if (this.authService.isLoggedIn()){
+      return this.authService.getCurrentUser().roles.customer
+    } else{
+      return false
+    }
+  }
+
+  public checkRolesForAdminPanel(): boolean{
+    if (this.authService.isLoggedIn()){
+      return this.authService.getCurrentUser().roles.admin
+    } else{
+      return false
+    }
+  }
+
+  public getNickname(): string{
+    let user: UserData = this.authService.getCurrentUser()
+    
+    if (this.authService.isLoggedIn()){
+      if(user.roles.admin){
+        return "Admin"
+      } else if (user.roles.manager){
+        return "Manager"
+      } else{
+        return user.nickname + " (default user)"
+      }
+    } else{
+      return "logged out"
+    }
   }
 }

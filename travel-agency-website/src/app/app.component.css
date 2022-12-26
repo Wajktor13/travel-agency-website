@@ -18,7 +18,7 @@ header {
     border: 2px solid black;
     transition: background-color 0.8s;
     margin-bottom: 40px;
-    font-size: 18px;
+    font-size: 17px;
     position: fixed;
     z-index: 4;
 }
@@ -103,9 +103,12 @@ header {
     text-align: center;
 }
 
-.nav-tile:hover,
-.nav-tile-radio:checked+label,
 .dropbtn:hover {
+    cursor: pointer;
+}
+
+.nav-tile:hover,
+.nav-tile-radio:checked+label {
     cursor: pointer;
     font-size: 25px !important;
     color: white !important;
@@ -217,7 +220,7 @@ footer hr {
     display: none;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
     #nav-wrapper {
         flex-wrap: wrap;
     }
@@ -241,7 +244,8 @@ footer hr {
         border-top: 2px solid gray;
     }
 
-    .nav-tile, .dropbtn {
+    .nav-tile,
+    .dropbtn {
         width: max(40%, 250px);
         padding-left: 15px;
         justify-content: flex-start;
@@ -288,7 +292,7 @@ footer hr {
 
 
 .dropdown .dropbtn {
-    font-size: 18px;
+    font-size: 17px;
     border: none;
     outline: none;
     color: rgb(210, 210, 210);
@@ -299,7 +303,7 @@ footer hr {
     height: 60px;
 }
 
-.dropbtn{
+.dropbtn {
     padding: 0;
     transition: background-color 0.5s, height 0.5s, font-size 0.4s;
 }

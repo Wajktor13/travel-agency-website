@@ -21,7 +21,7 @@
 
     <div id="buttons-container">
 
-        <div (click)="removeButtonClicked(excursion)" id="remove-card-button"></div>
+        <div (click)="removeButtonClicked(excursion)" id="remove-card-button" *ngIf="checkRolesForRemovingExcursions()"></div>
 
         <div id="reservation-buttons">
             <button (click)="changeReservationCounter(1)"

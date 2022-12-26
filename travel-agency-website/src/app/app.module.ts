@@ -28,6 +28,7 @@ import { ReservationHistoryService } from './services/reservation-history/reserv
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { AuthService } from './services/auth/auth.service';
 import { UserDataManagerService } from './services/user-data-manager/user-data-manager.service';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { UserDataManagerService } from './services/user-data-manager/user-data-m
     ReservationsHistoryComponent,
     NotificationsComponent,
     SingleExcursionViewComponent,
-    LoginRegisterComponent
+    LoginRegisterComponent,
+    AdminPanelComponent
   ],
 
   imports: [

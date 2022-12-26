@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
@@ -23,7 +24,7 @@ export class ExcursionCardComponent implements OnChanges {
   @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: '' }
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService) {
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
     dataManager.minUnitPrice.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.minPrice = price,
@@ -50,7 +51,7 @@ export class ExcursionCardComponent implements OnChanges {
     if (this.cartService.isInCart(this.excursion.id)) {
       let cart = this.cartService.getCart()
       this.reservationCounter = cart.get(this.excursion.id)!
-      
+
     } else if (this.excursion.id != -1) {
       this.cartService.addToCart(this.excursion.id, 0)
     }
@@ -59,8 +60,17 @@ export class ExcursionCardComponent implements OnChanges {
   }
 
   public changeReservationCounter(diff: number): void {
-    this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
-    this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.excursion.id)
+
+    if (this.authService.isLoggedIn() && this.authService.getCurrentUser().roles.customer) {
+      this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
+      this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.excursion.id)
+
+    } else if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['login-register'])
+      
+    } else{
+      alert("Not avaialble for manager / admin")
+    }
   }
 
   public getMinPrice(): number {
@@ -89,5 +99,16 @@ export class ExcursionCardComponent implements OnChanges {
 
   public getReservationsFromHistory(id: number): number {
     return this.reservationHistory.getReservationsByID(this.excursion.id)
+  }
+
+  public checkRolesForRemovingExcursions(): boolean {
+    if (this.authService.isLoggedIn()) {
+      let currentUserRoles = this.authService.getCurrentUser().roles
+      if (currentUserRoles.admin || currentUserRoles.manager) {
+        return true
+      }
+    }
+
+    return false
   }
 }

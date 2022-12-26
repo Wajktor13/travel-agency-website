@@ -1,5 +1,5 @@
 export type UserRoles = {
-    defaultUser: boolean,
+    customer: boolean,
     manager: boolean,
     admin: boolean
  }

@@ -46,7 +46,6 @@
 #remove-card-button {
   width: 50px;
   height: 50px;
-  margin: 20px;
   background-image: url(../../../assets/images/trash_bin.png);
   background-size: contain;
   background-repeat: no-repeat;
@@ -59,7 +58,7 @@
 
 #buttons-container {
   width: max(40%, 500px);
-  margin: auto;
+  margin: 20px auto 20px auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -69,7 +68,6 @@
 .reservation-button {
   font-size: 50px;
   width: 200px;
-  margin-bottom: 10px;
   transition: transform 0.35s;
 }
 
@@ -434,6 +432,7 @@ fieldset[disabled] a.btn {
 
   #buttons-container {
     flex-direction: column;
+    height: 200px;
   }
 
   #slider-details-container {

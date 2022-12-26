@@ -20,22 +20,21 @@
                 <a (click)="navigateToExcursions()">Excursions</a>
             </label>
 
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-add-excursions" *ngIf="checkRolesForAddingExcursions()">
+
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-account">
             <label class="nav-tile" for="radio-account">
                 <div class="dropdown">
-                    <button class="dropbtn">Account: {{nickname}}</button>
+                    <button class="dropbtn">Account: {{getNickname()}}</button>
                     <div class="dropdown-content">
                         <a (click)="navigateToLoginRegister()" *ngIf="!isLoggedIn">Log In / Register</a>
                         <a (click)="logOutButtonClicked()" *ngIf="isLoggedIn">Log Out</a>
-                        <a (click)="navigateToAddReservationsHistory()">Reservations History</a>
+                        <a (click)="navigateToAddReservationsHistory()" *ngIf="checkRolesForReservationsHistory()">Reservations History</a>
+                        <a (click)="navigateToAddExcursionForm()" *ngIf="checkRolesForAddingExcursions()">Add Excursion</a>
+                        <a (click)="navigateToAdminPanel()" *ngIf="checkRolesForAdminPanel()">Admin Panel</a>
                     </div>
                 </div>
             </label>
-
-            <!-- <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-add-excursions">
-            <label class="nav-tile" for="radio-add-excursions">
-                <a (click)="navigateToAddExcursionForm()">Add Excursion</a>
-            </label> -->
             
             <!-- <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-notification">
             <label class="nav-tile" id="notification-label" for="radio-notification">

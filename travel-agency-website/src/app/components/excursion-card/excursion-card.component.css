@@ -63,7 +63,8 @@ h3,
 #remove-card-button {
     width: 40px;
     height: 40px;
-    margin: 20px;
+    margin-top: -10px;
+    margin-right: 20px;
     background-image: url(../../../assets/images/trash_bin.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -78,20 +79,24 @@ h3,
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 #reservation-buttons {
     display: flex;
-    flex-direction: column;
-    margin-right: 20px;
+    flex-direction: row;
 }
 
 #reservation-buttons button {
+    width: 40px;
     font-size: 30px;
     margin-bottom: 10px;
     transition: transform 0.35s;
+}
+
+#reservation-buttons button:first-child{
+    margin-right: 20px;
 }
 
 .add-reservation-button {
