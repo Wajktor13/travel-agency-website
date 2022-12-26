@@ -49,11 +49,11 @@ export class ExcursionDataManagerService {
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
     currentExcursionsData = currentExcursionsData.filter(e => e.id != toRemove.id)
     this.setExcursionsData(currentExcursionsData)
-    this.updateMinMaxPrice(this.getExcursionsData());
+    this.updateMinMaxPrice(this.getExcursionsData())
   }
 
   public addToExcursionsDB(toAdd: ExcursionData) {
-    this.db.collection('excursions').doc(toAdd.id.toString()).set(toAdd);
+    this.db.collection('excursions').doc(toAdd.id.toString()).set(toAdd)
   }
 
   public setExcursionsData(newExcursionsData: ExcursionData[]) {

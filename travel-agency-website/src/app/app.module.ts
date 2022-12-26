@@ -27,6 +27,7 @@ import { ReviewsService } from './services/reviews/reviews.service';
 import { ReservationHistoryService } from './services/reservation-history/reservation-history.service';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { AuthService } from './services/auth/auth.service';
+import { UserDataManagerService } from './services/user-data-manager/user-data-manager.service';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { AuthService } from './services/auth/auth.service';
     SingleExcursionViewComponent,
     LoginRegisterComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -54,14 +56,17 @@ import { AuthService } from './services/auth/auth.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
+
   providers: [
     ExcursionDataManagerService,
     CartService,
     FilterExcursionsService,
     ReviewsService,
     ReservationHistoryService,
-    AuthService
+    AuthService,
+    UserDataManagerService
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
