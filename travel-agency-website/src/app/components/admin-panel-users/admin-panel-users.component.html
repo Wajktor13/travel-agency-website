@@ -1,0 +1,16 @@
+<section id="users-list">
+    <div *ngFor="let userData of allUsersData" class="user-div">
+        <p>{{userData.uid}}</p>
+        <p>{{userData.email}}</p>
+        <p>{{userData.nickname}}</p>
+        <div class="roles">
+            <input type="checkbox">
+            <input type="checkbox">
+        </div>
+        <div>
+        <p>{{userData.banned}}</p>
+            <button *ngIf="!userData.banned" (click)="reverseBan(userData)">Ban</button>
+            <button *ngIf="userData.banned" (click)="reverseBan(userData)">Unban</button>
+        </div>
+    </div>
+</section>

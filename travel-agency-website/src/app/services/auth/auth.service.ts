@@ -33,7 +33,7 @@ export class AuthService {
     this.fireAuth.createUserWithEmailAndPassword(email, password)
       .then(async (registerData) => {
         registerData.user?.updateProfile({ displayName: nickname, photoURL: "" })
-        await this.userDataManger.addUserData(registerData.user?.uid!, false, roles)
+        await this.userDataManger.addUserData({uid: registerData.user?.uid!, email: email, nickname: nickname, roles: roles, banned: false})
         alert("Successfully registered!")
         this.logout()
       })

@@ -46,8 +46,8 @@ export class AppComponent {
     this.router.navigate(['login-register'])
   }
 
-  public navigateToAdminPanel(): void{
-    this.router.navigate(['admin-panel'])
+  public navigateToAdminPanelUsers(): void{
+    this.router.navigate(['admin-panel-users'])
   }
 
   public logOutButtonClicked(): void{

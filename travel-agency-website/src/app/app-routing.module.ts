@@ -9,8 +9,8 @@ import { ReservationsHistoryComponent } from './components/reservations-history/
 import { SingleExcursionViewComponent } from './components/single-excursion-view/single-excursion-view.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { AuthGuard } from './guards/auth/auth.guard';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { UserRoles } from './shared/models/user-roles';
+import { AdminPanelUsersComponent } from './components/admin-panel-users/admin-panel-users.component';
 
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'reservations-history', component: ReservationsHistoryComponent, canActivate: [AuthGuard], data: { customer: true, admin: false, manager: false } as UserRoles },
   { path: 'excursion/:id', component: SingleExcursionViewComponent, canActivate: [AuthGuard], data: { customer: true, admin: true, manager: true } as UserRoles },
   { path: 'login-register', component: LoginRegisterComponent },
-  { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard], data: { customer: false, admin: true, manager: false } as UserRoles },
+  { path: 'admin-panel-users', component: AdminPanelUsersComponent, canActivate: [AuthGuard], data: { customer: false, admin: true, manager: false } as UserRoles },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
