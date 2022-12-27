@@ -16,7 +16,7 @@
     border-radius: 15px;
     margin-top: 40px;
     padding: 10px;
-    font-size: 20px;
+    font-size: 15px;
     background-color: white;
 }
 
@@ -31,4 +31,9 @@
 .user-div img:hover{
     cursor: pointer;
     filter: brightness(0.85);
+}
+
+.uid-p{
+    width: max(20%, 120px);
+    word-wrap: break-word;
 }

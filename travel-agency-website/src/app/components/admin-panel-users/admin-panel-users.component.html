@@ -1,14 +1,26 @@
 <section id="users-list">
     <div *ngFor="let userData of allUsersData" class="user-div">
-        <p>{{userData.uid}}</p>
+        <p class="uid-p">{{userData.uid}}</p>
         <p>{{userData.email}}</p>
         <p>{{userData.nickname}}</p>
         <div class="roles">
-            <input type="checkbox">
-            <input type="checkbox">
+            <form>
+                <div class="checkbox-div">
+                    <label for="customer-checkbox">customer</label>
+                    <input type="checkbox" name="roles-input" id="customer-checkbox" [checked]="userData.roles.customer" (input)="changeRoles(userData ,{customer: true, manager: false, admin: false})">
+                </div>
+                <div class="checkbox-div">
+                    <label for="manager-checkbox">manager</label>
+                    <input type="checkbox" name="roles-input" id="manager-checkbox" [checked]="userData.roles.manager" (input)="changeRoles(userData ,{customer: false, manager: true, admin: false})">
+                </div>
+                <div class="checkbox-div">
+                    <label for="admin-checkbox">admin</label>
+                    <input type="checkbox" name="roles-input" id="admin-checkbox" [checked]="userData.roles.admin" (input)="changeRoles(userData ,{customer: false, manager: false, admin: true})">
+                </div>
+            </form>
         </div>
         <div>
-        <p>{{userData.banned}}</p>
+        <p>{{userData.banned ? 'banned' : 'not banned'}}</p>
             <button *ngIf="!userData.banned" (click)="reverseBan(userData)">Ban</button>
             <button *ngIf="userData.banned" (click)="reverseBan(userData)">Unban</button>
         </div>
