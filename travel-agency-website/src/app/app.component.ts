@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 import { UserData } from './shared/models/user-data';
@@ -94,14 +94,19 @@ export class AppComponent {
     
     if (this.authService.isLoggedIn()){
       if(user.roles.admin){
-        return "Admin"
+        return user.nickname + " (admin)"
       } else if (user.roles.manager){
-        return "Manager"
+        return user.nickname + " (manager)"
       } else{
-        return user.nickname + " (default user)"
+        return user.nickname + " (customer)"
       }
     } else{
       return "logged out"
     }
   }
+
+  // @HostListener('window:unload', ['$event'])
+  // unloadHandler(event: any) {
+  //   this.authService.logout()
+  // }
 }

@@ -66,6 +66,7 @@ export class ExcursionCardComponent implements OnChanges {
       this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.excursion.id)
 
     } else if (!this.authService.isLoggedIn()) {
+      alert("Available for logged in users only.")
       this.router.navigate(['login-register'])
       
     } else{

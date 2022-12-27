@@ -11,8 +11,8 @@ export class UserDataManagerService {
 
   constructor(private db: AngularFirestore) { }
 
-  public addUserData(uid: string, banned: boolean, roles: UserRoles): void{
-    this.db.collection('users').doc(uid).set({uid: uid, banned: banned, roles: roles})
+  public async addUserData(uid: string, banned: boolean, roles: UserRoles): Promise<void>{
+    await this.db.collection('users').doc(uid).set({uid: uid, banned: banned, roles: roles})
   }
 
   public async getUserDataByUid(uid: string) {

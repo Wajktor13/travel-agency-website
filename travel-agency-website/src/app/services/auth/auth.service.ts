@@ -27,13 +27,15 @@ export class AuthService {
     })
   }
 
-  public register(email: string, password: string, nickname: string, roles: UserRoles = { customer: true, manager: false, admin: false }): void {
-    this.fireAuth.createUserWithEmailAndPassword(email, password)
-      .then((registerData) => {
-        registerData.user?.updateProfile({ displayName: nickname, photoURL: "" })
-        this.userDataManger.addUserData(registerData.user?.uid!, false, roles)
+  public async register(email: string, password: string, nickname: string, roles: UserRoles = { customer: true, manager: false, admin: false }): Promise<void> {
+    this.logout()
 
+    this.fireAuth.createUserWithEmailAndPassword(email, password)
+      .then(async (registerData) => {
+        registerData.user?.updateProfile({ displayName: nickname, photoURL: "" })
+        await this.userDataManger.addUserData(registerData.user?.uid!, false, roles)
         alert("Successfully registered!")
+        this.logout()
       })
       .catch((error) => {
         alert(error.code.slice(5))
