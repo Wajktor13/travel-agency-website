@@ -46,8 +46,8 @@
                 </a>
             </label> -->
 
-            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-cart-preview">
-            <label class="nav-tile nav-cart-label" for="radio-cart-preview">
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-cart-preview" *ngIf="checkRolesForCart()">
+            <label class="nav-tile nav-cart-label" for="radio-cart-preview" *ngIf="checkRolesForCart()">
                 <a (click)="navigateToCart()" id="nav-cart">
                     <app-cart-preview></app-cart-preview>
                 </a>

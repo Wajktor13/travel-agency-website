@@ -43,6 +43,7 @@ export class AuthService {
   public login(email: string, password: string): void {
     this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((loginData) => {
+        localStorage.setItem("user", loginData.user?.uid!)
         alert("Successfully logged in!")
       })
       .catch((error) => {
@@ -51,6 +52,7 @@ export class AuthService {
   }
 
   public logout(): void {
+    localStorage.removeItem("user")
     this.fireAuth.signOut()
   }
 

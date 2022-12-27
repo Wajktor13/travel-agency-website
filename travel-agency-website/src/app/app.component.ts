@@ -81,6 +81,14 @@ export class AppComponent {
     }
   }
 
+  public checkRolesForCart(): boolean{
+    if (!this.authService.isLoggedIn()){
+      return true
+    } else {
+      return this.authService.getCurrentUser().roles.customer
+    }
+  }
+
   public getNickname(): string{
     let user: UserData = this.authService.getCurrentUser()
     

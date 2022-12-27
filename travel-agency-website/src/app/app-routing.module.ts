@@ -10,19 +10,18 @@ import { SingleExcursionViewComponent } from './components/single-excursion-view
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { RoleGuard } from './guards/role/role.guard';
 import { UserRoles } from './shared/models/user-roles';
 
 
 const routes: Routes = [
   { path: 'excursions', component: ExcursionCardsListComponent },
-  { path: 'cart', component: CartComponent, canActivate: [AuthGuard, RoleGuard], data: { customer: true, admin: false, manager: false } as UserRoles},
-  { path: 'add-excursion-form', component: AddExcursionFormComponent },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard], data: { customer: true, admin: false, manager: false } as UserRoles},
+  { path: 'add-excursion-form', component: AddExcursionFormComponent, canActivate: [AuthGuard], data: { customer: false, admin: true, manager: true } as UserRoles },
   { path: 'home', component: HomeComponent },
-  { path: 'reservations-history', component: ReservationsHistoryComponent, canActivate: [AuthGuard] },
-  { path: 'excursion/:id', component: SingleExcursionViewComponent, canActivate: [AuthGuard] },
+  { path: 'reservations-history', component: ReservationsHistoryComponent, canActivate: [AuthGuard], data: { customer: true, admin: false, manager: false } as UserRoles },
+  { path: 'excursion/:id', component: SingleExcursionViewComponent, canActivate: [AuthGuard], data: { customer: true, admin: true, manager: true } as UserRoles },
   { path: 'login-register', component: LoginRegisterComponent },
-  { path: 'admin-panel', component: AdminPanelComponent },
+  { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard], data: { customer: false, admin: true, manager: false } as UserRoles },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
