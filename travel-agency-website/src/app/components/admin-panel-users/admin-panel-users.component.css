@@ -1,3 +1,7 @@
+p{
+    margin: 5px;
+}
+
 #user-list{
     width: 100%;
     display: flex;
@@ -6,11 +10,12 @@
 }
 
 .user-div{
-    width: 90%;
+    width: 92%;
+    height: 80px;
     margin: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-direction: row;
     box-shadow: 0px 0px 23px 2px rgba(66, 68, 90, 1);
     border-radius: 15px;
@@ -20,20 +25,82 @@
     background-color: white;
 }
 
-.user-div img{
-    display: block;
-    width: 80px;
-    height: 80px;
-    margin: 5px;
-    border-radius: 15px;
+.user-inner-div{
+    width: 25%;
+    height: 80%;
+    padding: 10px;
+    border-right: 1px solid rgb(209, 209, 209);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.user-div img:hover{
-    cursor: pointer;
-    filter: brightness(0.85);
+.user-inner-div:last-child{
+    border: none;
 }
 
 .uid-p{
-    width: max(20%, 120px);
     word-wrap: break-word;
+    text-align: center;
+}
+
+.roles form{
+    width: max(40%, 100px);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.email-nickname-div, .ban-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.email-nickname-div p{
+    display: inline-block;
+    word-break: break-all;
+    text-align: center;
+}
+
+.ban-btn{
+    color: black;
+    width: 70px;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 15px;
+    border: 1px solid black;
+    transition: transform 0.4s;
+}
+
+.ban-btn:hover{
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.ban-btn:active{
+    filter: brightness(0.8);
+}
+
+.ban-btn{
+    background-color: red;
+}
+
+.unban-btn{
+    background-color: green;
+}
+
+.checkbox-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox-div input{
+    width: 18px;
+    height: 18px;
 }
