@@ -20,7 +20,7 @@ export class ExcursionCardsListComponent {
   constructor(private dataManager: ExcursionDataManagerService, private cartService: CartService, 
     public filterService: FilterExcursionsService){
 
-    dataManager.excursionsData.subscribe(
+    dataManager.excursionsData$.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,
         error: (err: any) => console.log(err)
@@ -28,14 +28,14 @@ export class ExcursionCardsListComponent {
       }
     )
 
-    filterService.selectedMinPrice.subscribe(
+    filterService.selectedMinPrice$.subscribe(
       {
         next: (price: number) => this.selectedMinPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    filterService.selectedMaxPrice.subscribe(
+    filterService.selectedMaxPrice$.subscribe(
       {
         next: (price: number) => this.selectedMaxPrice = price,
         error: (err: any) => console.log(err)

@@ -15,7 +15,7 @@ export class CartPreviewComponent {
 
   constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService) {
 
-    cartService.cart.subscribe(
+    cartService.cart$.subscribe(
       {
         next: (cartData: Map<number, number>) => {
           this.totalCartValue = 0

@@ -19,14 +19,14 @@ export class CartComponent {
   public totalReservations: number = 0
 
   constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
-    dataManager.excursionsData.subscribe(
+    dataManager.excursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => this.excursionsData = data,
         error: (err: any) => console.log(err)
       }
     )
 
-    cartService.cart.subscribe(
+    cartService.cart$.subscribe(
       {
         next: (cartData: Map<number, number>) => {
           this.cart = cartData

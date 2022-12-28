@@ -9,22 +9,22 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 
 export class ExcursionDataManagerService {
-  private fetchedData: Observable<ExcursionData[]>
-  public excursionsData: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([] as ExcursionData[])
-  public minUnitPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
-  public maxUnitPrice: BehaviorSubject<number> = new BehaviorSubject(0)
+  private fetchedData$: Observable<ExcursionData[]>
+  public excursionsData$: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([] as ExcursionData[])
+  public minUnitPrice$: BehaviorSubject<number> = new BehaviorSubject(Infinity)
+  public maxUnitPrice$: BehaviorSubject<number> = new BehaviorSubject(0)
 
   constructor(private db: AngularFirestore) {
-    this.fetchedData = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
+    this.fetchedData$ = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
 
-    this.fetchedData.subscribe(
+    this.fetchedData$.subscribe(
       {
-        next: (data: ExcursionData[]) => this.excursionsData.next(data),
+        next: (data: ExcursionData[]) => this.excursionsData$.next(data),
         error: (err: any) => console.log(err)
       }
     )
 
-    this.excursionsData.subscribe(
+    this.excursionsData$.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => {
           this.updateMinMaxPrice(excursionsData)
@@ -57,11 +57,11 @@ export class ExcursionDataManagerService {
   }
 
   public setExcursionsData(newExcursionsData: ExcursionData[]) {
-    this.excursionsData.next(newExcursionsData)
+    this.excursionsData$.next(newExcursionsData)
   }
 
   public getExcursionsData(): ExcursionData[] {
-    return this.excursionsData.getValue()
+    return this.excursionsData$.getValue()
   }
 
   public getNumberOfExcursion(): number {
@@ -73,11 +73,11 @@ export class ExcursionDataManagerService {
   }
 
   public getMinPrice(): number {
-    return this.minUnitPrice.getValue()
+    return this.minUnitPrice$.getValue()
   }
 
   public getMaxPrice(): number {
-    return this.maxUnitPrice.getValue()
+    return this.maxUnitPrice$.getValue()
   }
 
   public validateExcursionData(excursion: ExcursionData): boolean {
@@ -131,8 +131,8 @@ export class ExcursionDataManagerService {
       maxPrice = Math.max(maxPrice, excursion.unitPrice)
     }
 
-    this.minUnitPrice.next(minPrice)
-    this.maxUnitPrice.next(maxPrice)
+    this.minUnitPrice$.next(minPrice)
+    this.maxUnitPrice$.next(maxPrice)
   }
 
   public getMinAvailableID(): number {

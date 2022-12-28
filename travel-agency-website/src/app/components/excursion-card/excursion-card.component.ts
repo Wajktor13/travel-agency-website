@@ -25,21 +25,21 @@ export class ExcursionCardComponent implements OnChanges {
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
   constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
-    dataManager.minUnitPrice.subscribe(
+    dataManager.minUnitPrice$.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.minPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    dataManager.maxUnitPrice.subscribe(
+    dataManager.maxUnitPrice$.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.maxPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    this.cartService.cart.subscribe(
+    this.cartService.cart$.subscribe(
       {
         next: (data) => this.reservationCounter = data.get(this.excursion.id)!,
         error: (err: any) => console.log(err)

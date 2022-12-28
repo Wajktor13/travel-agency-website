@@ -9,12 +9,12 @@ import { ReviewData } from 'src/app/shared/models/review-data';
 
 export class ReviewsService {
 
-  public reviewsData: BehaviorSubject<ReviewData[]> = new BehaviorSubject([] as ReviewData[])
+  public reviewsData$: BehaviorSubject<ReviewData[]> = new BehaviorSubject([] as ReviewData[])
 
   constructor() { }
 
   public getReviewsData(): ReviewData[] {
-    return this.reviewsData.getValue()
+    return this.reviewsData$.getValue()
   }
 
   public getReviewsByID(id: number): ReviewData[] {
@@ -40,7 +40,7 @@ export class ReviewsService {
   public addReview(review: ReviewData): void {
     let current: ReviewData[] = this.getReviewsData()
     current.push(review)
-    this.reviewsData.next(current)
+    this.reviewsData$.next(current)
   }
 
   public getAverageStarsByID(id: number): number {

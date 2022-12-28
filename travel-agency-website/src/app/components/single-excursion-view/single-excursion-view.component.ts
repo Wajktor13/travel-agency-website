@@ -30,7 +30,7 @@ export class SingleExcursionViewComponent implements OnInit {
   public date: Date = new Date()
 
   constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
-    this.dataManager.excursionsData.subscribe(
+    this.dataManager.excursionsData$.subscribe(
       {
         next: (data) => {
           this.excursion = this.dataManager.getExcursionDataByID(this.id)
@@ -41,14 +41,14 @@ export class SingleExcursionViewComponent implements OnInit {
       }
     )
 
-    this.cartService.cart.subscribe(
+    this.cartService.cart$.subscribe(
       {
         next: (data) => this.reservationCounter = cartService.getReservationsOf(this.excursion.id)!,
         error: (err: any) => console.log(err)
       }
     )
 
-    this.reviesService.reviewsData.subscribe(
+    this.reviesService.reviewsData$.subscribe(
       {
         next: (data) => this.reviews = reviesService.getReviewsByID(this.id),
         error: (err) => console.log(err)

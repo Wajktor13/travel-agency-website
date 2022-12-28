@@ -17,21 +17,21 @@ export class FilterExcursionsComponent {
   public selectedMaxPrice: number = Infinity
 
   constructor(public dataManager: ExcursionDataManagerService, public filterService: FilterExcursionsService){
-    filterService.selectedMaxPrice.subscribe(
+    filterService.selectedMaxPrice$.subscribe(
       {
         next: (price: number) => this.selectedMaxPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    filterService.selectedMinPrice.subscribe(
+    filterService.selectedMinPrice$.subscribe(
       {
         next: (price: number) => this.selectedMinPrice = price,
         error: (err: any) => console.log(err)
       }
     )
     
-    dataManager.maxUnitPrice.subscribe(
+    dataManager.maxUnitPrice$.subscribe(
       {
         next: (price: number) => 
         {
@@ -45,7 +45,7 @@ export class FilterExcursionsComponent {
       }
     )
 
-    dataManager.minUnitPrice.subscribe(
+    dataManager.minUnitPrice$.subscribe(
       {
         next: (price: number) => 
         {

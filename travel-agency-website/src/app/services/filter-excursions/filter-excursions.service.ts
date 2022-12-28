@@ -6,8 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FilterExcursionsService {
 
-  public selectedMinPrice: BehaviorSubject<number> = new BehaviorSubject(0)
-  public selectedMaxPrice: BehaviorSubject<number> = new BehaviorSubject(Infinity)
+  public selectedMinPrice$: BehaviorSubject<number> = new BehaviorSubject(0)
+  public selectedMaxPrice$: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   private selectedFromDate: string = ''
   private selectedToDate: string = ''
   private selectedCountry: string = 'all'
@@ -18,19 +18,19 @@ export class FilterExcursionsService {
   constructor() { }
 
   public getSelectedMinPrice(): number{
-    return this.selectedMinPrice.getValue()
+    return this.selectedMinPrice$.getValue()
   }
 
   public getSelectedMaxPrice(): number{
-    return this.selectedMaxPrice.getValue()
+    return this.selectedMaxPrice$.getValue()
   }
 
   public setSelectedMinPrice(newSelectedMinPrice: number){
-    this.selectedMinPrice.next(newSelectedMinPrice)
+    this.selectedMinPrice$.next(newSelectedMinPrice)
   }
 
   public setSelectedMaxPrice(newSelectedMaxPrice: number){
-    this.selectedMaxPrice.next(newSelectedMaxPrice)
+    this.selectedMaxPrice$.next(newSelectedMaxPrice)
   }
 
   public getSelectedFromDate(): string{

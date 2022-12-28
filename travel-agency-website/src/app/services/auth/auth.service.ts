@@ -12,7 +12,7 @@ import { UserDataManagerService } from '../user-data-manager/user-data-manager.s
 
 export class AuthService {
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false)
-  public currentUser: BehaviorSubject<UserData> = new BehaviorSubject({} as UserData)
+  public currentUser$: BehaviorSubject<UserData> = new BehaviorSubject({} as UserData)
 
   constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService) {
     this.fireAuth.onAuthStateChanged(async (user) => {
@@ -20,7 +20,7 @@ export class AuthService {
         let userData = (await this.userDataManger.getUserDataByUid(user.uid)) as { uid: number, banned: boolean, roles: UserRoles }
         this.isLoggedIn$.next(true)
 
-        this.currentUser.next({ uid: user.uid, email: user.email!, nickname: user.displayName!, roles: userData.roles, banned: userData.banned })
+        this.currentUser$.next({ uid: user.uid, email: user.email!, nickname: user.displayName!, roles: userData.roles, banned: userData.banned })
       } else {
         this.isLoggedIn$.next(false)
       }
@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   public getCurrentUser(): UserData{
-    return this.currentUser.getValue()
+    return this.currentUser$.getValue()
   }
 
   public isLoggedIn(): boolean{
