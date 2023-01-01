@@ -19,7 +19,7 @@ export class ExcursionCardsListComponent {
 
   constructor(private dataManager: ExcursionDataManagerService, private cartService: CartService, 
     public filterService: FilterExcursionsService){
-
+      
     dataManager.excursionsData$.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,

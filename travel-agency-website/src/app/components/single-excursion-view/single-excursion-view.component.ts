@@ -17,7 +17,7 @@ import { ReviewData } from 'src/app/shared/models/review-data';
 
 export class SingleExcursionViewComponent implements OnInit {
   public reservationCounter: number = 0
-  public leftInStock: number = 0
+  public leftToAddToCart: number = 0
   public id: any = -1
   public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
 
@@ -35,7 +35,7 @@ export class SingleExcursionViewComponent implements OnInit {
         next: (data) => {
           this.excursion = this.dataManager.getExcursionDataByID(this.id)
           this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
-          this.leftInStock = this.excursion.inStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
+          this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
         },
         error: (err) => console.log(err)
       }
@@ -61,13 +61,13 @@ export class SingleExcursionViewComponent implements OnInit {
     this.reviews = this.reviesService.getReviewsByID(this.id)
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
     this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
-    this.leftInStock = this.excursion.inStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
+    this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
   }
 
   public changeReservationCounter(diff: number): void {
     if (this.authService.isLoggedIn() && this.authService.getCurrentUser().roles.customer) {
       this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
-      this.leftInStock = this.excursion.inStock - this.reservationCounter - this.getReservationsFromHistory(this.id)
+      this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
 
     } else if (!this.authService.isLoggedIn()) {
       this.router.navigate(['login-register'])

@@ -17,7 +17,7 @@
             <p>Location: {{excursion.country}}</p>
             <p>When: from {{excursion.startDate}} to {{excursion.endDate}}</p>
             <p>Price: {{excursion.unitPrice | currency}}</p>
-            <p *ngIf="leftInStock > 0; else outOfStock">In stock: {{leftInStock}}</p>
+            <p *ngIf="leftToAddToCart > 0; else outOfStock">In stock: {{leftToAddToCart}}</p>
             <ng-template #outOfStock class="out-of-stock">
                 <p>Out of stock!</p>
             </ng-template>

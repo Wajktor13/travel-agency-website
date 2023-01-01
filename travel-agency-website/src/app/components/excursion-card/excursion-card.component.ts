@@ -19,7 +19,7 @@ export class ExcursionCardComponent implements OnChanges {
   static minPrice: number = Infinity
   static maxPrice: number = 0
   public reservationCounter: number = 0
-  public leftInStock: number = 0
+  public leftToAddToCart: number = 0
 
   @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
@@ -56,14 +56,14 @@ export class ExcursionCardComponent implements OnChanges {
     //   this.cartService.addToCart(this.excursion.id, 0)
     // }
 
-    this.leftInStock = this.excursion.inStock - this.reservationCounter
+    this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
   }
 
   public changeReservationCounter(diff: number): void {
 
     if (this.authService.isLoggedIn() && this.authService.getCurrentUser().roles.customer) {
       this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
-      this.leftInStock = this.excursion.inStock - this.reservationCounter
+      this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
 
     } else if (!this.authService.isLoggedIn()) {
       alert("Available for logged in users only.")

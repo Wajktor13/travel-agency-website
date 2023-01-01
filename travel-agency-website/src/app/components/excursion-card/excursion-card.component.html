@@ -1,5 +1,5 @@
 <div class="excursion-card"
-    [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice(), 'low-stock-3' : leftInStock == 3, 'low-stock-2' : leftInStock == 2, 'low-stock-1' : leftInStock == 1, 'low-stock-0' : leftInStock == 0}">
+    [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice(), 'low-stock-3' : leftToAddToCart == 3, 'low-stock-2' : leftToAddToCart == 2, 'low-stock-1' : leftToAddToCart == 1, 'low-stock-0' : leftToAddToCart == 0}">
 
     <img class="preview-img" src={{excursion.img}} alt={{excursion.name}} (click)="navigateToSingleExcursionView()">
     <h3>{{excursion.name | uppercase}}</h3>
@@ -14,7 +14,7 @@
     </div>
     <p>From {{excursion.startDate}} to {{excursion.endDate}}</p>
     <p>{{excursion.unitPrice | currency}}</p>
-    <p *ngIf="leftInStock > 0; else outOfStock">In stock: {{leftInStock}}</p>
+    <p *ngIf="leftToAddToCart > 0; else outOfStock">In stock: {{leftToAddToCart}}</p>
     <ng-template #outOfStock class="out-of-stock">
         <p>Out of stock!</p>
     </ng-template>

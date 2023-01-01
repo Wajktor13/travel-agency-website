@@ -44,16 +44,23 @@ export class ExcursionDataManagerService {
      uncomment below line to enable permanent deletion of data from database
     */
 
-    // this.db.collection('excursions').doc(toRemove.id.toString()).delete()
+    this.db.collection('excursions').doc(toRemove.id.toString()).delete()
 
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
     currentExcursionsData = currentExcursionsData.filter(e => e.id != toRemove.id)
     this.setExcursionsData(currentExcursionsData)
+
     this.updateMinMaxPrice(this.getExcursionsData())
   }
 
   public addToExcursionsDB(toAdd: ExcursionData) {
     this.db.collection('excursions').doc(toAdd.id.toString()).set(toAdd)
+
+    let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
+    currentExcursionsData.push(toAdd)
+    this.excursionsData$.next(currentExcursionsData)
+
+    this.updateMinMaxPrice(this.getExcursionsData())
   }
 
   public setExcursionsData(newExcursionsData: ExcursionData[]) {
@@ -133,6 +140,7 @@ export class ExcursionDataManagerService {
 
     this.minUnitPrice$.next(minPrice)
     this.maxUnitPrice$.next(maxPrice)
+     
   }
 
   public getMinAvailableID(): number {
@@ -168,8 +176,8 @@ export class ExcursionDataManagerService {
     return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
   }
 
-  public updateExcursionData(excursionData: ExcursionData): void{
-    this.removeFromExcursionsDB(excursionData)
-    this.addToExcursionsDB(excursionData)
+  public updateExcursionData(toUpdate: ExcursionData): void{
+    this.db.collection('excursions').doc(toUpdate.id.toString()).delete()
+    this.db.collection('excursions').doc(toUpdate.id.toString()).set(toUpdate)
   }
 }

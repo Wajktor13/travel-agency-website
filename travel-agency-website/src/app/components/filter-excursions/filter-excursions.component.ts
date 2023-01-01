@@ -36,9 +36,10 @@ export class FilterExcursionsComponent {
         next: (price: number) => 
         {
           this.maxPrice = price
-          if (this.selectedMaxPrice == 0 || this.selectedMaxPrice == Infinity  || this.selectedMaxPrice > price){
+          if (this.selectedMaxPrice == 0 || this.selectedMaxPrice == Infinity  || this.selectedMaxPrice < price){
             this.filterService.setSelectedMaxPrice(price)
-            this.filterService.setSelectedMaxPrice(Math.min(this.selectedMaxPrice, price))
+            this.filterService.setSelectedMaxPrice(Math.min(this.selectedMaxPrice, price))   
+            
           }
         },
         error: (err: any) => console.log(err)
@@ -50,8 +51,8 @@ export class FilterExcursionsComponent {
         next: (price: number) => 
         {
           this.minPrice = price
-          if (this.selectedMinPrice == 0 || this.selectedMinPrice == Infinity || this.selectedMinPrice < price){
-            this.filterService.setSelectedMinPrice(price)
+          if (this.selectedMinPrice == 0 || this.selectedMinPrice == Infinity || this.selectedMinPrice > price){
+            this.filterService.setSelectedMinPrice(price)         
           }
         },
         error: (err: any) => console.log(err)
