@@ -43,8 +43,8 @@ export class CartComponent {
     )
   }
 
-  public getReservations(id: number) {
-    return this.cartService.getReservationsOf(id)
+  public getReservations(id: number | undefined) {
+    return this.cartService.getReservationsOf(id as number)
   }
 
   public getExcursionDetails(id: number) {
@@ -69,7 +69,7 @@ export class CartComponent {
     return cartDetails
   }
 
-  public navigateToSingleExcursionView(id: number): void {
+  public navigateToSingleExcursionView(id: number | undefined): void {
     this.router.navigate(['excursion/', id])
   }
 
