@@ -25,7 +25,7 @@
 
         <div id="reservation-buttons">
             <button (click)="changeReservationCounter(1)"
-                [disabled]="reservationCounter == excursion.maxInStock - getReservationsFromHistory(excursion.id)"
+                [disabled]="reservationCounter == excursion.inStock"
                 class="add-reservation-button">+</button>
             <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0"
                 class="remove-reservation-button">-</button>

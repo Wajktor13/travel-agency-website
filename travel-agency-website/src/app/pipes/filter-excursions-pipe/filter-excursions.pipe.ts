@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
-import { ExcursionData } from '../../shared/models/excursions-data';
+import { ExcursionData } from '../../shared/models/excursion-data';
 import { FilterArguments } from '../../shared/models/filter-arguments';
 
 

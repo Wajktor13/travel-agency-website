@@ -1,3 +1,5 @@
+import { CartItem } from "./cart-item";
+import { ReservationData } from "./reservation-data";
 import { UserRoles } from "./user-roles";
 
 export type UserData = {
@@ -6,4 +8,6 @@ export type UserData = {
     nickname: string
     roles: UserRoles
     banned: boolean
+    inCart: CartItem[]
+    reservations: ReservationData[]
  }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { BehaviorSubject } from 'rxjs';
+import { CartItem } from 'src/app/shared/models/cart-item';
+import { ReservationData } from 'src/app/shared/models/reservation-data';
 import { UserData } from 'src/app/shared/models/user-data';
 import { UserRoles } from 'src/app/shared/models/user-roles';
 import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
@@ -12,15 +14,15 @@ import { UserDataManagerService } from '../user-data-manager/user-data-manager.s
 
 export class AuthService {
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false)
-  public currentUser$: BehaviorSubject<UserData> = new BehaviorSubject({} as UserData)
+  public currentUser$: BehaviorSubject<UserData> = new BehaviorSubject({ uid:"",banned: true, roles: {} as UserRoles, inCart: [], reservations: [], email: "", nickname: ""} as UserData)
 
   constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService) {
     this.fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
-        let userData = (await this.userDataManger.getUserDataByUid(user.uid)) as { uid: number, banned: boolean, roles: UserRoles }
+        let userData = (await this.userDataManger.getUserDataByUid(user.uid)) as { uid: string, banned: boolean, roles: UserRoles, inCart: CartItem[], reservations: ReservationData[] }
         this.isLoggedIn$.next(true)
 
-        this.currentUser$.next({ uid: user.uid, email: user.email!, nickname: user.displayName!, roles: userData.roles, banned: userData.banned })
+        this.currentUser$.next({ uid: user.uid, email: user.email!, nickname: user.displayName!, roles: userData.roles, banned: userData.banned, inCart: userData.inCart, reservations: userData.reservations })
       } else {
         this.isLoggedIn$.next(false)
       }
@@ -33,7 +35,7 @@ export class AuthService {
     this.fireAuth.createUserWithEmailAndPassword(email, password)
       .then(async (registerData) => {
         registerData.user?.updateProfile({ displayName: nickname, photoURL: "" })
-        await this.userDataManger.addUserData({uid: registerData.user?.uid!, email: email, nickname: nickname, roles: roles, banned: false})
+        await this.userDataManger.addUserData({uid: registerData.user?.uid!, email: email, nickname: nickname, roles: roles, banned: false, inCart: [], reservations: []})
         alert("Successfully registered!")
         this.logout()
       })

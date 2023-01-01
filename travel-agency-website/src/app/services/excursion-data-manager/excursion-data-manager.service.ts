@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ExcursionData } from '../../shared/models/excursions-data';
+import { ExcursionData } from '../../shared/models/excursion-data';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
@@ -82,7 +82,7 @@ export class ExcursionDataManagerService {
 
   public validateExcursionData(excursion: ExcursionData): boolean {
     return !this.existsInExcursionsData(excursion)
-      && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.maxInStock) &&
+      && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.inStock) &&
       this.validateDescription(excursion.description) && this.validateImg(excursion.img)
   }
 
@@ -158,13 +158,18 @@ export class ExcursionDataManagerService {
     return 0
   }
 
-  getExcursionDataByID(id: number): ExcursionData {
+  public getExcursionDataByID(id: number): ExcursionData {
     for (let excursion of this.getExcursionsData()) {
       if (excursion.id == id) {
         return excursion
       }
     }
 
-    return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: '' }
+    return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
+  }
+
+  public updateExcursionData(excursionData: ExcursionData): void{
+    this.removeFromExcursionsDB(excursionData)
+    this.addToExcursionsDB(excursionData)
   }
 }

@@ -1,4 +1,4 @@
-import { ExcursionData } from "./excursions-data"
+import { ExcursionData } from "./excursion-data"
 
 export type RemoveExcursionData = {
     excursionData: ExcursionData

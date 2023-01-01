@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CartItem } from 'src/app/shared/models/cart-item';
+import { UserData } from 'src/app/shared/models/user-data';
+import { AuthService } from '../auth/auth.service';
+import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
 
 
 @Injectable({
@@ -7,38 +11,49 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class CartService {
-  public cart$: BehaviorSubject<Map<number, number>> = new BehaviorSubject(new Map<number, number>)
+  public cart$: BehaviorSubject<CartItem[]> = new BehaviorSubject([] as CartItem[])
 
-  constructor() { }
+  constructor(private authService: AuthService, private userDataManager: UserDataManagerService) { 
+    authService.currentUser$.subscribe(
+      {
+        next: (userData: UserData) => this.cart$.next(userData.inCart),
+        error: (err) => console.log(err)
+      }
+    )
+  }
 
-  public getCart(): Map<number, number> {
+  public getCart(): CartItem[] {
     return this.cart$.getValue()
   }
 
   public addToCart(id: number, newReservationsCounter: number) {
-    let current: Map<number, number> = this.cart$.getValue()
-    current.set(id, newReservationsCounter)
-    this.cart$.next(current)
+    let currentCart: CartItem[] = this.cart$.getValue().filter(cartItem => cartItem.excursionID != id)
+    currentCart.push({excursionID: id, amount: newReservationsCounter} as CartItem)
+    this.cart$.next(currentCart)
+
+    let currentUser = this.authService.getCurrentUser()
+    this.userDataManager.updateUserData({uid: currentUser.uid, email: currentUser.email, 
+    nickname: currentUser.nickname, roles: currentUser.roles, banned: currentUser.banned,
+  inCart: currentCart, reservations: currentUser.reservations})
   }
 
   public isInCart(id: number): boolean {
-    return this.cart$.getValue().has(id)
+    return this.cart$.getValue().map(cartItem => cartItem.excursionID).includes(id)
   }
 
   public removeFromCart(id: number): void {
-    let current: Map<number, number> = this.cart$.getValue()
-    current.delete(id)
-    this.cart$.next(current)
+    let current: CartItem[] = this.cart$.getValue()
+    this.cart$.next(current.filter(cartItem => cartItem.excursionID != id))
   }
 
   public removeAllFromCart(): void {
-    this.cart$.next(new Map<number, number>)
+    this.cart$.next([] as CartItem[])
   }
 
   public getReservationsOf(id: number) {
-    let c = this.getCart()
-    if (c.get(id) != undefined) {
-      return c.get(id)
+    let c = this.getCart().filter(cartItem => cartItem.excursionID == id)
+    if (c.length > 0) {
+      return c[0].amount
     }
 
     return 0

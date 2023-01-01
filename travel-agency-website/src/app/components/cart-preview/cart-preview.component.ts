@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { CartItem } from 'src/app/shared/models/cart-item';
 
 
 @Component({
@@ -13,22 +14,34 @@ export class CartPreviewComponent {
   public totalReservationsCounter: number = 0
   public totalCartValue: number = 0
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService) {
+  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, excursionDataManager: ExcursionDataManagerService) {
 
-    cartService.cart$.subscribe(
+    excursionDataManager.excursionsData$.subscribe(
       {
-        next: (cartData: Map<number, number>) => {
-          this.totalCartValue = 0
-          this.totalReservationsCounter = 0
-
-          for (let [id, reservations] of cartData) {
-            this.totalReservationsCounter += reservations
-            this.totalCartValue += this.dataManager.getPriceByID(id) * reservations
-          }
-          
+        next: (data) => {
+          this.updatePreviev()  
         },
         error: (err: any) => console.log(err)
       }
     )
+
+    cartService.cart$.subscribe(
+      {
+        next: (cartData: CartItem[]) => {
+          this.updatePreviev()  
+        },
+        error: (err: any) => console.log(err)
+      }
+    )
+  }
+
+  updatePreviev(): void {
+    let cartData = this.cartService.getCart()
+    this.totalCartValue = 0
+    this.totalReservationsCounter = 0
+    for (let cartItem of cartData) {
+      this.totalReservationsCounter += cartItem.amount
+      this.totalCartValue += this.dataManager.getPriceByID(cartItem.excursionID) * cartItem.amount
+    }
   }
 }

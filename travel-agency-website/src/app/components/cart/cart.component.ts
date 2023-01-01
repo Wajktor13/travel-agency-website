@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
-import { ExcursionData } from 'src/app/shared/models/excursions-data';
+import { CartItem } from 'src/app/shared/models/cart-item';
+import { ExcursionData } from 'src/app/shared/models/excursion-data';
 
 
 @Component({
@@ -14,12 +15,12 @@ import { ExcursionData } from 'src/app/shared/models/excursions-data';
 
 export class CartComponent {
   private excursionsData: ExcursionData[] = []
-  public cart: Map<number, number> = new Map<number, number>()
+  public cart: CartItem[] = []
   public totalPrice: number = 0
   public totalReservations: number = 0
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
-    dataManager.excursionsData$.subscribe(
+  constructor(private cartService: CartService, private excursionDataManager: ExcursionDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
+    excursionDataManager.excursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => this.excursionsData = data,
         error: (err: any) => console.log(err)
@@ -28,13 +29,13 @@ export class CartComponent {
 
     cartService.cart$.subscribe(
       {
-        next: (cartData: Map<number, number>) => {
+        next: (cartData: CartItem[]) => {
           this.cart = cartData
           this.totalPrice = 0
           this.totalReservations = 0
-          for (let [id, reservations] of this.cart) {
-            this.totalReservations += reservations
-            this.totalPrice += this.dataManager.getPriceByID(id) * reservations
+          for (let cartItem of this.cart) {
+            this.totalReservations += cartItem.amount
+            this.totalPrice += this.excursionDataManager.getPriceByID(cartItem.excursionID) * cartItem.amount
           }
         },
         error: (err: any) => console.log(err)
@@ -43,7 +44,7 @@ export class CartComponent {
   }
 
   public getReservations(id: number) {
-    return this.cart.get(id)
+    return this.cartService.getReservationsOf(id)
   }
 
   public getExcursionDetails(id: number) {
@@ -59,9 +60,9 @@ export class CartComponent {
   public getExcursionsWithReservations(): ExcursionData[] {
     let cartDetails: ExcursionData[] = []
 
-    for (let [id, reservations] of this.cart) {
-      if (reservations > 0) {
-        cartDetails.push(this.getExcursionDetails(id) as ExcursionData)
+    for (let cartItem of this.cart) {
+      if (cartItem.amount > 0) {
+        cartDetails.push(this.getExcursionDetails(cartItem.excursionID) as ExcursionData)
       }
     }
 
@@ -77,8 +78,14 @@ export class CartComponent {
     let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':' + d.getMinutes()
 
     for (let cartItem of this.cart) {
-      if (cartItem[1] > 0) {
-        this.reservationHistory.addToHistory({ excursionData: this.getExcursionDetails(cartItem[0])!, reservationDate: currentDate, status: "upcoming", reservations: cartItem[1] })
+      if (cartItem.amount > 0) {
+        let excursionDetails: ExcursionData = this.getExcursionDetails(cartItem.excursionID)!
+
+        this.reservationHistory.addToHistory({ excursionData: excursionDetails, reservationDate: currentDate, status: "upcoming", amount: cartItem.amount })
+
+        excursionDetails.inStock -= cartItem.amount
+
+        this.excursionDataManager.updateExcursionData(excursionDetails)
       }
     }
 

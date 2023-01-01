@@ -5,7 +5,7 @@ export type ExcursionData = {
     startDate: string,
     endDate: string,
     unitPrice: number,
-    maxInStock: number,
+    inStock: number,
     description: string,
     img: string
 }

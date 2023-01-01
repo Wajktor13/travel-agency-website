@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ExcursionData } from 'src/app/shared/models/excursions-data';
+import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
 import { CartService } from 'src/app/services/cart/cart.service';

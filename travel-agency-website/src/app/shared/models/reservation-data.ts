@@ -1,8 +1,8 @@
-import { ExcursionData } from "./excursions-data"
+import { ExcursionData } from "./excursion-data"
 
 export type ReservationData = {
     excursionData: ExcursionData
     reservationDate: string
     status: string
-    reservations: number  
+    amount: number  
 }

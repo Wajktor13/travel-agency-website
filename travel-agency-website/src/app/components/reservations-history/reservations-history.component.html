@@ -25,9 +25,9 @@
             <h4>Reservation details:</h4>
             <div class="details">
                 <p>Reservation date: {{reservation.reservationDate}}</p>
-                <p>Total reservations: {{reservation.reservations}}</p>
+                <p>Total reservations: {{reservation.amount}}</p>
                 <p>Unit price: {{reservation.excursionData.unitPrice | currency}}</p>
-                <p>Total price: {{reservation.excursionData.unitPrice * reservation.reservations | currency}}</p>
+                <p>Total price: {{reservation.excursionData.unitPrice * reservation.amount | currency}}</p>
                 <p>From {{reservation.excursionData.startDate}} to {{reservation.excursionData.endDate}}</p>
                 <p>Status: {{reservation.status}}</p>
             </div>

@@ -5,7 +5,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
-import { ExcursionData } from 'src/app/shared/models/excursions-data';
+import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
 
 
@@ -21,7 +21,7 @@ export class ExcursionCardComponent implements OnChanges {
   public reservationCounter: number = 0
   public leftInStock: number = 0
 
-  @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, maxInStock: 0, description: '', img: '' }
+  @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
   constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
@@ -41,7 +41,7 @@ export class ExcursionCardComponent implements OnChanges {
 
     this.cartService.cart$.subscribe(
       {
-        next: (data) => this.reservationCounter = data.get(this.excursion.id)!,
+        next: (cartData) => this.reservationCounter = cartService.getReservationsOf(this.excursion.id),
         error: (err: any) => console.log(err)
       }
     )
@@ -49,21 +49,21 @@ export class ExcursionCardComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (this.cartService.isInCart(this.excursion.id)) {
-      let cart = this.cartService.getCart()
-      this.reservationCounter = cart.get(this.excursion.id)!
+      this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)
 
-    } else if (this.excursion.id != -1) {
-      this.cartService.addToCart(this.excursion.id, 0)
-    }
+    } 
+    // else if (this.excursion.id != -1) {
+    //   this.cartService.addToCart(this.excursion.id, 0)
+    // }
 
-    this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.excursion.id)
+    this.leftInStock = this.excursion.inStock - this.reservationCounter
   }
 
   public changeReservationCounter(diff: number): void {
 
     if (this.authService.isLoggedIn() && this.authService.getCurrentUser().roles.customer) {
       this.cartService.addToCart(this.excursion.id, this.reservationCounter + diff)
-      this.leftInStock = this.excursion.maxInStock - this.reservationCounter - this.getReservationsFromHistory(this.excursion.id)
+      this.leftInStock = this.excursion.inStock - this.reservationCounter
 
     } else if (!this.authService.isLoggedIn()) {
       alert("Available for logged in users only.")

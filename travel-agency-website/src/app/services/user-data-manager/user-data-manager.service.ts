@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { UserData } from 'src/app/shared/models/user-data';
-import { UserRoles } from 'src/app/shared/models/user-roles';
 
 
 @Injectable({
@@ -25,7 +24,7 @@ export class UserDataManagerService {
     return this.db.collection('users').valueChanges()
   }
 
-  public updateUserData(updatedUserData: UserData): void{
+  public updateUserData(updatedUserData: UserData): void{    
     this.db.doc(`users/${updatedUserData.uid}`).update(updatedUserData)
   }
 }

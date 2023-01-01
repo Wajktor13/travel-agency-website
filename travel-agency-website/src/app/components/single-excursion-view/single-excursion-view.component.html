@@ -27,7 +27,7 @@
 
     <div id="buttons-container">
         <div id="remove-card-button" (click)="removeButtonClicked()" *ngIf="checkRolesForRemovingExcursions()"></div>
-        <button [disabled]="reservationCounter == excursion.maxInStock - getReservationsFromHistory(this.id)" class="add-reservation-button reservation-button" (click)="changeReservationCounter(1)">+</button>
+        <button [disabled]="reservationCounter == excursion.inStock" class="add-reservation-button reservation-button" (click)="changeReservationCounter(1)">+</button>
         <button [disabled]="reservationCounter == 0" class="remove-reservation-button reservation-button" (click)="changeReservationCounter(-1)">-</button>
     </div>
 
