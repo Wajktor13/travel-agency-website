@@ -26,6 +26,10 @@ export class CartService {
     return this.cart$.getValue()
   }
 
+  public setCart(newCart: CartItem[]): void{
+    this.cart$.next(newCart)
+  }
+
   public addToCart(id: number, newReservationsCounter: number) {
     let currentCart: CartItem[] = this.cart$.getValue().filter(cartItem => cartItem.excursionID != id)
     currentCart.push({excursionID: id, amount: newReservationsCounter} as CartItem)

@@ -5,6 +5,7 @@ import { CartItem } from 'src/app/shared/models/cart-item';
 import { ReservationData } from 'src/app/shared/models/reservation-data';
 import { UserData } from 'src/app/shared/models/user-data';
 import { UserRoles } from 'src/app/shared/models/user-roles';
+import { CartService } from '../cart/cart.service';
 import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
 
 

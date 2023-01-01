@@ -35,7 +35,7 @@ export class CartPreviewComponent {
     )
   }
 
-  updatePreviev(): void {
+  public updatePreviev(): void {
     let cartData = this.cartService.getCart()
     this.totalCartValue = 0
     this.totalReservationsCounter = 0
