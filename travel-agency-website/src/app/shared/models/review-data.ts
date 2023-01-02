@@ -1,5 +1,6 @@
 export type ReviewData = {
-    id: number,
+    reviewID: number
+    uid: string
     nick: string
     date: string
     stars: number

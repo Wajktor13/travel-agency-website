@@ -7,6 +7,7 @@ import { ReservationHistoryService } from 'src/app/services/reservation-history/
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
+import { ReviewData } from 'src/app/shared/models/review-data';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ExcursionCardComponent implements OnChanges {
   public reservationCounter: number = 0
   public leftToAddToCart: number = 0
 
-  @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
+  @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' , reviews: []}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
   constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
@@ -95,7 +96,7 @@ export class ExcursionCardComponent implements OnChanges {
   }
 
   public getAverageStars(): number {
-    return this.reviewsService.getAverageStarsByID(this.excursion.id)
+    return this.reviewsService.getAverageStars(this.excursion.reviews)
   }
 
   public getReservationsFromHistory(id: number): number {

@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ReviewData } from 'src/app/shared/models/review-data';
+import { UserData } from 'src/app/shared/models/user-data';
+import { ExcursionDataManagerService } from '../excursion-data-manager/excursion-data-manager.service';
+import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
 
 
 @Injectable({
@@ -9,50 +13,45 @@ import { ReviewData } from 'src/app/shared/models/review-data';
 
 export class ReviewsService {
 
-  public reviewsData$: BehaviorSubject<ReviewData[]> = new BehaviorSubject([] as ReviewData[])
+  constructor(private excurionDataManager: ExcursionDataManagerService) { }
 
-  constructor() { }
-
-  public getReviewsData(): ReviewData[] {
-    return this.reviewsData$.getValue()
+  public validateReview(newReview: ReviewData, reviews: ReviewData[]): boolean {
+    return this.validateNumberOfReviews(newReview, reviews) && this.validateNick(newReview.nick) && this.validateStars(newReview.stars, newReview.nick) && this.validateText(newReview.text)
   }
 
-  public getReviewsByID(id: number): ReviewData[] {
-    return this.getReviewsData().filter(review => review.id == id)
-  }
-
-  public validateReview(review: ReviewData): boolean {
-    return this.validateNick(review.nick) && this.validateStars(review.stars) && this.validateText(review.text)
+  private validateNumberOfReviews(newReview: ReviewData, reviews: ReviewData[]): boolean{
+    return !reviews.map(r => r.uid).includes(newReview.uid)
   }
 
   private validateNick(nick: string): boolean {
     return nick.length >= 3
   }
 
-  private validateStars(stars: number): boolean {
-    return stars >= 0
+  private validateStars(stars: number, nick: string): boolean {
+    if (!nick.includes("(customer)")) {
+      return true
+    } else {
+      return stars > 0
+    }
   }
 
   private validateText(text: string): boolean {
     return text.length > 50 && text.length < 500
   }
 
-  public addReview(review: ReviewData): void {
-    let current: ReviewData[] = this.getReviewsData()
-    current.push(review)
-    this.reviewsData$.next(current)
+  public addReview(newReview: ReviewData, excursionData: ExcursionData): void {
+    excursionData.reviews.push(newReview)
+    this.excurionDataManager.updateExcursionData(excursionData)
   }
 
-  public getAverageStarsByID(id: number): number {
-    let reviewsForID: ReviewData[] = this.getReviewsData().filter(r => r.id == id)
+  public getAverageStars(reviews: ReviewData[]): number {
 
-    if (reviewsForID.length > 0)
-    {
-      let total: number = reviewsForID.length - reviewsForID.filter(r => r.stars == 0).map(r => r.stars).reduce((r1, r2) => r1 + r2, 0)
+    if (reviews.length > 0) {
+      let total: number = reviews.length - reviews.filter(r => r.stars == 0).map(r => r.stars).reduce((r1, r2) => r1 + r2, 0)
 
       if (total > 0) {
-        return reviewsForID.map(r => r.stars).reduce((r1, r2) => r1 + r2, 0) / total
-    }
+        return reviews.map(r => r.stars).reduce((r1, r2) => r1 + r2, 0) / total
+      }
     }
     return 0
   }

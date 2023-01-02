@@ -1,3 +1,5 @@
+import { ReviewData } from "./review-data"
+
 export type ExcursionData = {
     id: number
     name: string,
@@ -7,5 +9,6 @@ export type ExcursionData = {
     unitPrice: number,
     inStock: number,
     description: string,
-    img: string
+    img: string,
+    reviews: ReviewData[]
 }

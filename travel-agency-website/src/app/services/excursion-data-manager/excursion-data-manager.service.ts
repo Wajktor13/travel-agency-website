@@ -97,7 +97,7 @@ export class ExcursionDataManagerService {
     return name.length >= 1
   }
 
-  private validateCountry(country: string): boolean {
+  private validateCountry(country: string): boolean {    
     return /^[A-Z][a-z ]*$/.test(country) && country.length >= 4
   }
 
@@ -173,7 +173,7 @@ export class ExcursionDataManagerService {
       }
     }
 
-    return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
+    return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '', reviews: [] }
   }
 
   public updateExcursionData(toUpdate: ExcursionData): void{

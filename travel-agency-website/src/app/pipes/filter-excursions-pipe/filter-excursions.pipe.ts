@@ -54,7 +54,7 @@ export class FilterExcursionsPipe implements PipeTransform {
   }
 
   private starsFilter(e: ExcursionData, minStars: number, maxStars: number, noReviews: boolean) {
-    let stars: number = this.reviewsService.getAverageStarsByID(e.id)
+    let stars: number = this.reviewsService.getAverageStars(e.reviews)
 
     return stars >= minStars && stars <= maxStars || (noReviews && stars == 0)
   }

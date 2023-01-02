@@ -12,19 +12,20 @@ import { ExcursionData } from 'src/app/shared/models/excursion-data';
 export class AddExcursionFormComponent {
   info: string = " (lowest available)"
 
-  constructor(private dataManager: ExcursionDataManagerService, private filterService: FilterExcursionsService) { }
+  constructor(private excursionDataManager: ExcursionDataManagerService, private filterService: FilterExcursionsService) { }
 
   public getMinAvailableID(): number {
-    return this.dataManager.getMinAvailableID()
+    return this.excursionDataManager.getMinAvailableID()
   }
 
   public submitClicked(data: any) {
     data["id"] = this.getMinAvailableID()
+    data["reviews"] = []
     let newExcursionData: ExcursionData = data as ExcursionData
 
-    if (this.dataManager.validateExcursionData(newExcursionData)) {
-      this.dataManager.addToExcursionsDB(newExcursionData)
-      this.filterService.resetFilters(this.dataManager.getMinPrice(), Math.max(this.dataManager.getMaxPrice(), newExcursionData.unitPrice))
+    if (this.excursionDataManager.validateExcursionData(newExcursionData)) {
+      this.excursionDataManager.addToExcursionsDB(newExcursionData)
+      this.filterService.resetFilters(this.excursionDataManager.getMinPrice(), Math.max(this.excursionDataManager.getMaxPrice(), newExcursionData.unitPrice))
       alert("Success!")
 
     } else {

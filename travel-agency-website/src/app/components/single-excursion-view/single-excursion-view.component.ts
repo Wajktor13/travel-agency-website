@@ -7,6 +7,7 @@ import { ReservationHistoryService } from 'src/app/services/reservation-history/
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ReviewData } from 'src/app/shared/models/review-data';
+import { UserData } from 'src/app/shared/models/user-data';
 
 
 @Component({
@@ -19,17 +20,16 @@ export class SingleExcursionViewComponent implements OnInit {
   public reservationCounter: number = 0
   public leftToAddToCart: number = 0
   public id: any = -1
-  public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' }
+  public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' , reviews: []}
 
   public reviewNick: string = ''
   public reviewDate: string = ''
   public reviewStars: string = '0'
   public reviewText: string = ''
-  public reviews: ReviewData[] = []
 
   public date: Date = new Date()
 
-  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
+  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, public authService: AuthService) {
     this.dataManager.excursionsData$.subscribe(
       {
         next: (data) => {
@@ -47,18 +47,10 @@ export class SingleExcursionViewComponent implements OnInit {
         error: (err: any) => console.log(err)
       }
     )
-
-    this.reviewsService.reviewsData$.subscribe(
-      {
-        next: (data) => this.reviews = reviewsService.getReviewsByID(this.id),
-        error: (err) => console.log(err)
-      }
-    )
   }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id')
-    this.reviews = this.reviewsService.getReviewsByID(this.id)
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
     this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
     this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
@@ -71,8 +63,8 @@ export class SingleExcursionViewComponent implements OnInit {
 
     } else if (!this.authService.isLoggedIn()) {
       this.router.navigate(['login-register'])
-      
-    } else{
+
+    } else {
       alert("Not avaialble for manager / admin")
     }
   }
@@ -84,19 +76,25 @@ export class SingleExcursionViewComponent implements OnInit {
   }
 
   public reviewFormSubmitted() {
-    let newReview: ReviewData = {
-      id: this.id, nick: this.getNickname(), date: this.reviewDate,
-      stars: parseInt(this.reviewStars), text: this.reviewText
-    }
-    
-    if (this.reviewsService.validateReview(newReview)) {
-      this.reviewsService.addReview(newReview)
-      this.reviewNick = ''
-      this.reviewDate = ''
-      this.reviewStars = '0'
-      this.reviewText = ''
+    let currentUser: UserData = this.authService.getCurrentUser()
+
+    if (currentUser.banned) {
+      alert("Your account is banned. You can't add reviews.")
     } else {
-      alert('Wrong input!')
+      let newReview: ReviewData = {
+        reviewID: this.id, uid: currentUser.uid, nick: this.getNickname(), date: this.reviewDate,
+        stars: parseInt(this.reviewStars), text: this.reviewText
+      }
+  
+      if (this.reviewsService.validateReview(newReview, this.excursion.reviews)) {
+        this.reviewsService.addReview(newReview, this.excursion)
+        this.reviewNick = ''
+        this.reviewDate = ''
+        this.reviewStars = '0'
+        this.reviewText = ''
+      } else {
+        alert('Wrong input!')
+      }
     }
   }
 
@@ -119,11 +117,11 @@ export class SingleExcursionViewComponent implements OnInit {
     return false
   }
 
-  public getNickname(): string{
+  public getNickname(): string {
     return this.authService.getTitle()
   }
 
-  public canVote(): boolean{
+  public canVote(): boolean {
     return this.authService.getCurrentUser().roles.customer
   }
 }

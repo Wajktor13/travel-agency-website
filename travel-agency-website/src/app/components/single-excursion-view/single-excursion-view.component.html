@@ -46,14 +46,14 @@
 
             <h2>Reviews:</h2>
 
-            <div *ngIf="reviews.length == 0">
+            <div *ngIf="excursion?.reviews?.length == 0">
                 There are no reviews of this excursion. Add the first one below!
             </div>
  
-            <div class="review" *ngFor="let review of reviews">
+            <div class="review" *ngFor="let review of excursion?.reviews">
 
                 <div class="review-header">
-                    <p class="nick">{{review.nick}} | <i *ngIf="review.nick.includes('(customer)')">attended</i> {{review.date}}</p>
+                    <p class="nick">{{review.nick}} | <i *ngIf="authService.getCurrentUser().roles.customer">attended</i> {{review.date}}</p>
                 </div>
 
                 <div class="stars-date-div">
@@ -120,7 +120,7 @@
                         <span class="input-group-addon">
                             <img src="../../../assets/images/review.png" alt="">
                         </span>
-                        <textarea class="form-control" id="review" rows="3" name="review" [(ngModel)]="reviewText"></textarea>
+                        <textarea class="form-control" id="review" rows="3" name="review" [(ngModel)]="reviewText" placeholder="min 50 characters"></textarea>
                     </div>
                 </div>
             </div>
