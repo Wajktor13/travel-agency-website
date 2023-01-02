@@ -8,7 +8,8 @@ export type ExcursionData = {
     endDate: string,
     unitPrice: number,
     inStock: number,
-    description: string,
+    shortDescription: string,
+    longDescription: string,
     img: string,
     reviews: ReviewData[]
 }

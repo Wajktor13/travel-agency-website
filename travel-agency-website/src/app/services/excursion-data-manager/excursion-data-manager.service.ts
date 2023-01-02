@@ -90,7 +90,7 @@ export class ExcursionDataManagerService {
   public validateExcursionData(excursion: ExcursionData): boolean {
     return !this.existsInExcursionsData(excursion)
       && this.validateName(excursion.name) && this.validateCountry(excursion.country) && this.validateStartDate(excursion.startDate) && this.validateEndDate(excursion.startDate, excursion.endDate) && this.validateUnitPrice(excursion.unitPrice) && this.validateInStock(excursion.inStock) &&
-      this.validateDescription(excursion.description) && this.validateImg(excursion.img)
+      this.validateDescription(excursion.shortDescription) && this.validateImg(excursion.img)
   }
 
   private validateName(name: string): boolean {
@@ -173,7 +173,7 @@ export class ExcursionDataManagerService {
       }
     }
 
-    return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '', reviews: [] }
+    return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', img: '', reviews: [], longDescription: '' }
   }
 
   public updateExcursionData(toUpdate: ExcursionData): void{

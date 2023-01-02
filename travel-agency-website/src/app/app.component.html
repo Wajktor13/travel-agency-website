@@ -30,7 +30,7 @@
                         <a (click)="navigateToLoginRegister()" *ngIf="!isLoggedIn">Log In / Register</a>
                         <a (click)="logOutButtonClicked()" *ngIf="isLoggedIn">Log Out</a>
                         <a (click)="navigateToAddReservationsHistory()" *ngIf="checkRolesForReservationsHistory()">Reservations History</a>
-                        <a (click)="navigateToAddExcursionForm()" *ngIf="checkRolesForAddingExcursions()">Add Excursion</a>
+                        <a (click)="navigateToAddExcursionForm()" *ngIf="checkRolesForAddingExcursions()">Manager Panel - Excursions</a>
                         <a (click)="navigateToAdminPanelUsers()" *ngIf="checkRolesForAdminPanel()">Admin Panel - Users</a>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ export class SingleExcursionViewComponent implements OnInit {
   public reservationCounter: number = 0
   public leftToAddToCart: number = 0
   public id: any = -1
-  public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, description: '', img: '' , reviews: []}
+  public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', img: '' , reviews: [], longDescription: ''}
 
   public reviewNick: string = ''
   public reviewDate: string = ''

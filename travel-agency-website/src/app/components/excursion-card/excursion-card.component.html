@@ -4,7 +4,7 @@
     <img class="preview-img" src={{excursion.img}} alt={{excursion.name}} (click)="navigateToSingleExcursionView()">
     <h3>{{excursion.name | uppercase}}</h3>
     <p>{{excursion.country | uppercase}}</p>
-    <p>{{excursion.description}}</p>
+    <p>{{excursion.shortDescription}}</p>
     <div class="stars">
         <span *ngIf="getAverageStars() > 0 else noReviews">
             {{getAverageStars() | number : '1.2-2'}} / 5
@@ -20,8 +20,6 @@
     </ng-template>
 
     <div id="buttons-container">
-
-        <div (click)="removeButtonClicked(excursion)" id="remove-card-button" *ngIf="checkRolesForRemovingExcursions()"></div>
 
         <div id="reservation-buttons">
             <button (click)="changeReservationCounter(1)"
