@@ -19,7 +19,7 @@ export class CartPreviewComponent {
     excursionDataManager.excursionsData$.subscribe(
       {
         next: (data) => {
-          this.updatePreviev()  
+          this.updatePreview()  
         },
         error: (err: any) => console.log(err)
       }
@@ -28,14 +28,14 @@ export class CartPreviewComponent {
     cartService.cart$.subscribe(
       {
         next: (cartData: CartItem[]) => {
-          this.updatePreviev()  
+          this.updatePreview()  
         },
         error: (err: any) => console.log(err)
       }
     )
   }
 
-  public updatePreviev(): void {
+  public updatePreview(): void {
     let cartData = this.cartService.getCart()
     this.totalCartValue = 0
     this.totalReservationsCounter = 0
