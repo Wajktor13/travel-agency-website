@@ -98,7 +98,7 @@ export class ExcursionDataManagerService {
   }
 
   private validateCountry(country: string): boolean {    
-    return /^[A-Z][a-z ]*$/.test(country) && country.length >= 4
+    return country.length >= 4
   }
 
   private validateDate(date: string): boolean {
