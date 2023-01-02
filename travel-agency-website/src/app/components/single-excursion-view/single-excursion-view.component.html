@@ -47,13 +47,13 @@
             <h2>Reviews:</h2>
 
             <div *ngIf="reviews.length == 0">
-                There are no reviews for this excursion. Add the first one below!
+                There are no reviews of this excursion. Add the first one below!
             </div>
  
             <div class="review" *ngFor="let review of reviews">
 
                 <div class="review-header">
-                    <p class="nick">{{review.nick}} | attended: {{review.date}}</p>
+                    <p class="nick">{{review.nick}} | <i *ngIf="review.nick.includes('(customer)')">attended</i> {{review.date}}</p>
                 </div>
 
                 <div class="stars-date-div">
@@ -81,7 +81,7 @@
                         <span class="input-group-addon">
                             <img src="../../../assets/images/avatar.png">
                         </span>
-                        <input type="text" name="nick" class="form-control" [(ngModel)]="reviewNick">
+                        <input type="text" name="nick" class="form-control" [(ngModel)]="reviewNick" [disabled]="true" placeholder={{getNickname()}} value={{getNickname()}}>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                         <span class="input-group-addon">
                             <img src="../../../assets/images/star.png" alt="">
                         </span>
-                        <select class="form-control" id="rate" name="stars" [(ngModel)]="reviewStars">
+                        <select class="form-control" id="rate" name="stars" [(ngModel)]="reviewStars" [disabled]="!canVote()">
                             <option value=1>1</option>
                             <option value=2>2</option>
                             <option value=3>3</option>

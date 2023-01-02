@@ -92,19 +92,7 @@ export class AppComponent {
   }
 
   public getNickname(): string{
-    let user: UserData = this.authService.getCurrentUser()
-    
-    if (this.authService.isLoggedIn()){
-      if(user.roles.admin){
-        return user.nickname + " (admin)"
-      } else if (user.roles.manager){
-        return user.nickname + " (manager)"
-      } else{
-        return user.nickname + " (customer)"
-      }
-    } else{
-      return "logged out"
-    }
+    return this.authService.getTitle()
   }
 
   // @HostListener('window:unload', ['$event'])

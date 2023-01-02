@@ -30,7 +30,7 @@ export class ReviewsService {
   }
 
   private validateStars(stars: number): boolean {
-    return stars > 0
+    return stars >= 0
   }
 
   private validateText(text: string): boolean {
@@ -46,12 +46,14 @@ export class ReviewsService {
   public getAverageStarsByID(id: number): number {
     let reviewsForID: ReviewData[] = this.getReviewsData().filter(r => r.id == id)
 
-    let total: number = reviewsForID.length
+    if (reviewsForID.length > 0)
+    {
+      let total: number = reviewsForID.length - reviewsForID.filter(r => r.stars == 0).map(r => r.stars).reduce((r1, r2) => r1 + r2, 0)
 
-    if (total > 0) {
-      return reviewsForID.map(r => r.stars).reduce((r1, r2) => r1 + r2) / total
-    } else {
-      return 0
+      if (total > 0) {
+        return reviewsForID.map(r => r.stars).reduce((r1, r2) => r1 + r2, 0) / total
     }
+    }
+    return 0
   }
 }

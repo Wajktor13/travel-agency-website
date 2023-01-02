@@ -5,7 +5,6 @@ import { CartItem } from 'src/app/shared/models/cart-item';
 import { ReservationData } from 'src/app/shared/models/reservation-data';
 import { UserData } from 'src/app/shared/models/user-data';
 import { UserRoles } from 'src/app/shared/models/user-roles';
-import { CartService } from '../cart/cart.service';
 import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
 
 
@@ -67,5 +66,21 @@ export class AuthService {
 
   public isLoggedIn(): boolean{
     return this.isLoggedIn$.getValue()
+  }
+
+  public getTitle(): string{
+    let user: UserData = this.getCurrentUser()
+
+    if (this.isLoggedIn()){
+      if(user.roles.admin){
+        return user.nickname + " (admin)"
+      } else if (user.roles.manager){
+        return user.nickname + " (manager)"
+      } else{
+        return user.nickname + " (customer)"
+      }
+    } else{
+      return "logged out"
+    }
   }
 }

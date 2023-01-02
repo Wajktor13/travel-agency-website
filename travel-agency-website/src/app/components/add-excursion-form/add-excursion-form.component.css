@@ -40,3 +40,6 @@ form button:active{
     filter: brightness(0.8);
 }
 
+#id-input{
+    cursor: not-allowed;
+}

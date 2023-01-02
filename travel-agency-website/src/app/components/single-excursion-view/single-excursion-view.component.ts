@@ -29,7 +29,7 @@ export class SingleExcursionViewComponent implements OnInit {
 
   public date: Date = new Date()
 
-  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviesService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
+  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
     this.dataManager.excursionsData$.subscribe(
       {
         next: (data) => {
@@ -48,9 +48,9 @@ export class SingleExcursionViewComponent implements OnInit {
       }
     )
 
-    this.reviesService.reviewsData$.subscribe(
+    this.reviewsService.reviewsData$.subscribe(
       {
-        next: (data) => this.reviews = reviesService.getReviewsByID(this.id),
+        next: (data) => this.reviews = reviewsService.getReviewsByID(this.id),
         error: (err) => console.log(err)
       }
     )
@@ -58,7 +58,7 @@ export class SingleExcursionViewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id')
-    this.reviews = this.reviesService.getReviewsByID(this.id)
+    this.reviews = this.reviewsService.getReviewsByID(this.id)
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
     this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
     this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
@@ -85,12 +85,12 @@ export class SingleExcursionViewComponent implements OnInit {
 
   public reviewFormSubmitted() {
     let newReview: ReviewData = {
-      id: this.id, nick: this.reviewNick, date: this.reviewDate,
+      id: this.id, nick: this.getNickname(), date: this.reviewDate,
       stars: parseInt(this.reviewStars), text: this.reviewText
     }
-
-    if (this.reviesService.validateReview(newReview)) {
-      this.reviesService.addReview(newReview)
+    
+    if (this.reviewsService.validateReview(newReview)) {
+      this.reviewsService.addReview(newReview)
       this.reviewNick = ''
       this.reviewDate = ''
       this.reviewStars = '0'
@@ -117,5 +117,13 @@ export class SingleExcursionViewComponent implements OnInit {
     }
 
     return false
+  }
+
+  public getNickname(): string{
+    return this.authService.getTitle()
+  }
+
+  public canVote(): boolean{
+    return this.authService.getCurrentUser().roles.customer
   }
 }
