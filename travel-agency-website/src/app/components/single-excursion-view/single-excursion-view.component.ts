@@ -80,13 +80,18 @@ export class SingleExcursionViewComponent implements OnInit {
 
     if (currentUser.banned) {
       alert("Your account is banned. You can't add reviews.")
-    } else {
+    } else if(this.excursion.reviews.map(r => r.uid).includes(currentUser.uid)){
+      alert("You have already reviewed this excursion!")
+    } else if(!currentUser.reservations.map(r => r.excursionData.id).includes(this.excursion.id)){
+      alert("You have not attended this excursion!")
+    }
+    else {
       let newReview: ReviewData = {
         reviewID: this.id, uid: currentUser.uid, nick: this.getNickname(), date: this.reviewDate,
         stars: parseInt(this.reviewStars), text: this.reviewText
       }
   
-      if (this.reviewsService.validateReview(newReview, this.excursion.reviews)) {
+      if (this.reviewsService.validateReview(newReview)) {
         this.reviewsService.addReview(newReview, this.excursion)
         this.reviewNick = ''
         this.reviewDate = ''

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ReviewData } from 'src/app/shared/models/review-data';
-import { UserData } from 'src/app/shared/models/user-data';
 import { ExcursionDataManagerService } from '../excursion-data-manager/excursion-data-manager.service';
-import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
 
 
 @Injectable({
@@ -15,12 +12,8 @@ export class ReviewsService {
 
   constructor(private excurionDataManager: ExcursionDataManagerService) { }
 
-  public validateReview(newReview: ReviewData, reviews: ReviewData[]): boolean {
-    return this.validateNumberOfReviews(newReview, reviews) && this.validateNick(newReview.nick) && this.validateStars(newReview.stars, newReview.nick) && this.validateText(newReview.text)
-  }
-
-  private validateNumberOfReviews(newReview: ReviewData, reviews: ReviewData[]): boolean{
-    return !reviews.map(r => r.uid).includes(newReview.uid)
+  public validateReview(newReview: ReviewData): boolean {
+    return this.validateNick(newReview.nick) && this.validateStars(newReview.stars, newReview.nick) && this.validateText(newReview.text)
   }
 
   private validateNick(nick: string): boolean {
