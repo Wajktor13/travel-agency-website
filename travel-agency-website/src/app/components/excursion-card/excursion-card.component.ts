@@ -71,7 +71,7 @@ export class ExcursionCardComponent implements OnChanges {
       this.router.navigate(['login-register'])
       
     } else{
-      alert("Not avaialble for manager / admin")
+      alert("Not available for manager / admin")
     }
   }
 

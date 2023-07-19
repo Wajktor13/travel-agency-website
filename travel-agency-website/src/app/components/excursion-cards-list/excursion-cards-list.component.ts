@@ -24,7 +24,6 @@ export class ExcursionCardsListComponent {
       {
         next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,
         error: (err: any) => console.log(err)
-        
       }
     )
 

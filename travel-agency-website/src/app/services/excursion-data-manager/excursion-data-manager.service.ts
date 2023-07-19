@@ -44,7 +44,7 @@ export class ExcursionDataManagerService {
      uncomment below line to enable permanent deletion of data from database
     */
 
-    this.db.collection('excursions').doc(toRemove.id.toString()).delete()
+    // this.db.collection('excursions').doc(toRemove.id.toString()).delete()
 
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
     currentExcursionsData = currentExcursionsData.filter(e => e.id != toRemove.id)
