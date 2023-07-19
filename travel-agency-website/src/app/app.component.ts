@@ -95,8 +95,11 @@ export class AppComponent {
     return this.authService.getTitle()
   }
 
-  // @HostListener('window:unload', ['$event'])
-  // unloadHandler(event: any) {
-  //   this.authService.logout()
-  // }
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event: any) {
+    if (!this.authService.keepLoggedIn){
+      this.authService.logout()
+      localStorage.clear()
+    }
+  }
 }

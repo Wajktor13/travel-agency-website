@@ -15,6 +15,7 @@ import { UserDataManagerService } from '../user-data-manager/user-data-manager.s
 export class AuthService {
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false)
   public currentUser$: BehaviorSubject<UserData> = new BehaviorSubject({ uid:"",banned: true, roles: {} as UserRoles, inCart: [], reservations: [], email: "", nickname: ""} as UserData)
+  public keepLoggedIn: boolean = false
 
   constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService) {
     this.fireAuth.onAuthStateChanged(async (user) => {
@@ -44,15 +45,20 @@ export class AuthService {
       })
   }
 
-  public login(email: string, password: string): void {
-    this.fireAuth.signInWithEmailAndPassword(email, password)
+  public async login(email: string, password: string): Promise<boolean> {
+    let loggedIn: boolean = false;
+
+    await this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((loginData) => {
         localStorage.setItem("user", loginData.user?.uid!)
         alert("Successfully logged in!")
+        loggedIn = true
       })
       .catch((error) => {
         alert(error.code.slice(5))
       })
+
+      return loggedIn;
   }
 
   public logout(): void {

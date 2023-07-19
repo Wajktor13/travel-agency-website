@@ -12,6 +12,12 @@
         <input class="login-register-input" type="text" placeholder="Nickname" name="nickname" *ngIf="!radioLoginChecked" [(ngModel)]="nickname">
         <input class="login-register-input" type="email" placeholder="Email" name="email" [(ngModel)]="email">
         <input class="login-register-input" type="password" placeholder="Password" name="password" [(ngModel)]="password">
+
+        <div>
+            <input id="keep-logged-in" type="checkbox" name="keep-logged-in" [(ngModel)]="authService.keepLoggedIn">
+            <label for="keep-logged-in">Keep me logged in</label>
+        </div>
+
         <button class="submit-button" id="login-button" type="submit" *ngIf="radioLoginChecked" (click)="loginButtonClicked()">Log in</button>
         <button class="submit-button" id="register-button" type="submit" *ngIf="!radioLoginChecked" (click)="registerButtonClicked()">Register</button>
     </form>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 
@@ -14,20 +15,23 @@ export class LoginRegisterComponent {
   public email: string = ''
   public password: string = ''
 
-  constructor(private authService: AuthService){}
+  constructor(public authService: AuthService, private router: Router){}
 
   public changeLoginRegister(event: any): void{
     let value: string = event.target.value
 
-    if (value =="1"){
+    if (value == "1"){
       this.radioLoginChecked = true
     } else{
       this.radioLoginChecked = false
     }
   }
 
-  public loginButtonClicked(): void{
-    this.authService.login(this.email, this.password)
+  public async loginButtonClicked(): Promise<void>{
+    this.authService.logout()
+    if (await this.authService.login(this.email, this.password)){
+      this.router.navigate(["/home"])
+    }
   }
 
   public registerButtonClicked(): void{
