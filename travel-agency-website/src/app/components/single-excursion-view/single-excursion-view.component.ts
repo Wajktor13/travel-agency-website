@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
@@ -29,7 +29,7 @@ export class SingleExcursionViewComponent implements OnInit {
 
   public date: Date = new Date()
 
-  constructor(private dataManager: ExcursionDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, public authService: AuthService) {
+  constructor(private dataManager: ExcursionsDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, public authService: AuthService) {
     this.dataManager.excursionsData$.subscribe(
       {
         next: (data) => {
@@ -69,13 +69,13 @@ export class SingleExcursionViewComponent implements OnInit {
     }
   }
 
-  public removeButtonClicked() {
+  public removeButtonClicked(): void {
     this.dataManager.removeFromExcursionsDB(this.excursion)
     this.cartService.removeFromCart(parseInt(this.id))
     this.router.navigate(['excursions'])
   }
 
-  public reviewFormSubmitted() {
+  public reviewFormSubmitted(): void {
     let currentUser: UserData = this.authService.getCurrentUser()
 
     if (currentUser.banned) {
@@ -108,7 +108,7 @@ export class SingleExcursionViewComponent implements OnInit {
   }
 
   public getReservationsFromHistory(id: number): number {
-    return this.reservationHistory.getReservationsByID(this.excursion.id)
+    return this.reservationHistory.getNoReservationsByID(this.excursion.id)
   }
 
   public checkRolesForRemovingExcursions(): boolean {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { CartItem } from 'src/app/shared/models/cart-item';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
@@ -19,7 +19,7 @@ export class CartComponent {
   public totalPrice: number = 0
   public totalReservations: number = 0
 
-  constructor(private cartService: CartService, private excursionDataManager: ExcursionDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
+  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
     excursionDataManager.excursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => this.excursionsData = data,
@@ -43,11 +43,11 @@ export class CartComponent {
     )
   }
 
-  public getReservations(id: number | undefined) {
+  public getReservations(id: number | undefined): number {
     return this.cartService.getReservationsOf(id as number)
   }
 
-  public getExcursionDetails(id: number) {
+  public getExcursionDetails(id: number): ExcursionData | null {
     for (let excursion of this.excursionsData) {
       if (excursion.id == id) {
         return excursion
@@ -58,15 +58,15 @@ export class CartComponent {
   }
 
   public getExcursionsWithReservations(): ExcursionData[] {
-    let cartDetails: ExcursionData[] = []
+    let cartFiltered: ExcursionData[] = []
 
     for (let cartItem of this.cart) {
       if (cartItem.amount > 0) {
-        cartDetails.push(this.getExcursionDetails(cartItem.excursionID) as ExcursionData)
+        cartFiltered.push(this.getExcursionDetails(cartItem.excursionID) as ExcursionData)
       }
     }
 
-    return cartDetails
+    return cartFiltered
   }
 
   public navigateToSingleExcursionView(id: number | undefined): void {
@@ -81,7 +81,7 @@ export class CartComponent {
       if (cartItem.amount > 0) {
         let excursionDetails: ExcursionData = this.getExcursionDetails(cartItem.excursionID)!
 
-        this.reservationHistory.addToHistory({ excursionData: excursionDetails, reservationDate: currentDate, status: "upcoming", amount: cartItem.amount })
+        this.reservationHistory.addToReservationsHistory({ excursionData: excursionDetails, reservationDate: currentDate, status: "upcoming", amount: cartItem.amount })
 
         excursionDetails.inStock -= cartItem.amount
 

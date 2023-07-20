@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ReviewData } from 'src/app/shared/models/review-data';
-import { ExcursionDataManagerService } from '../excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from '../excursion-data-manager/excursion-data-manager.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Injectable({
@@ -10,21 +11,21 @@ import { ExcursionDataManagerService } from '../excursion-data-manager/excursion
 
 export class ReviewsService {
 
-  constructor(private excurionDataManager: ExcursionDataManagerService) { }
+  constructor(private excursionsDataManager: ExcursionsDataManagerService, private authService: AuthService) { }
 
   public validateReview(newReview: ReviewData): boolean {
-    return this.validateNick(newReview.nick) && this.validateStars(newReview.stars, newReview.nick) && this.validateText(newReview.text)
+    return this.validateNick(newReview.nick) && this.validateStars(newReview.stars) && this.validateText(newReview.text)
   }
 
   private validateNick(nick: string): boolean {
     return nick.length >= 3
   }
 
-  private validateStars(stars: number, nick: string): boolean {
-    if (!nick.includes("(customer)")) {
+  private validateStars(stars: number): boolean {
+    if (stars > 0) {
       return true
     } else {
-      return stars > 0
+      return this.authService.checkRolesForPostingReviewWithoutStars()
     }
   }
 
@@ -34,11 +35,10 @@ export class ReviewsService {
 
   public addReview(newReview: ReviewData, excursionData: ExcursionData): void {
     excursionData.reviews.push(newReview)
-    this.excurionDataManager.updateExcursionData(excursionData)
+    this.excursionsDataManager.updateExcursionData(excursionData)
   }
 
   public getAverageStars(reviews: ReviewData[]): number {
-
     if (reviews.length > 0) {
       let total: number = reviews.length - reviews.filter(r => r.stars == 0).map(r => r.stars).reduce((r1, r2) => r1 + r2, 0)
 
@@ -46,6 +46,7 @@ export class ReviewsService {
         return reviews.map(r => r.stars).reduce((r1, r2) => r1 + r2, 0) / total
       }
     }
+    
     return 0
   }
 }

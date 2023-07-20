@@ -14,7 +14,7 @@ export class ReservationsHistoryComponent {
   public history: ReservationData[] = []
 
   constructor(private reservationHistory: ReservationHistoryService, private router: Router) {
-    reservationHistory.history$.subscribe(
+    reservationHistory.reservationsHistory$.subscribe(
       {
         next: (historyData: ReservationData[]) => { this.history = historyData },
         error: (err: any) => console.log(err)

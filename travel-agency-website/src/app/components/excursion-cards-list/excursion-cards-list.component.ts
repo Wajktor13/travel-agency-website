@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
-import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
@@ -17,7 +17,7 @@ export class ExcursionCardsListComponent {
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
 
-  constructor(private dataManager: ExcursionDataManagerService, private cartService: CartService, 
+  constructor(private dataManager: ExcursionsDataManagerService, private cartService: CartService, 
     public filterService: FilterExcursionsService){
       
     dataManager.excursionsData$.subscribe(
@@ -42,7 +42,7 @@ export class ExcursionCardsListComponent {
     )
   }
 
-  public removeExcursionCard(event: any){
+  public removeExcursionCard(event: any): void {
     let toRemove: RemoveExcursionData = event
     this.dataManager.removeFromExcursionsDB(toRemove.excursionData)
     this.cartService.removeFromCart(toRemove.excursionData.id)

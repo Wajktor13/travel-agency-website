@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ExcursionDataManagerService } from './excursion-data-manager.service';
+import { ExcursionsDataManagerService } from './excursion-data-manager.service';
 
 describe('ExcursionDataFetcherService', () => {
-  let service: ExcursionDataManagerService;
+  let service: ExcursionsDataManagerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ExcursionDataManagerService);
+    service = TestBed.inject(ExcursionsDataManagerService);
   });
 
   it('should be created', () => {

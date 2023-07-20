@@ -2,12 +2,11 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
-import { ReviewData } from 'src/app/shared/models/review-data';
 
 
 @Component({
@@ -25,15 +24,15 @@ export class ExcursionCardComponent implements OnChanges {
   @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', img: '' , reviews: [], longDescription: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
-    dataManager.minUnitPrice$.subscribe(
+  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
+    excursionDataManager.minUnitPrice$.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.minPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    dataManager.maxUnitPrice$.subscribe(
+    excursionDataManager.maxUnitPrice$.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.maxPrice = price,
         error: (err: any) => console.log(err)
@@ -53,9 +52,6 @@ export class ExcursionCardComponent implements OnChanges {
       this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)
 
     } 
-    // else if (this.excursion.id != -1) {
-    //   this.cartService.addToCart(this.excursion.id, 0)
-    // }
 
     this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
   }
@@ -83,7 +79,7 @@ export class ExcursionCardComponent implements OnChanges {
     return ExcursionCardComponent.maxPrice
   }
 
-  public removeButtonClicked(toRemove: ExcursionData) {
+  public removeButtonClicked(toRemove: ExcursionData): void {
     this.removeExcursionCardEvent.emit({ excursionData: toRemove, reserved: this.reservationCounter })
   }
 
@@ -100,17 +96,6 @@ export class ExcursionCardComponent implements OnChanges {
   }
 
   public getReservationsFromHistory(id: number): number {
-    return this.reservationHistory.getReservationsByID(this.excursion.id)
-  }
-
-  public checkRolesForRemovingExcursions(): boolean {
-    if (this.authService.isLoggedIn()) {
-      let currentUserRoles = this.authService.getCurrentUser().roles
-      if (currentUserRoles.admin || currentUserRoles.manager) {
-        return true
-      }
-    }
-
-    return false
+    return this.reservationHistory.getNoReservationsByID(this.excursion.id)
   }
 }

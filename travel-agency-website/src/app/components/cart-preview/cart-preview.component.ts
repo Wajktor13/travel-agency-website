@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { CartItem } from 'src/app/shared/models/cart-item';
 
 
@@ -14,7 +14,7 @@ export class CartPreviewComponent {
   public totalReservationsCounter: number = 0
   public totalCartValue: number = 0
 
-  constructor(private cartService: CartService, private dataManager: ExcursionDataManagerService, excursionDataManager: ExcursionDataManagerService) {
+  constructor(private cartService: CartService, private dataManager: ExcursionsDataManagerService, excursionDataManager: ExcursionsDataManagerService) {
 
     excursionDataManager.excursionsData$.subscribe(
       {

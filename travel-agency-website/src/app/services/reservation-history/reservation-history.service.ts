@@ -11,29 +11,29 @@ import { UserDataManagerService } from '../user-data-manager/user-data-manager.s
 })
 
 export class ReservationHistoryService {
-  public history$: BehaviorSubject<ReservationData[]> = new BehaviorSubject([] as ReservationData[])
+  public reservationsHistory$: BehaviorSubject<ReservationData[]> = new BehaviorSubject([] as ReservationData[])
 
   constructor(private userDataManager: UserDataManagerService, private authService: AuthService) {
     authService.currentUser$.subscribe(
       {
-        next: (userData: UserData) => this.history$.next(userData.reservations),
+        next: (userData: UserData) => this.reservationsHistory$.next(userData.reservations),
         error: (err) => console.log(err)
       }
     )
    }
 
-  public getHistory(): ReservationData[]{
-    return this.history$.getValue()
+  public getReservationsHistory(): ReservationData[] {
+    return this.reservationsHistory$.getValue()
   }
 
-  public addToHistory(newReservation: ReservationData){
+  public addToReservationsHistory(newReservation: ReservationData) {
     let currentUser: UserData = this.authService.getCurrentUser()
     currentUser.reservations.push(newReservation)
     this.userDataManager.updateUserData(currentUser)
   }
 
-  public getReservationsByID(id: number): number{
-  let reservationList = this.getHistory().filter(r => r.excursionData.id == id).map(r => r.amount)
+  public getNoReservationsByID(id: number): number {
+  let reservationList = this.getReservationsHistory().filter(r => r.excursionData.id == id).map(r => r.amount)
 
   return reservationList.reduce((a, b) => a + b, 0)
   }

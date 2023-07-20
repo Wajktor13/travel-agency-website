@@ -8,16 +8,16 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   providedIn: 'root'
 })
 
-export class ExcursionDataManagerService {
-  private fetchedData$: Observable<ExcursionData[]>
+export class ExcursionsDataManagerService {
+  private fetchedExcursionsData$: Observable<ExcursionData[]>
   public excursionsData$: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([] as ExcursionData[])
   public minUnitPrice$: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   public maxUnitPrice$: BehaviorSubject<number> = new BehaviorSubject(0)
 
   constructor(private db: AngularFirestore) {
-    this.fetchedData$ = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
+    this.fetchedExcursionsData$ = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
 
-    this.fetchedData$.subscribe(
+    this.fetchedExcursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => this.excursionsData$.next(data),
         error: (err: any) => console.log(err)
@@ -38,10 +38,10 @@ export class ExcursionDataManagerService {
     return this.getExcursionsData().includes(excursion)
   }
 
-  public removeFromExcursionsDB(toRemove: ExcursionData) {
+  public removeFromExcursionsDB(toRemove: ExcursionData): void {
 
     /*
-     uncomment below line to enable permanent deletion of data from database
+     uncomment below line to enable permanent deletion from database
     */
 
     // this.db.collection('excursions').doc(toRemove.id.toString()).delete()
@@ -53,17 +53,17 @@ export class ExcursionDataManagerService {
     this.updateMinMaxPrice(this.getExcursionsData())
   }
 
-  public addToExcursionsDB(toAdd: ExcursionData) {
-    this.db.collection('excursions').doc(toAdd.id.toString()).set(toAdd)
+  public addToExcursionsDB(excursionToAdd: ExcursionData): void {
+    this.db.collection('excursions').doc(excursionToAdd.id.toString()).set(excursionToAdd)
 
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
-    currentExcursionsData.push(toAdd)
+    currentExcursionsData.push(excursionToAdd)
     this.excursionsData$.next(currentExcursionsData)
 
     this.updateMinMaxPrice(this.getExcursionsData())
   }
 
-  public setExcursionsData(newExcursionsData: ExcursionData[]) {
+  public setExcursionsData(newExcursionsData: ExcursionData[]): void {
     this.excursionsData$.next(newExcursionsData)
   }
 
@@ -139,22 +139,21 @@ export class ExcursionDataManagerService {
     }
 
     this.minUnitPrice$.next(minPrice)
-    this.maxUnitPrice$.next(maxPrice)
-     
+    this.maxUnitPrice$.next(maxPrice) 
   }
 
   public getMinAvailableID(): number {
-    let i = 0
+    let minID = 0
     let data: ExcursionData[] = this.getExcursionsData()
     data.sort((e1, e2) => e1.id - e2.id)
     for (let excursion of data) {
-      if (excursion.id != i) {
+      if (excursion.id != minID) {
         break
       }
-      i++
+      minID++
     }
 
-    return i
+    return minID
   }
 
   public getPriceByID(id: number): number {
@@ -176,7 +175,7 @@ export class ExcursionDataManagerService {
     return { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', img: '', reviews: [], longDescription: '' }
   }
 
-  public updateExcursionData(toUpdate: ExcursionData): void{
+  public updateExcursionData(toUpdate: ExcursionData): void {
     this.db.collection('excursions').doc(toUpdate.id.toString()).delete()
     this.db.collection('excursions').doc(toUpdate.id.toString()).set(toUpdate)
   }

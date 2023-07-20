@@ -1,5 +1,6 @@
 <header>
     <div id="nav-wrapper">
+
         <input type="checkbox" id="nav-btn-checkbox">
         <label for="nav-btn-checkbox">
             <div id="nav-btn">
@@ -8,6 +9,7 @@
                 <div class="nav-btn-bar" id="bar3"></div>
             </div>
         </label>
+        
         <nav id="nav-flex-container">
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-home">
@@ -20,18 +22,18 @@
                 <a (click)="navigateToExcursions()">Excursions</a>
             </label>
 
-            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-add-excursions" *ngIf="checkRolesForAddingExcursions()">
+            <!-- <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-add-excursions" *ngIf="this.authService.checkRolesForAddingExcursions()"> -->
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-account">
             <label class="nav-tile" for="radio-account">
                 <div class="dropdown">
-                    <button class="dropbtn">Account: {{getNickname()}}</button>
+                    <button class="dropbtn">Account: {{this.authService.getTitle()}}</button>
                     <div class="dropdown-content">
                         <a (click)="navigateToLoginRegister()" *ngIf="!isLoggedIn">Log In / Register</a>
                         <a (click)="logOutButtonClicked()" *ngIf="isLoggedIn">Log Out</a>
-                        <a (click)="navigateToAddReservationsHistory()" *ngIf="checkRolesForReservationsHistory()">Reservations History</a>
-                        <a (click)="navigateToAddExcursionForm()" *ngIf="checkRolesForAddingExcursions()">Manager Panel - Excursions</a>
-                        <a (click)="navigateToAdminPanelUsers()" *ngIf="checkRolesForAdminPanel()">Admin Panel - Users</a>
+                        <a (click)="navigateToReservationsHistory()" *ngIf="this.authService.checkRolesForReservationsHistory()">Reservations History</a>
+                        <a (click)="navigateToAddExcursionForm()" *ngIf="this.authService.checkRolesForAddingExcursions()">Manager Panel - Excursions</a>
+                        <a (click)="navigateToAdminPanelUsers()" *ngIf="this.authService.checkRolesForAdminPanel()">Admin Panel - Users</a>
                     </div>
                 </div>
             </label>
@@ -46,8 +48,8 @@
                 </a>
             </label> -->
 
-            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-cart-preview" *ngIf="checkRolesForCart()">
-            <label class="nav-tile nav-cart-label" for="radio-cart-preview" *ngIf="checkRolesForCart()">
+            <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-cart-preview" *ngIf="this.authService.checkRolesForCart()">
+            <label class="nav-tile nav-cart-label" for="radio-cart-preview" *ngIf="this.authService.checkRolesForCart()">
                 <a (click)="navigateToCart()" id="nav-cart">
                     <app-cart-preview></app-cart-preview>
                 </a>

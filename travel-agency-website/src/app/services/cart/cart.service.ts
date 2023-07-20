@@ -30,7 +30,7 @@ export class CartService {
     this.cart$.next(newCart)
   }
 
-  public addToCart(id: number, newReservationsCounter: number) {
+  public addToCart(id: number, newReservationsCounter: number): void {
     let currentCart: CartItem[] = this.cart$.getValue().filter(cartItem => cartItem.excursionID != id)
     currentCart.push({excursionID: id, amount: newReservationsCounter} as CartItem)
     this.cart$.next(currentCart)
@@ -38,7 +38,7 @@ export class CartService {
     let currentUser = this.authService.getCurrentUser()
     this.userDataManager.updateUserData({uid: currentUser.uid, email: currentUser.email, 
     nickname: currentUser.nickname, roles: currentUser.roles, banned: currentUser.banned,
-  inCart: currentCart, reservations: currentUser.reservations})
+    inCart: currentCart, reservations: currentUser.reservations})
   }
 
   public isInCart(id: number): boolean {
@@ -46,18 +46,18 @@ export class CartService {
   }
 
   public removeFromCart(id: number): void {
-    let current: CartItem[] = this.cart$.getValue()
-    this.cart$.next(current.filter(cartItem => cartItem.excursionID != id))
+    let currentCart: CartItem[] = this.cart$.getValue()
+    this.cart$.next(currentCart.filter(cartItem => cartItem.excursionID != id))
   }
 
   public removeAllFromCart(): void {
     this.cart$.next([] as CartItem[])
   }
 
-  public getReservationsOf(id: number) {
-    let c = this.getCart().filter(cartItem => cartItem.excursionID == id)
-    if (c.length > 0) {
-      return c[0].amount
+  public getReservationsOf(id: number): number {
+    let cartFiltered = this.getCart().filter(cartItem => cartItem.excursionID == id)
+    if (cartFiltered.length > 0) {
+      return cartFiltered[0].amount
     }
 
     return 0

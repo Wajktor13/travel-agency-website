@@ -9,7 +9,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { ExcursionCardComponent } from './components/excursion-card/excursion-card.component';
-import { ExcursionDataManagerService } from './services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from './services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionCardsListComponent } from './components/excursion-cards-list/excursion-cards-list.component'
 import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
 import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
@@ -60,7 +60,7 @@ import { AdminPanelUsersComponent } from './components/admin-panel-users/admin-p
   ],
 
   providers: [
-    ExcursionDataManagerService,
+    ExcursionsDataManagerService,
     CartService,
     FilterExcursionsService,
     ReviewsService,

@@ -20,11 +20,10 @@ export class AuthService {
   constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService) {
     this.fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
-        console.log(user)
         let userData = (await this.userDataManger.getUserDataByUid(user.uid)) as { uid: string, banned: boolean, roles: UserRoles, inCart: CartItem[], reservations: ReservationData[] }
         this.isLoggedIn$.next(true)
-
         this.currentUser$.next({ uid: user.uid, email: user.email!, nickname: user.displayName!, roles: userData.roles, banned: userData.banned, inCart: userData.inCart, reservations: userData.reservations })
+        
       } else {
         this.isLoggedIn$.next(false)
       }
@@ -49,18 +48,18 @@ export class AuthService {
   public async login(email: string, password: string): Promise<boolean> {
     let loggedIn: boolean = false;
 
-      await this.fireAuth.setPersistence(this.keepLoggedIn ? "local" : "session")
-        .then(async () => {
-          await this.fireAuth.signInWithEmailAndPassword(email, password)
-            .then((loginData) => {
-              alert("Successfully logged in!")
-              localStorage.setItem("user", loginData.user?.uid!)
-              loggedIn = true
-            })
-            .catch((error) => {
-              alert(error.code.slice(5))
-            })
-        })
+    await this.fireAuth.setPersistence(this.keepLoggedIn ? "local" : "session")
+      .then(async () => {
+        await this.fireAuth.signInWithEmailAndPassword(email, password)
+          .then((loginData) => {
+            alert("Successfully logged in!")
+            localStorage.setItem("user", loginData.user?.uid!)
+            loggedIn = true
+          })
+          .catch((error) => {
+            alert(error.code.slice(5))
+          })
+      })
 
       if (this.keepLoggedIn){
         localStorage.setItem("keepLoggedIn", "true")
@@ -73,30 +72,68 @@ export class AuthService {
 
   public logout(): void {
     localStorage.removeItem("user")
+    localStorage.setItem("keepLoggedIn", "false")
     this.fireAuth.signOut()
   }
 
-  public getCurrentUser(): UserData{
+  public getCurrentUser(): UserData {
     return this.currentUser$.getValue()
   }
 
-  public isLoggedIn(): boolean{
+  public isLoggedIn(): boolean {
     return this.isLoggedIn$.getValue()
   }
 
-  public getTitle(): string{
+  public getTitle(): string {
     let user: UserData = this.getCurrentUser()
 
-    if (this.isLoggedIn()){
-      if(user.roles.admin){
+    if (this.isLoggedIn()) {
+      if (user.roles.admin) {
         return user.nickname + " (admin)"
-      } else if (user.roles.manager){
+      } else if (user.roles.manager) {
         return user.nickname + " (manager)"
-      } else{
+      } else {
         return user.nickname + " (customer)"
       }
-    } else{
+    } else {
       return "logged out"
     }
+  }
+
+  public checkRolesForAddingExcursions(): boolean {
+    if (this.isLoggedIn()) {
+      let currentUserRoles: UserRoles = this.getCurrentUser().roles
+      return currentUserRoles.manager || currentUserRoles.admin
+    } else {
+      return false
+    }
+  }
+
+  public checkRolesForReservationsHistory(): boolean {
+    if (this.isLoggedIn()) {
+      return this.getCurrentUser().roles.customer
+    } else {
+      return false
+    }
+  }
+
+  public checkRolesForAdminPanel(): boolean {
+    if (this.isLoggedIn()) {
+      return this.getCurrentUser().roles.admin
+    } else {
+      return false
+    }
+  }
+
+  public checkRolesForCart(): boolean {
+    if (!this.isLoggedIn()) {
+      return true
+    } else {
+      return this.getCurrentUser().roles.customer
+    }
+  }
+
+  public checkRolesForPostingReviewWithoutStars(): boolean {
+    return this.isLoggedIn() && (this.getCurrentUser().roles.admin || this.getCurrentUser().roles.manager)
   }
 }

@@ -5,6 +5,7 @@
     <h3>{{excursion.name | uppercase}}</h3>
     <p>{{excursion.country | uppercase}}</p>
     <p>{{excursion.shortDescription}}</p>
+
     <div class="stars">
         <span *ngIf="getAverageStars() > 0 else noReviews">
             {{getAverageStars() | number : '1.2-2'}} / 5
@@ -12,6 +13,7 @@
         </span>
         <ng-template #noReviews>No reviews!</ng-template>
     </div>
+    
     <p>From {{excursion.startDate}} to {{excursion.endDate}}</p>
     <p>{{excursion.unitPrice | currency}}</p>
     <p *ngIf="leftToAddToCart > 0; else outOfStock">In stock: {{leftToAddToCart}}</p>

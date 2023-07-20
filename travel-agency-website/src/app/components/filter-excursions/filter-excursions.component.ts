@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EventType } from '@angular/router';
-import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
 
 
@@ -16,7 +16,7 @@ export class FilterExcursionsComponent {
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
 
-  constructor(public dataManager: ExcursionDataManagerService, public filterService: FilterExcursionsService){
+  constructor(public dataManager: ExcursionsDataManagerService, public filterService: FilterExcursionsService){
     filterService.selectedMaxPrice$.subscribe(
       {
         next: (price: number) => this.selectedMaxPrice = price,
@@ -60,35 +60,35 @@ export class FilterExcursionsComponent {
     )
   }
 
-  public changeSelectedMinPrice(event: any){
+  public changeSelectedMinPrice(event: any): void {
     this.filterService.setSelectedMinPrice(event.target.value)
   }
 
-  public changeSelectedMaxPrice(event: any){
+  public changeSelectedMaxPrice(event: any): void {
     this.filterService.setSelectedMaxPrice(event.target.value)
   }
 
-  public changeSelectedFromDate(event: any){
+  public changeSelectedFromDate(event: any): void {
     this.filterService.setSelectedFromDate(event.target.value)
   }
 
-  public changeSelectedToDate(event: any){
+  public changeSelectedToDate(event: any): void {
     this.filterService.setSelectedToDate(event.target.value)
   }
 
-  public changeSelectedCountry(event: any){
+  public changeSelectedCountry(event: any): void {
     this.filterService.setSelectedCountry(event.target.value)
   }
 
-  public changeSelectedMinStars(event: any){
+  public changeSelectedMinStars(event: any): void {
     this.filterService.setSelectedMinStars(event.target.value)
   }
 
-  public changeSelectedMaxStars(event: any){
+  public changeSelectedMaxStars(event: any): void {
     this.filterService.setSelectedMaxStars(event.target.value)
   }
 
-  public changeSelectedNoReviews(event: any){
+  public changeSelectedNoReviews(event: any): void {
     this.filterService.setSelectedNoReviews(event.target.checked)
   }
 

@@ -17,7 +17,7 @@ export class LoginRegisterComponent {
 
   constructor(public authService: AuthService, private router: Router){}
 
-  public changeLoginRegister(event: any): void{
+  public changeLoginRegister(event: any): void {
     let value: string = event.target.value
 
     if (value == "1"){
@@ -27,14 +27,14 @@ export class LoginRegisterComponent {
     }
   }
 
-  public async loginButtonClicked(): Promise<void>{
+  public async loginButtonClicked(): Promise<void> {
     this.authService.logout()
     if (await this.authService.login(this.email, this.password)){
-      this.router.navigate(["/home"])
+      // this.router.navigate(['home'])
     }
   }
 
-  public registerButtonClicked(): void{
+  public registerButtonClicked(): void {
     this.authService.register(this.email, this.password, this.nickname)
   }
 }

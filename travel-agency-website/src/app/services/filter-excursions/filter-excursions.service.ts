@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class FilterExcursionsService {
 
   public selectedMinPrice$: BehaviorSubject<number> = new BehaviorSubject(0)
@@ -17,71 +19,71 @@ export class FilterExcursionsService {
 
   constructor() { }
 
-  public getSelectedMinPrice(): number{
+  public getSelectedMinPrice(): number {
     return this.selectedMinPrice$.getValue()
   }
 
-  public getSelectedMaxPrice(): number{
+  public getSelectedMaxPrice(): number {
     return this.selectedMaxPrice$.getValue()
   }
 
-  public setSelectedMinPrice(newSelectedMinPrice: number){
+  public setSelectedMinPrice(newSelectedMinPrice: number) {
     this.selectedMinPrice$.next(newSelectedMinPrice)
   }
 
-  public setSelectedMaxPrice(newSelectedMaxPrice: number){
+  public setSelectedMaxPrice(newSelectedMaxPrice: number) {
     this.selectedMaxPrice$.next(newSelectedMaxPrice)
   }
 
-  public getSelectedFromDate(): string{
+  public getSelectedFromDate(): string {
     return this.selectedFromDate
   }
 
-  public getSelectedToDate(): string{
+  public getSelectedToDate(): string {
     return this.selectedToDate
   }
 
-  public getSelectedCountry(): string{
+  public getSelectedCountry(): string {
     return this.selectedCountry
   }
 
-  public getSelectedMinStars(): number{
+  public getSelectedMinStars(): number {
     return this.selectedMinStars
   }
 
-  public getSelectedMaxStars(): number{
+  public getSelectedMaxStars(): number {
     return this.selectedMaxStars
   }
 
-  public getSelectedNoReviews(): boolean{
+  public getSelectedNoReviews(): boolean {
     return this.selectedNoReviews
   }
 
-  public setSelectedFromDate(newSelectedFromDate: string): void{
+  public setSelectedFromDate(newSelectedFromDate: string): void {
     this.selectedFromDate = newSelectedFromDate
   }
 
-  public setSelectedToDate(newSelectedToDate: string): void{
+  public setSelectedToDate(newSelectedToDate: string): void {
     this.selectedToDate = newSelectedToDate
   }
 
-  public setSelectedCountry(newSelectedCountry: string): void{
+  public setSelectedCountry(newSelectedCountry: string): void {
     this.selectedCountry = newSelectedCountry
   }
 
-  public setSelectedMinStars(newSelectedMinStars: number): void{
+  public setSelectedMinStars(newSelectedMinStars: number): void {
     this.selectedMinStars = newSelectedMinStars
   }
 
-  public setSelectedMaxStars(newSelectedMaxStars: number): void{
+  public setSelectedMaxStars(newSelectedMaxStars: number): void {
     this.selectedMaxStars = newSelectedMaxStars
   }
 
-  public setSelectedNoReviews(newSelectedNoReviews: boolean): void{
+  public setSelectedNoReviews(newSelectedNoReviews: boolean): void {
     this.selectedNoReviews = newSelectedNoReviews
   }
 
-  public resetFilters(minPrice: number, maxPrice: number): void{
+  public resetFilters(minPrice: number, maxPrice: number): void {
     this.setSelectedMinPrice(minPrice)
     this.setSelectedMaxPrice(maxPrice)
     this.setSelectedFromDate('')

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ExcursionDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
+import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
+
 
 @Component({
   selector: 'app-add-excursion-form',
@@ -16,12 +17,11 @@ export class AddExcursionFormComponent {
   public excursionsData: ExcursionData[] = []
   public textAreaValue: string = ''
 
-  constructor(private excursionDataManager: ExcursionDataManagerService, private filterService: FilterExcursionsService, private router: Router) {
+  constructor(private excursionDataManager: ExcursionsDataManagerService, private filterService: FilterExcursionsService, private router: Router) {
     excursionDataManager.excursionsData$.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,
-        error: (err: any) => console.log(err)
-        
+        error: (err: any) => console.log(err) 
       }
     )
    }
@@ -44,14 +44,14 @@ export class AddExcursionFormComponent {
 
     } else {
 
-      alert("Wrong data or excursion the same excursion already exists!")
+      alert("Wrong data or the same excursion already exists!")
     }
   }
 
   public changePanelOption(event: any): void{
     let value: string = event.target.value
 
-    if (value =="1"){
+    if (value == "1"){
       this.radioExcursionListChecked = true
     } else{
       this.radioExcursionListChecked = false
@@ -62,11 +62,11 @@ export class AddExcursionFormComponent {
     this.router.navigate(['excursion/', id])
   }
 
-  public removeButtonClicked(excursion: ExcursionData) {
+  public removeButtonClicked(excursion: ExcursionData): void {
     this.excursionDataManager.removeFromExcursionsDB(excursion)
   }
 
-  public updateButtonClicked(excursion: ExcursionData) {
+  public updateButtonClicked(excursion: ExcursionData): void {
     alert('Updating excursion is currently not available!')
   }
 }
