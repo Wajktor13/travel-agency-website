@@ -41,6 +41,30 @@
     filter: brightness(0.85);
 }
 
+.remove-excursion-button {
+    width: 40px;
+    height: 40px;
+    margin-top: -10px;
+    margin-right: 20px;
+    background-image: url(../../../assets/images/trash_bin.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: red;
+    border: 1px solid black;
+    border-radius: 10%;
+    transition: transform 0.35s;
+}
+
+.remove-excursion-button:hover, .edit-excursion-button:hover {
+    cursor: pointer;
+    transform: scale(1.15);
+}
+
+.remove-excursion-button:active, .edit-excursion-button:active {
+    transform: scale(0.8);
+}
+
 #summary {
     align-self: flex-end;
     font-size: 22px;
@@ -68,4 +92,3 @@
 #book-button:active {
     filter: brightness(0.85);
 }
-

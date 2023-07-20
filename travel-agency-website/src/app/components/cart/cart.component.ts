@@ -91,4 +91,8 @@ export class CartComponent {
 
     this.cartService.removeAllFromCart()
   }
+
+  public removeExcursionButtonClicked(excursionID: number): void {
+    this.cartService.removeFromCart(excursionID)
+  }
 }
