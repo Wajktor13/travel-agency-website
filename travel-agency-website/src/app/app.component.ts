@@ -97,7 +97,7 @@ export class AppComponent {
 
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: any) {
-    if (!this.authService.keepLoggedIn){
+    if (localStorage.getItem("keepLoggedIn") != "true"){
       this.authService.logout()
       localStorage.clear()
     }

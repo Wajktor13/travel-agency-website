@@ -20,6 +20,7 @@ export class AuthService {
   constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService) {
     this.fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
+        console.log(user)
         let userData = (await this.userDataManger.getUserDataByUid(user.uid)) as { uid: string, banned: boolean, roles: UserRoles, inCart: CartItem[], reservations: ReservationData[] }
         this.isLoggedIn$.next(true)
 
@@ -48,15 +49,24 @@ export class AuthService {
   public async login(email: string, password: string): Promise<boolean> {
     let loggedIn: boolean = false;
 
-    await this.fireAuth.signInWithEmailAndPassword(email, password)
-      .then((loginData) => {
-        localStorage.setItem("user", loginData.user?.uid!)
-        alert("Successfully logged in!")
-        loggedIn = true
-      })
-      .catch((error) => {
-        alert(error.code.slice(5))
-      })
+      await this.fireAuth.setPersistence(this.keepLoggedIn ? "local" : "session")
+        .then(async () => {
+          await this.fireAuth.signInWithEmailAndPassword(email, password)
+            .then((loginData) => {
+              alert("Successfully logged in!")
+              localStorage.setItem("user", loginData.user?.uid!)
+              loggedIn = true
+            })
+            .catch((error) => {
+              alert(error.code.slice(5))
+            })
+        })
+
+      if (this.keepLoggedIn){
+        localStorage.setItem("keepLoggedIn", "true")
+      } else{
+        localStorage.setItem("keepLoggedIn", "false")
+      }
 
       return loggedIn;
   }

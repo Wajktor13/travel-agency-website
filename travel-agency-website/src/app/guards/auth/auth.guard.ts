@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
 
     let requiredRoles: UserRoles = route.data as UserRoles
     let userID: string | null = localStorage.getItem("user")
-
+    console.log(userID)
     if (userID){
       let user: UserData = await this.userDataManager.getUserDataByUid(localStorage.getItem("user")!) as UserData
       if (user && this.checkRoles(requiredRoles, user.roles)){
