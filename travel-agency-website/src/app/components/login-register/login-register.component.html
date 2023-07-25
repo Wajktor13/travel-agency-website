@@ -17,7 +17,7 @@
         <input class="login-register-input" type="email" placeholder="email" name="email" [(ngModel)]="email">
         <input class="login-register-input" type="password" placeholder="password" name="password" [(ngModel)]="password">
 
-        <div id="keep-logged-in-wrapper">
+        <div id="keep-logged-in-wrapper" *ngIf="radioLoginChecked">
             <input id="keep-logged-in" type="checkbox" name="keep-logged-in" [(ngModel)]="authService.keepLoggedIn">
             <label for="keep-logged-in">keep me logged in</label>
         </div>
