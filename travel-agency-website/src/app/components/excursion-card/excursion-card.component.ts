@@ -65,6 +65,9 @@ export class ExcursionCardComponent implements OnChanges {
     } else if (!this.authService.isLoggedIn()) {
       alert("Available for logged in users only.")
       this.router.navigate(['login-register'])
+        .then(() => {
+          window.location.reload();
+        });
       
     } else{
       alert("Not available for manager / admin")

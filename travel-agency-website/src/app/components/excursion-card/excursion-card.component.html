@@ -1,36 +1,70 @@
-<div class="excursion-card"
-    [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice(), 'low-stock-3' : leftToAddToCart == 3, 'low-stock-2' : leftToAddToCart == 2, 'low-stock-1' : leftToAddToCart == 1, 'low-stock-0' : leftToAddToCart == 0}">
+<div class="excursion-card-flip-wrapper">
+    <div class="excursion-card">
 
-    <img class="preview-img" src={{excursion.img}} alt={{excursion.name}} (click)="navigateToSingleExcursionView()">
-    <h3>{{excursion.name | uppercase}}</h3>
-    <p>{{excursion.country | uppercase}}</p>
-    <p>{{excursion.shortDescription}}</p>
+        <div class="excursion-card-front" [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice()}">
 
-    <div class="stars">
-        <span *ngIf="getAverageStars() > 0 else noReviews">
-            {{getAverageStars() | number : '1.2-2'}} / 5
-            <img src="../../../assets/images/star.png" alt="" width="20px">
-        </span>
-        <ng-template #noReviews>No reviews!</ng-template>
-    </div>
-    
-    <p>From {{excursion.startDate}} to {{excursion.endDate}}</p>
-    <p>{{excursion.unitPrice | currency}}</p>
-    <p *ngIf="leftToAddToCart > 0; else outOfStock">In stock: {{leftToAddToCart}}</p>
-    <ng-template #outOfStock class="out-of-stock">
-        <p>Out of stock!</p>
-    </ng-template>
+            <img src="{{excursion.img}}" width="420px" height="260px" alt={{excursion.name}}>
 
-    <div id="buttons-container">
+            <div class="card-title">
+                <p>{{excursion.name | uppercase}}</p>
+                <p>{{excursion.country | uppercase}}</p>
+            </div>
 
-        <div id="reservation-buttons">
-            <button (click)="changeReservationCounter(1)"
-                [disabled]="reservationCounter == excursion.inStock"
-                class="add-reservation-button">+</button>
-            <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0"
-                class="remove-reservation-button">-</button>
+            <div class="description">
+
+                <p>{{excursion.shortDescription}}</p>
+
+                <hr>
+
+                <p class="stars">
+                    <span *ngIf="getAverageStars() > 0 else noReviews">
+                        Reviews: {{getAverageStars() | number : '1.2-2'}} / 5
+                        <img id="star-img" src="../../../assets/images/star.png" alt="star" width="20px">
+                    </span>
+                    <ng-template #noReviews>No reviews!</ng-template>
+                </p>
+
+                <hr>
+
+                <p>From {{excursion.startDate}} to {{excursion.endDate}}</p>
+
+                <hr>
+
+                <p *ngIf="leftToAddToCart > 0; else outOfStockFront">Available: {{leftToAddToCart}}</p>
+                <ng-template #outOfStockFront class="out-of-stock">
+                    <p>Fully booked!</p>
+                </ng-template>
+
+            </div>
+
+        </div>
+
+        <div class="excursion-card-back" [ngClass]="{'low-stock-3' : leftToAddToCart == 3, 'low-stock-2' : leftToAddToCart == 2, 'low-stock-1' : leftToAddToCart == 1, 'low-stock-0' : leftToAddToCart == 0, 'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice()}">
+            <div class="price">
+                <p>ONLY</p>
+                <p>{{excursion.unitPrice | currency}}</p>
+                <p *ngIf="leftToAddToCart > 0">BOOK NOW!</p>
+                <p *ngIf="leftToAddToCart > 0; else outOfStockBack">AVAILABLE: {{leftToAddToCart}}</p>
+                <ng-template #outOfStockBack class="out-of-stock">
+                    <p>FULLY BOOKED!</p>
+                </ng-template>
+            </div>
+
+            <div id="reservation-buttons-container">
+
+                <div id="reservation-buttons">
+                    <button (click)="changeReservationCounter(1)"
+                        [disabled]="reservationCounter == excursion.inStock"
+                        class="add-reservation-button">+</button>
+                    <button (click)="changeReservationCounter(-1)" [disabled]="reservationCounter == 0"
+                        class="remove-reservation-button">-</button>
+                </div>
+        
+            </div>
+
+            <button id="details-btn" (click)="navigateToSingleExcursionView()">DETAILS</button>
+
         </div>
 
     </div>
-
 </div>

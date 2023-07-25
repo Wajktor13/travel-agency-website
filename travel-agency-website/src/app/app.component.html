@@ -14,26 +14,24 @@
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-home">
             <label class="nav-tile" for="radio-home">
-                <a (click)="navigateToHome()">Home</a>
+                <a (click)="navigateToHome()">HOME</a>
             </label>
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-excursions">
             <label class="nav-tile" for="radio-excursions">
-                <a (click)="navigateToExcursions()">Excursions</a>
+                <a (click)="navigateToExcursions()">EXCURSIONS</a>
             </label>
-
-            <!-- <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-add-excursions" *ngIf="this.authService.checkRolesForAddingExcursions()"> -->
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-account">
             <label class="nav-tile" for="radio-account">
                 <div class="dropdown">
-                    <button class="dropbtn">Account: {{this.authService.getTitle()}}</button>
+                    <button class="dropbtn">ACCOUNT: {{this.authService.getTitle()}}</button>
                     <div class="dropdown-content">
-                        <a (click)="navigateToLoginRegister()" *ngIf="!isLoggedIn">Log In / Register</a>
-                        <a (click)="logOutButtonClicked()" *ngIf="isLoggedIn">Log Out</a>
-                        <a (click)="navigateToReservationsHistory()" *ngIf="this.authService.checkRolesForReservationsHistory()">Reservations History</a>
-                        <a (click)="navigateToAddExcursionForm()" *ngIf="this.authService.checkRolesForAddingExcursions()">Manager Panel - Excursions</a>
-                        <a (click)="navigateToAdminPanelUsers()" *ngIf="this.authService.checkRolesForAdminPanel()">Admin Panel - Users</a>
+                        <a (click)="navigateToLoginRegister()" *ngIf="!isLoggedIn">LOG IN / REGISTER</a>
+                        <a (click)="logOutButtonClicked()" *ngIf="isLoggedIn">LOG OUT</a>
+                        <a (click)="navigateToReservationsHistory()" *ngIf="this.authService.checkRolesForReservationsHistory()">RESERVATIONS HISTORY</a>
+                        <a (click)="navigateToAddExcursionForm()" *ngIf="this.authService.checkRolesForAddingExcursions()">MANAGER PANEL - EXCURSIONS</a>
+                        <a (click)="navigateToAdminPanelUsers()" *ngIf="this.authService.checkRolesForAdminPanel()">ADMIN PANEL - USERS</a>
                     </div>
                 </div>
             </label>
@@ -67,21 +65,21 @@
     <div id="contact">
 
         <div id="contact-details">
-            <p id="contact-p">
-                <u>Contact:</u>
-            </p>
+            <h3>Contact:</h3>
             <p>Wonderful Excursions</p>
             <p>Kawiory 21 Street</p>
             <p>30-055 Krakow</p>
-            <p>+48 123 123 123</p>
-            <p>wonderfulexcursions@mail.com</p>
+            <p>
+                <a class="phone-mail-link" href="tel:+48123123123">+48 123 123 123</a>
+            </p>
+            <p>
+                <a class="phone-mail-link" href="mailto:wonderfulexcursions@mail.com">wonderfulexcursions@mail.com</a>
+            </p>
         </div>
 
         <div id="socials-links-wrapper">
 
-            <p>
-                <u>Visit us on:</u>
-            </p>
+            <h3>Visit us on:</h3>
 
             <div id="socials-links">
                 <a href="https://www.linkedin.com" target="_blank">

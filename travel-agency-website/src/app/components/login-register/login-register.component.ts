@@ -17,14 +17,8 @@ export class LoginRegisterComponent {
 
   constructor(public authService: AuthService, private router: Router){}
 
-  public changeLoginRegister(event: any): void {
-    let value: string = event.target.value
-
-    if (value == "1"){
-      this.radioLoginChecked = true
-    } else{
-      this.radioLoginChecked = false
-    }
+  public changeLoginRegister(): void {
+    this.radioLoginChecked = !this.radioLoginChecked
   }
 
   public async loginButtonClicked(): Promise<void> {

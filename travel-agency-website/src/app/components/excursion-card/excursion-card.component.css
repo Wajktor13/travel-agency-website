@@ -1,39 +1,142 @@
+body {
+    font-family: 'Gill Sans', sans-serif;
+    min-width: 280px;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.excursion-card-flip-wrapper {
+    width: 350px;
+    height: 480px;
+    margin: 80px 50px 50px 50px;
+}
+
 .excursion-card {
     display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.excursion-card-front, .excursion-card-back {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 340px;
-    height: 550px;
-    border-radius: 10px;
-    margin: 20px;
-    box-shadow: 0px 0px 11px 5px rgb(120, 120, 120);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 1px rgba(66, 68, 90, 1);
+    position: absolute;
+    backface-visibility: hidden;
     background-color: white;
 }
 
-.preview-img {
-    aspect-ratio: 1 / 1;
-    width: 40%;
-    border-radius: 50%;
+.excursion-card-front {
+    background-color: white;
+    overflow: hidden;
 }
 
-.preview-img:hover {
-    cursor: pointer;
-    filter: brightness(0.85);
+.excursion-card-front > img {
+    transform: rotate(-10deg);
+    position: relative;
+    top: -50px;
+    left: -50px;
 }
 
-.excursion-card p,
-h3,
-.stars {
-    margin: 0 10px 10px 10px;
+.excursion-card-front > .color-filter {
+    width: 500px;
+    height: 250px;
+    transform: rotate(-10deg);
+    position: relative;
+    top: -306px;
+    left: -50px;
+    margin: 0 0 -260px 0;
+}
+
+.excursion-card-front > .card-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    top: -60px;
+    margin: -25px 8px -25px 8px;
+    align-self: flex-end;
+}
+
+.excursion-card-front > .card-title > p {
+    font-size: 15px;
+    margin: 0;
+    padding: 6px;
+    color: white;
+    display: inline-flex;
+    text-align: right;
+}
+
+.excursion-card-front > .description {
+    margin: -25px 15px 0px 15px;
+    font-size: 14px;
+    color: rgb(95, 95, 95);
     text-align: center;
 }
 
-.excursion-card p,
-.out-of-stock p,
-.stars {
-    width: 80%;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.498);
+.excursion-card-front > .description hr {
+    margin: 0 20px 0 20px;
+    border: 1px solid rgba(238, 235, 235, 0.799);
+    background-color: rgba(235, 233, 233, 0.82);
+}
+
+#star-img {
+    position: relative;
+    top:4px;
+}
+
+.excursion-card-back {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: rotateY(180deg);
+}
+
+.excursion-card-back > .price {
+    color: black;
+    text-align: center;
+}
+
+.excursion-card-back > .price > p {
+    margin: 20px;
+}
+
+.excursion-card-back > .price > p:nth-child(1) {
+    font-size: 15px;
+}
+
+.excursion-card-back > .price > p:nth-child(2) {
+    font-weight: 100;
+    font-size: 50px;
+}
+
+.excursion-card-back > button:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.excursion-card-back > button:active {
+    opacity: 0.9;
+}
+
+.excursion-card-flip-wrapper:hover .excursion-card {
+    transform: rotateY(180deg) scale(1.1);
+}
+
+.excursion-card-front > .card-title > p, .orange-excursion-card-back {
+    background: linear-gradient(90deg, rgba(58, 40, 26, 0.934) 0%, rgba(182, 100, 50, 0.928)70%);
 }
 
 .min-price-card {
@@ -57,25 +160,10 @@ h3,
 }
 
 .low-stock-0 {
-    background-color: rgba(255, 0, 0, 0.887);
+    background-color: rgba(255, 0, 0, 0.887) !important;
 }
 
-#remove-card-button {
-    width: 40px;
-    height: 40px;
-    margin-top: -10px;
-    margin-right: 20px;
-    background-image: url(../../../assets/images/trash_bin.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: red;
-    border: 1px solid black;
-    border-radius: 10%;
-    transition: transform 0.35s;
-}
-
-#buttons-container {
+#reservation-buttons-container {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -118,8 +206,12 @@ h3,
     transform: scale(0.8);
 }
 
-.stars span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#details-btn {
+    width: 140px;
+    height: 30px;
+    background-color: rgb(68, 59, 54);
+    border: 2px solid black;
+    border-radius: 5px;
+    transition: transform 0.3s;
+    color: white;
 }

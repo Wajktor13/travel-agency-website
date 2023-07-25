@@ -1,25 +1,29 @@
 <section id="login-register-section">
 
-    <div>
-        <input type="radio" id="radio-login" name="login-or-register" value=1 (click)="changeLoginRegister($event)" checked>
-        <label for="radio-login">Log in</label>
+    <div class="switch-wrapper">
+        
+        <p>log in</p>
 
-        <input type="radio" id="radio-register" name="login-or-register" value=0 (click)="changeLoginRegister($event)">
-        <label for="radio-register">Register</label>
+        <label class="switch">
+            <input type="checkbox" (click)="changeLoginRegister()">
+            <div></div>
+        </label>
+
+        <p>register</p>
     </div>
 
     <form>
-        <input class="login-register-input" type="text" placeholder="Nickname" name="nickname" *ngIf="!radioLoginChecked" [(ngModel)]="nickname">
-        <input class="login-register-input" type="email" placeholder="Email" name="email" [(ngModel)]="email">
-        <input class="login-register-input" type="password" placeholder="Password" name="password" [(ngModel)]="password">
+        <input class="login-register-input" type="text" placeholder="nickname" name="nickname" *ngIf="!radioLoginChecked" [(ngModel)]="nickname">
+        <input class="login-register-input" type="email" placeholder="email" name="email" [(ngModel)]="email">
+        <input class="login-register-input" type="password" placeholder="password" name="password" [(ngModel)]="password">
 
-        <div>
+        <div id="keep-logged-in-wrapper">
             <input id="keep-logged-in" type="checkbox" name="keep-logged-in" [(ngModel)]="authService.keepLoggedIn">
-            <label for="keep-logged-in">Keep me logged in</label>
+            <label for="keep-logged-in">keep me logged in</label>
         </div>
 
-        <button class="submit-button" id="login-button" type="submit" *ngIf="radioLoginChecked" (click)="loginButtonClicked()">Log in</button>
-        <button class="submit-button" id="register-button" type="submit" *ngIf="!radioLoginChecked" (click)="registerButtonClicked()">Register</button>
+        <button class="submit-button" id="login-button" type="submit" *ngIf="radioLoginChecked" (click)="loginButtonClicked()">LOG IN</button>
+        <button class="submit-button" id="register-button" type="submit" *ngIf="!radioLoginChecked" (click)="registerButtonClicked()">REGISTER</button>
     </form>
 
 </section>

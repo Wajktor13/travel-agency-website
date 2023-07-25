@@ -1,70 +1,79 @@
-<section id="filters-section">
-    <h3>Filters:</h3>
+<div id="filters-section-btn-wrapper">
 
-    <div id="price-inputs-wrapper">
-        <div>
-            <label for="min-price-range">Min price:</label>
-            <input type="range" min={{minPrice}} max={{maxPrice}} id="min-price-range"
-                oninput="this.nextElementSibling.value = this.value" (input)="changeSelectedMinPrice($event)"
-                value={{selectedMinPrice}}>
-            <output for="min-price-range" value={{selectedMinPrice}}></output>
-            <span>$</span>
+    <section id="filters-section" [ngClass]="{'filters-section-hidden': filtersHidden}">
+
+        <div id="price-inputs-wrapper">
+            <div>
+                <label for="min-price-range">min price:</label>
+                <input type="range" min={{minPrice}} max={{maxPrice}} id="min-price-range"
+                    oninput="this.nextElementSibling.value = this.value" (input)="changeSelectedMinPrice($event)"
+                    value={{selectedMinPrice}}>
+                <output for="min-price-range" value={{selectedMinPrice}}></output>
+                <span>$</span>
+            </div>
+            <div>
+                <label for="max-price-range">max price:</label>
+                <input type="range" min={{minPrice}} max={{maxPrice}} id="max-price-range"
+                    oninput="this.nextElementSibling.value = this.value" (input)="changeSelectedMaxPrice($event)"
+                    value={{selectedMaxPrice}}>
+                <output for="max-price-range" value={{selectedMaxPrice}}></output>
+                <span>$</span>
+            </div>
         </div>
-        <div>
-            <label for="max-price-range">Max price:</label>
-            <input type="range" min={{minPrice}} max={{maxPrice}} id="max-price-range"
-                oninput="this.nextElementSibling.value = this.value" (input)="changeSelectedMaxPrice($event)"
-                value={{selectedMaxPrice}}>
-            <output for="max-price-range" value={{selectedMaxPrice}}></output>
-            <span>$</span>
+    
+        <div id="date-inputs-warapper">
+            <div>
+                <label for="from-date-input">from date:</label>
+                <input type="date" id="start-date-input" (input)="changeSelectedFromDate($event)"
+                    value={{filterService.getSelectedFromDate()}}>
+            </div>
+    
+            <div>
+                <label for="to-date-input">to date:</label>
+                <input type="date" id="end-date-input" (input)="changeSelectedToDate($event)"
+                    value={{filterService.getSelectedToDate()}}>
+            </div>
         </div>
-    </div>
-
-    <div id="date-inputs-warapper">
-        <div>
-            <label for="from-date-input">From date:</label>
-            <input type="date" id="start-date-input" (input)="changeSelectedFromDate($event)"
-                value={{filterService.getSelectedFromDate()}}>
+    
+        <div id="country-input-wrapper">
+            <label for="country-input">country:</label>
+            <select id="country-input" (input)="changeSelectedCountry($event)">
+                <option value="all">all</option>
+                <option *ngFor="let country of dataManager.getCountries()" value={{country}}>{{country}}</option>
+            </select>
         </div>
-
-        <div>
-            <label for="to-date-input">To date:</label>
-            <input type="date" id="end-date-input" (input)="changeSelectedToDate($event)"
-                value={{filterService.getSelectedToDate()}}>
+    
+        <div id="star-inputs-wrapper">
+    
+            <div>
+                <label for="min-stars-range">min stars:</label>
+                <input type="range" min=1 max=5 id="min-stars-range" step="0.1"
+                    oninput="this.nextElementSibling.value = this.value" value=1 (input)="changeSelectedMinStars($event)">
+                <output for="min-stars-range" id="min-stars-output">1</output>
+            </div>
+    
+            <div>
+                <label for="max-stars-range">max stars:</label>
+                <input type="range" min=1 max=5 step="0.1" id="max-stars-range"
+                    oninput="this.nextElementSibling.value = this.value" value=5 (input)="changeSelectedMaxStars($event)">
+                <output for="max-stars-range" id="max-stars-output">5</output>
+            </div>
+    
+            <div id="reviews-checkbox-div">
+                <label for="no-reviews-input">without reviews</label>
+                <input type="checkbox" id="no-reviews-input" checked (input)="changeSelectedNoReviews($event)">
+            </div>
+    
         </div>
-    </div>
+    
+        <button id="reset-filters-button" (click)="resetFilters()">RESET</button>
+    
+    </section>
+    
+    <button id="show-hide-filters-btn" (click)="changeFiltersVisibilty()">
+        <span *ngIf="filtersHidden">SHOW FILTERS</span>
+        <span *ngIf="!filtersHidden">HIDE FILTERS</span>
+    </button>
 
-    <div id="country-input-wrapper">
-        <label for="country-input">Country:</label>
-        <select id="country-input" (input)="changeSelectedCountry($event)">
-            <option value="all">All</option>
-            <option *ngFor="let country of dataManager.getCountries()" value={{country}}>{{country}}</option>
-        </select>
-    </div>
+</div>
 
-    <div id="star-inputs-wrapper">
-
-        <div>
-            <label for="min-stars-range">Min stars:</label>
-            <input type="range" min=1 max=5 id="min-stars-range" step="0.1"
-                oninput="this.nextElementSibling.value = this.value" value=1 (input)="changeSelectedMinStars($event)">
-            <output for="min-stars-range" id="min-stars-output">1</output>
-        </div>
-
-        <div>
-            <label for="max-stars-range">Max stars:</label>
-            <input type="range" min=1 max=5 step="0.1" id="max-stars-range"
-                oninput="this.nextElementSibling.value = this.value" value=5 (input)="changeSelectedMaxStars($event)">
-            <output for="max-stars-range" id="max-stars-output">5</output>
-        </div>
-
-        <div id="reviews-checkbox-div">
-            <label for="no-reviews-input">Without reviews</label>
-            <input type="checkbox" id="no-reviews-input" checked (input)="changeSelectedNoReviews($event)">
-        </div>
-
-    </div>
-
-    <button id="reset-filters-button" (click)="resetFilters()">RESET</button>
-
-</section>
