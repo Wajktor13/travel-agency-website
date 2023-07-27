@@ -22,7 +22,11 @@ export class CartComponent {
   constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
     excursionDataManager.excursionsData$.subscribe(
       {
-        next: (data: ExcursionData[]) => this.excursionsData = data,
+        next: (data: ExcursionData[]) => {
+        this.excursionsData = data
+        this.checkCartItemsAvailability()
+        }
+        ,
         error: (err: any) => console.log(err)
       }
     )
@@ -47,22 +51,12 @@ export class CartComponent {
     return this.cartService.getReservationsOf(id as number)
   }
 
-  public getExcursionDetails(id: number): ExcursionData | null {
-    for (let excursion of this.excursionsData) {
-      if (excursion.id == id) {
-        return excursion
-      }
-    }
-
-    return null
-  }
-
   public getExcursionsWithReservations(): ExcursionData[] {
     let cartFiltered: ExcursionData[] = []
 
     for (let cartItem of this.cart) {
       if (cartItem.amount > 0) {
-        cartFiltered.push(this.getExcursionDetails(cartItem.excursionID) as ExcursionData)
+        cartFiltered.push(this.excursionDataManager.getExcursionDetails(cartItem.excursionID) as ExcursionData)
       }
     }
 
@@ -75,11 +69,18 @@ export class CartComponent {
 
   public bookButtonClicked(): void {
     let d: Date = new Date()
-    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':' + d.getMinutes()
+    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':'
+    let minutes = d.getMinutes()
+
+    if (minutes < 10) {
+      currentDate += '0' + minutes
+    } else {
+      currentDate += minutes
+    }
 
     for (let cartItem of this.cart) {
       if (cartItem.amount > 0) {
-        let excursionDetails: ExcursionData = this.getExcursionDetails(cartItem.excursionID)!
+        let excursionDetails: ExcursionData = this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!
 
         this.reservationHistory.addToReservationsHistory({ excursionData: excursionDetails, reservationDate: currentDate, status: "upcoming", amount: cartItem.amount })
 
@@ -94,5 +95,23 @@ export class CartComponent {
 
   public removeExcursionButtonClicked(excursionID: number): void {
     this.cartService.removeFromCart(excursionID)
+  }
+
+  private checkCartItemsAvailability(): boolean {
+    let madeChanges: boolean = false
+
+    for (let cartItem of this.cart) {
+      if (cartItem.amount > this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!?.inStock) {
+        cartItem.amount = this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!?.inStock 
+        madeChanges = true
+      }
+    }
+
+    if (madeChanges) {
+      this.cartService.setCartAndUpdateUser(this.cart)
+      alert("Some of the items in your cart are no longer available in the quantity you have selected. The quantity of these items has been changed or they have been removed.")
+    }
+
+    return madeChanges
   }
 }

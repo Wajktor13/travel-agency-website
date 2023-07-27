@@ -26,28 +26,35 @@ export class CartService {
     return this.cart$.getValue()
   }
 
-  public setCart(newCart: CartItem[]): void{
+  public setCart(newCart: CartItem[]): void {
     this.cart$.next(newCart)
   }
 
-  public addToCart(id: number, newReservationsCounter: number): void {
-    let currentCart: CartItem[] = this.cart$.getValue().filter(cartItem => cartItem.excursionID != id)
-    currentCart.push({excursionID: id, amount: newReservationsCounter} as CartItem)
-    this.cart$.next(currentCart)
+  public setCartAndUpdateUser(newCart: CartItem[]): void{
+    this.setCart(newCart)
 
     let currentUser = this.authService.getCurrentUser()
     this.userDataManager.updateUserData({uid: currentUser.uid, email: currentUser.email, 
     nickname: currentUser.nickname, roles: currentUser.roles, banned: currentUser.banned,
-    inCart: currentCart, reservations: currentUser.reservations})
+    inCart: newCart, reservations: currentUser.reservations})
+  }
+
+  public addToCart(id: number, newReservationsCounter: number): void {
+    let currentCart: CartItem[] = this.getCart().filter(cartItem => cartItem.excursionID != id)
+    currentCart.push({excursionID: id, amount: newReservationsCounter} as CartItem)
+
+    this.setCartAndUpdateUser(currentCart)
+  }
+
+  public removeFromCart(id: number): void {
+    let currentCart: CartItem[] = this.getCart()
+    currentCart = currentCart.filter(cartItem => cartItem.excursionID != id)
+
+    this.setCartAndUpdateUser(currentCart)
   }
 
   public isInCart(id: number): boolean {
     return this.cart$.getValue().map(cartItem => cartItem.excursionID).includes(id)
-  }
-
-  public removeFromCart(id: number): void {
-    let currentCart: CartItem[] = this.cart$.getValue()
-    this.cart$.next(currentCart.filter(cartItem => cartItem.excursionID != id))
   }
 
   public removeAllFromCart(): void {

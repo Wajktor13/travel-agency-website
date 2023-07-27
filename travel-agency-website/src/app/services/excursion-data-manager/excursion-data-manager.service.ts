@@ -19,7 +19,10 @@ export class ExcursionsDataManagerService {
 
     this.fetchedExcursionsData$.subscribe(
       {
-        next: (data: ExcursionData[]) => this.excursionsData$.next(data),
+        next: (data: ExcursionData[]) => {
+          this.excursionsData$.next(data)
+        }
+          ,
         error: (err: any) => console.log(err)
       }
     )
@@ -85,6 +88,16 @@ export class ExcursionsDataManagerService {
 
   public getMaxPrice(): number {
     return this.maxUnitPrice$.getValue()
+  }
+
+  public getExcursionDetails(id: number): ExcursionData | null {
+    for (let excursion of this.getExcursionsData()) {
+      if (excursion.id == id) {
+        return excursion
+      }
+    }
+
+    return null
   }
 
   public validateExcursionData(excursion: ExcursionData): boolean {
