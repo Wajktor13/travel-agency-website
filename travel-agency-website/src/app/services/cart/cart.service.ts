@@ -77,7 +77,7 @@ export class CartService {
 
   public async bookCart(): Promise<void> {
     let d: Date = new Date()
-    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+    let currentDate: string = (d.getDate() < 10 ? '0' : '') + d.getDate() + '-' + (d.getMonth() < 10 ? '0' : '') + (d.getMonth() + 1) + '-' + d.getFullYear() + ' | ' + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
     try {
       await this.db.firestore.runTransaction(async (transaction) => {
