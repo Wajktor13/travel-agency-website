@@ -4,6 +4,10 @@ import { CartItem } from 'src/app/shared/models/cart-item';
 import { UserData } from 'src/app/shared/models/user-data';
 import { AuthService } from '../auth/auth.service';
 import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
+import { ExcursionsDataManagerService } from '../excursion-data-manager/excursion-data-manager.service';
+import { ReservationHistoryService } from '../reservation-history/reservation-history.service';
+import { ExcursionData } from 'src/app/shared/models/excursion-data';
+import { AngularFirestore, CollectionReference } from '@angular/fire/compat/firestore';
 
 
 @Injectable({
@@ -13,7 +17,8 @@ import { UserDataManagerService } from '../user-data-manager/user-data-manager.s
 export class CartService {
   public cart$: BehaviorSubject<CartItem[]> = new BehaviorSubject([] as CartItem[])
 
-  constructor(private authService: AuthService, private userDataManager: UserDataManagerService) { 
+  constructor(private authService: AuthService, private userDataManager: UserDataManagerService, private excursionDataManager: ExcursionsDataManagerService, private reservationHistory: ReservationHistoryService, 
+  private db: AngularFirestore) { 
     authService.currentUser$.subscribe(
       {
         next: (userData: UserData) => this.cart$.next(userData.inCart),
@@ -68,5 +73,43 @@ export class CartService {
     }
 
     return 0
+  }
+
+  public async bookCart(): Promise<void> {
+    let d: Date = new Date()
+    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+
+    try {
+      await this.db.firestore.runTransaction(async (transaction) => {
+        for (const cartItem of this.getCart()) {
+          if (cartItem.amount > 0) {
+            const excursionDetails: ExcursionData =
+             this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!;
+  
+            const updatedInStock = excursionDetails.inStock - cartItem.amount;
+            if (updatedInStock >= 0) {
+              this.reservationHistory.addToReservationsHistory({
+                excursionData: excursionDetails,
+                reservationDate: currentDate,
+                status: "upcoming",
+                amount: cartItem.amount,
+              });
+  
+              transaction.update(this.db.firestore.collection('excursions').doc(excursionDetails.id.toString()), {
+                inStock: updatedInStock,
+              });
+
+            } else {
+              throw new Error('not enough stock for excursion: ' + excursionDetails.name);
+            }
+          }
+        }
+  
+        this.removeAllFromCart();
+      });
+      
+    } catch (error) {
+      console.error('transaction failed:', error);
+    }
   }
 }

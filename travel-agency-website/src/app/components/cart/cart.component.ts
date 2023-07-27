@@ -14,7 +14,6 @@ import { ExcursionData } from 'src/app/shared/models/excursion-data';
 })
 
 export class CartComponent {
-  private excursionsData: ExcursionData[] = []
   public cart: CartItem[] = []
   public totalPrice: number = 0
   public totalReservations: number = 0
@@ -23,7 +22,6 @@ export class CartComponent {
     excursionDataManager.excursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => {
-        this.excursionsData = data
         this.checkCartItemsAvailability()
         }
         ,
@@ -68,29 +66,7 @@ export class CartComponent {
   }
 
   public bookButtonClicked(): void {
-    let d: Date = new Date()
-    let currentDate: string = d.getFullYear() + '-' + d.getMonth() + 1 + '-' + d.getDate() + ' | ' + d.getHours() + ':'
-    let minutes = d.getMinutes()
-
-    if (minutes < 10) {
-      currentDate += '0' + minutes
-    } else {
-      currentDate += minutes
-    }
-
-    for (let cartItem of this.cart) {
-      if (cartItem.amount > 0) {
-        let excursionDetails: ExcursionData = this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!
-
-        this.reservationHistory.addToReservationsHistory({ excursionData: excursionDetails, reservationDate: currentDate, status: "upcoming", amount: cartItem.amount })
-
-        excursionDetails.inStock -= cartItem.amount
-
-        this.excursionDataManager.updateExcursionData(excursionDetails)
-      }
-    }
-
-    this.cartService.removeAllFromCart()
+    this.cartService.bookCart()
   }
 
   public removeExcursionButtonClicked(excursionID: number): void {
