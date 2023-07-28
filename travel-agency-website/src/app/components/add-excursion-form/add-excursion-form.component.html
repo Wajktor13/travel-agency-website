@@ -21,7 +21,7 @@
         <div class="cart-item" *ngFor="let excursion of excursionsData">
     
             <div class="main-reservation-info">
-                <img src={{excursion.img}} (click)="navigateToSingleExcursionView(excursion.id)">
+                <img src={{excursion.imgs[0]}} (click)="navigateToSingleExcursionView(excursion.id)">
                 <p>{{excursion.name}}</p>
                 <p>{{excursion.country}}</p>
                 <p> Excursion ID: {{excursion.id}}</p>

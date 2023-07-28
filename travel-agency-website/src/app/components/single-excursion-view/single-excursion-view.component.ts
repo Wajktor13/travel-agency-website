@@ -8,6 +8,7 @@ import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ReviewData } from 'src/app/shared/models/review-data';
 import { UserData } from 'src/app/shared/models/user-data';
+import { DOCUMENT } from '@angular/common'; 
 
 
 @Component({
@@ -20,7 +21,7 @@ export class SingleExcursionViewComponent implements OnInit {
   public reservationCounter: number = 0
   public leftToAddToCart: number = 0
   public id: any = -1
-  public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', img: '' , reviews: [], longDescription: ''}
+  public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', imgs: [] , reviews: [], longDescription: ''}
 
   public reviewNick: string = ''
   public reviewDate: string = ''
@@ -28,6 +29,8 @@ export class SingleExcursionViewComponent implements OnInit {
   public reviewText: string = ''
 
   public date: Date = new Date()
+
+  public currentImgID: number = 0
 
   constructor(private dataManager: ExcursionsDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, public authService: AuthService) {
     this.dataManager.excursionsData$.subscribe(
@@ -128,5 +131,24 @@ export class SingleExcursionViewComponent implements OnInit {
 
   public canVote(): boolean {
     return this.authService.getCurrentUser().roles.customer
+  }
+
+  public changeSliderImg(event: any, nextImgID: number): void {
+    event.stopPropagation()
+    
+    if (nextImgID < 0) {
+      nextImgID = 0
+    } else if (nextImgID >= this.excursion.imgs.length) {
+      nextImgID = this.excursion.imgs.length - 1
+    } else {
+      this.currentImgID = nextImgID
+    }
+
+    document.getElementById('slider-img')!.setAttribute('src', this.excursion.imgs[this.currentImgID])
+  }
+
+  public navigateToFullImg(): void {
+    console.log('click')
+    window.open(this.excursion.imgs[this.currentImgID], '_blank')
   }
 }

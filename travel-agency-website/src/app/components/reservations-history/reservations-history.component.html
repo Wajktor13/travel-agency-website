@@ -15,7 +15,7 @@
     <div class="cart-item" *ngFor="let reservation of history">
 
         <div class="main-reservation-info">
-            <img src={{reservation.excursionData.img}}
+            <img src={{reservation.excursionData.imgs[0]}}
                 (click)="navigateToSingleExcursionView(reservation.excursionData.id)">
             <p>{{reservation.excursionData.name}}, {{reservation.excursionData.country}}</p>
             <p></p>

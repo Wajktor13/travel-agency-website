@@ -19,11 +19,49 @@
   flex-direction: row;
 }
 
+#slider {
+  position: relative;
+}
+
 #slider img {
   object-fit:cover;
   display: block;
   border: 10px solid rgb(68, 59, 54);
   margin: auto;
+}
+
+#slider-buttons {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#slider-buttons:hover {
+  cursor: pointer;
+}
+
+#slide-left-btn,
+#slide-right-btn {
+  width: 50px;
+  height: 100px;
+  margin: 10px;
+  opacity: 0.6;
+  font-size: 30px;
+  top: 50%;
+  background-color: white;
+  border: none;
+  font-size: 50px;
+  color: black;
+}
+
+#slide-left-btn:hover,
+#slide-right-btn:hover {
+  cursor: pointer;
+  opacity: 1;
 }
 
 #info {
@@ -117,14 +155,21 @@
 #review-form {
   width: max(50%, 300px);
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-group {
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 #rate {
   height: 65px !important;
+  font-size: 20px;
+  padding: 21px;
+  color: black;
 }
 
 .form-control {
@@ -367,18 +412,11 @@ fieldset[disabled] a.btn {
   border-color: black;
 }
 
-.btn-primary:hover {
-  background-color: rgb(211, 211, 211);
-  cursor: pointer;
-}
-
 .btn-primary.disabled,
 .btn-primary:disabled {
   background-color: #717171;
 }
 
-.btn-primary:active,
-.btn-primary.active,
 .show>.btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #707070;
@@ -429,6 +467,29 @@ fieldset[disabled] a.btn {
   text-align: center;
 }
 
+#review-text {
+  min-height: 50px;
+  height: 150px;
+  color: black;
+}
+
+#submit-review-btn {
+  width: 150px;
+  border-radius: 8px;
+  color: white;
+  color: black;
+  transition: scale 0.35s;
+}
+
+#submit-review-btn:hover {
+  scale: 1.15;
+  cursor: pointer;
+}
+
+#submit-review-btn:active {
+  opacity: 0.85;
+}
+
 @media screen and (max-width: 1100px) {
 
   #buttons-container {
@@ -448,6 +509,11 @@ fieldset[disabled] a.btn {
   #slider img {
     width: 90%;
     height: auto;
+  }
+
+  #slide-left-btn,
+  #slide-right-btn {
+    margin: 5%;
   }
 
   #info {
