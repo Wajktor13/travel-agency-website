@@ -58,6 +58,11 @@
   color: black;
 }
 
+#slide-left-btn:active,
+#slide-right-btn:active {
+  background-color: rgb(220, 220, 220)
+}
+
 #slide-left-btn:hover,
 #slide-right-btn:hover {
   cursor: pointer;
