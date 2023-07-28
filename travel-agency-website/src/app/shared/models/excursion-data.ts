@@ -10,6 +10,6 @@ export type ExcursionData = {
     inStock: number,
     shortDescription: string,
     longDescription: string,
-    img: string,
+    imgs: string[],
     reviews: ReviewData[]
 }

@@ -9,7 +9,11 @@
     <div id="slider-details-container">
 
         <div id="slider">
-            <img src={{excursion.img}} width="700px" height="400px">
+            <div id="slider-buttons" (click)="navigateToFullImg()">
+                <button id="slide-left-btn" (click)="changeSliderImg($event, this.currentImgID - 1)"><</button>
+                <button id="slide-right-btn" (click)="changeSliderImg($event, this.currentImgID + 1)">></button>
+            </div>
+            <img id="slider-img" src={{excursion.imgs[0]}} width="800px" height="500px">
         </div>
 
         <div id="info">
@@ -119,12 +123,12 @@
                         <span class="input-group-addon">
                             <img src="../../../assets/images/review.png" alt="">
                         </span>
-                        <textarea class="form-control" id="review" rows="3" name="review" [(ngModel)]="reviewText" placeholder="min 50 characters"></textarea>
+                        <textarea class="form-control" id="review-text" rows="3" name="review" [(ngModel)]="reviewText" placeholder="min 50 characters"></textarea>
                     </div>
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" id="submit-review-btn">SUBMIT</button>
           
           </form>
     </div>

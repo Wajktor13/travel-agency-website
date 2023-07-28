@@ -3,7 +3,7 @@
 
         <div class="excursion-card-front" [ngClass]="{'min-price-card': excursion.unitPrice == getMinPrice(), 'max-price-card': excursion.unitPrice == getMaxPrice()}">
 
-            <img src="{{excursion.img}}" width="420px" height="260px" alt={{excursion.name}}>
+            <img src="{{excursion.imgs[0]}}" width="420px" height="260px" alt={{excursion.name}}>
 
             <div class="card-title">
                 <p>{{excursion.name | uppercase}}</p>

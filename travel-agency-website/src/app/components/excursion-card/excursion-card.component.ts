@@ -21,7 +21,7 @@ export class ExcursionCardComponent implements OnChanges {
   public reservationCounter: number = 0
   public leftToAddToCart: number = 0
 
-  @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', img: '' , reviews: [], longDescription: ''}
+  @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', imgs: [] , reviews: [], longDescription: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
   constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
