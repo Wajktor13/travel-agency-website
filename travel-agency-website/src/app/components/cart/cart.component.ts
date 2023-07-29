@@ -23,6 +23,7 @@ export class CartComponent {
       {
         next: (data: ExcursionData[]) => {
         this.checkCartItemsAvailability()
+        this.recalculateCart()
         }
         ,
         error: (err: any) => console.log(err)
@@ -33,12 +34,7 @@ export class CartComponent {
       {
         next: (cartData: CartItem[]) => {
           this.cart = cartData
-          this.totalPrice = 0
-          this.totalReservations = 0
-          for (let cartItem of this.cart) {
-            this.totalReservations += cartItem.amount
-            this.totalPrice += this.excursionDataManager.getPriceByID(cartItem.excursionID) * cartItem.amount
-          }
+          this.recalculateCart()
         },
         error: (err: any) => console.log(err)
       }
@@ -93,5 +89,14 @@ export class CartComponent {
     }
 
     return madeChanges
+  }
+
+  public recalculateCart(): void {
+    this.totalPrice = 0
+    this.totalReservations = 0
+    for (let cartItem of this.cart) {
+      this.totalReservations += cartItem.amount
+      this.totalPrice += this.excursionDataManager.getPriceByID(cartItem.excursionID) * cartItem.amount
+    }
   }
 }
