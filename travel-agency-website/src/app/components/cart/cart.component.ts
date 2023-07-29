@@ -18,7 +18,7 @@ export class CartComponent {
   public totalPrice: number = 0
   public totalReservations: number = 0
 
-  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
+  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router) {
     excursionDataManager.excursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => {
@@ -51,10 +51,14 @@ export class CartComponent {
 
   public getExcursionsWithReservations(): ExcursionData[] {
     let cartFiltered: ExcursionData[] = []
+    let excursionData: ExcursionData
 
     for (let cartItem of this.cart) {
       if (cartItem.amount > 0) {
-        cartFiltered.push(this.excursionDataManager.getExcursionDetails(cartItem.excursionID) as ExcursionData)
+        excursionData = this.excursionDataManager.getExcursionDetails(cartItem.excursionID) as ExcursionData
+        if (excursionData != null) {
+          cartFiltered.push(excursionData)
+        }
       }
     }
 
