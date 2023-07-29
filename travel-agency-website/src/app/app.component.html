@@ -35,16 +35,6 @@
                     </div>
                 </div>
             </label>
-            
-            <!-- <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-notification">
-            <label class="nav-tile" id="notification-label" for="radio-notification">
-                <a>
-                    <img src="../assets/images/bell.png" alt="" width="25px">
-                    <div id="notifications-widget">
-                        <app-notifications></app-notifications>
-                    </div>
-                </a>
-            </label> -->
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-cart-preview" *ngIf="this.authService.checkRolesForCart()">
             <label class="nav-tile nav-cart-label" for="radio-cart-preview" *ngIf="this.authService.checkRolesForCart()">

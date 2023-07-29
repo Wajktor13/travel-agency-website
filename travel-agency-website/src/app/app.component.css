@@ -1,6 +1,4 @@
-#nav-cart {
-    display: block;
-}
+/* navigation */
 
 header {
     width: 100%;
@@ -21,6 +19,12 @@ header {
     font-size: 17px;
     position: fixed;
     z-index: 4;
+}
+
+#nav-cart {
+    display: block;
+    transition: transform 0.35s;
+    min-width: 200px;
 }
 
 #nav-btn-checkbox {
@@ -115,96 +119,6 @@ header {
     text-decoration: underline;
 }
 
-main {
-    min-height: 88vh;
-}
-
-footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: rgb(68, 59, 54);
-    padding: 10px;
-    margin-top: 150px;
-    border-top: 2px solid black;
-}
-
-footer p {
-    margin: 0;
-}
-
-footer hr {
-    width: 70%;
-    border-color: white;
-    background-color: white;
-    color: white;
-}
-
-#contact {
-    color: white;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-}
-
-#contact-details {
-    border-right: 2px solid white;
-    margin-right: 50px;
-    padding-right: 50px;
-}
-
-#contact-details p {
-    margin: 8px;
-}
-
-.phone-mail-link {
-    color: white;
-}
-
-#socials-links {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    margin: 15px 0 30px 0;
-}
-
-#socials-links>a {
-    width: 35px;
-    margin: 5px;
-    transition: transform 0.4s;
-    cursor: pointer;
-}
-
-#socials-links>a:hover {
-    transform: scale(1.25);
-}
-
-#socials-links>a>img {
-    width: 100%;
-}
-
-#notification-label {
-    width: 100px;
-}
-
-#notification-label img {
-    transition: transform 0.35s;
-}
-
-#notification-label:hover img,
-#radio-notification:checked ~ label img {
-    transform: scale(1.5);
-}
-
-#nav-cart {
-    transition: transform 0.35s;
-    min-width: 200px;
-}
-
 #nav-cart:hover,
 #radio-cart-preview:checked ~ label a {
     transform: scale(1.2);
@@ -216,14 +130,6 @@ footer hr {
 
 .nav-cart-label:hover {
     text-decoration: none;
-}
-
-#footer-bottom {
-    color: white;
-}
-
-#notifications-widget {
-    display: none;
 }
 
 .dropdown {
@@ -280,7 +186,90 @@ footer hr {
     display: block;
 }
 
+/* main section */
+
+main {
+    min-height: 88vh;
+}
+
+/* footer */
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(68, 59, 54);
+    padding: 10px;
+    margin-top: 150px;
+    border-top: 2px solid black;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer hr {
+    width: 70%;
+    border-color: white;
+    background-color: white;
+    color: white;
+}
+
+#contact {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+#contact-details {
+    border-right: 2px solid white;
+    margin-right: 50px;
+    padding-right: 50px;
+}
+
+#contact-details p {
+    margin: 8px;
+}
+
+.phone-mail-link {
+    color: white;
+}
+
+#socials-links {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 15px 0 30px 0;
+}
+
+#socials-links > a {
+    width: 35px;
+    margin: 5px;
+    transition: transform 0.4s;
+    cursor: pointer;
+}
+
+#socials-links > a:hover {
+    transform: scale(1.25);
+}
+
+#socials-links > a > img {
+    width: 100%;
+}
+
+#footer-bottom {
+    color: white;
+}
+
 @media (max-width: 1200px) {
+
+    /* navigation */
+
     #nav-wrapper {
         flex-wrap: wrap;
     }
@@ -306,7 +295,7 @@ footer hr {
 
     .nav-tile,
     .dropbtn {
-        width: max(40%, 250px);
+        width: max(60%, 350px);
         justify-content: flex-start;
         text-align: left;
     }
@@ -338,11 +327,6 @@ footer hr {
         top: -11px
     }
 
-    #notification-label img {
-        transition: transform 0.35s;
-    }
-
-    #notification-label:hover img,
     #radio-notification:checked ~ label img {
         transform: scale(1.5);
     }

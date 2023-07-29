@@ -69,6 +69,10 @@
   opacity: 1;
 }
 
+.hide-slider-btn {
+  opacity: 0 !important;
+}
+
 #info {
   max-width: 300px;
   display: flex;
@@ -145,6 +149,8 @@
 #long-description h2{
   text-align: center;
 }
+
+/* reviews */
 
 #review-div {
   color: white;
