@@ -18,11 +18,12 @@ export class CartComponent {
   public totalPrice: number = 0
   public totalReservations: number = 0
 
-  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router, private reservationHistory: ReservationHistoryService) {
+  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router) {
     excursionDataManager.excursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => {
         this.checkCartItemsAvailability()
+        this.recalculateCart()
         }
         ,
         error: (err: any) => console.log(err)
@@ -33,12 +34,7 @@ export class CartComponent {
       {
         next: (cartData: CartItem[]) => {
           this.cart = cartData
-          this.totalPrice = 0
-          this.totalReservations = 0
-          for (let cartItem of this.cart) {
-            this.totalReservations += cartItem.amount
-            this.totalPrice += this.excursionDataManager.getPriceByID(cartItem.excursionID) * cartItem.amount
-          }
+          this.recalculateCart()
         },
         error: (err: any) => console.log(err)
       }
@@ -51,10 +47,14 @@ export class CartComponent {
 
   public getExcursionsWithReservations(): ExcursionData[] {
     let cartFiltered: ExcursionData[] = []
+    let excursionData: ExcursionData
 
     for (let cartItem of this.cart) {
       if (cartItem.amount > 0) {
-        cartFiltered.push(this.excursionDataManager.getExcursionDetails(cartItem.excursionID) as ExcursionData)
+        excursionData = this.excursionDataManager.getExcursionDetails(cartItem.excursionID) as ExcursionData
+        if (excursionData != null) {
+          cartFiltered.push(excursionData)
+        }
       }
     }
 
@@ -89,5 +89,14 @@ export class CartComponent {
     }
 
     return madeChanges
+  }
+
+  public recalculateCart(): void {
+    this.totalPrice = 0
+    this.totalReservations = 0
+    for (let cartItem of this.cart) {
+      this.totalReservations += cartItem.amount
+      this.totalPrice += this.excursionDataManager.getPriceByID(cartItem.excursionID) * cartItem.amount
+    }
   }
 }
