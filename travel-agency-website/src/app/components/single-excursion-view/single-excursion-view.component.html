@@ -10,8 +10,8 @@
 
         <div id="slider">
             <div id="slider-buttons" (click)="navigateToFullImg()">
-                <button id="slide-left-btn" (click)="changeSliderImg($event, this.currentImgID - 1)"><</button>
-                <button id="slide-right-btn" (click)="changeSliderImg($event, this.currentImgID + 1)">></button>
+                <button id="slide-left-btn" (click)="changeSliderImg($event, this.currentImgID - 1)" [ngClass]="{'hide-slider-btn': excursion.imgs.length < 0 || this.currentImgID == 0}"><</button>
+                <button id="slide-right-btn" (click)="changeSliderImg($event, this.currentImgID + 1)" [ngClass]="{'hide-slider-btn': excursion.imgs.length < 0 || this.currentImgID == excursion.imgs.length - 1}">></button>
             </div>
             <img id="slider-img" src={{excursion.imgs[0]}} width="800px" height="500px">
         </div>

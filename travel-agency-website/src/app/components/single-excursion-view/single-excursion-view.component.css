@@ -69,6 +69,10 @@
   opacity: 1;
 }
 
+.hide-slider-btn {
+  opacity: 0 !important;
+}
+
 #info {
   max-width: 300px;
   display: flex;
