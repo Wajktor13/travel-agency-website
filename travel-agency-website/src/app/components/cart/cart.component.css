@@ -20,7 +20,7 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    box-shadow: 0px 0px 23px 2px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
     border-radius: 15px;
     margin-top: 40px;
     padding: 10px;
@@ -73,6 +73,11 @@
 
 #summary p, .cart-info {
     border-bottom: 1px solid gray;
+}
+
+#excursion-name {
+    width: 40%;
+    text-align: center;
 }
 
 #book-button {

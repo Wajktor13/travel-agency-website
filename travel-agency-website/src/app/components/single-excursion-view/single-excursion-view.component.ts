@@ -148,7 +148,6 @@ export class SingleExcursionViewComponent implements OnInit {
   }
 
   public navigateToFullImg(): void {
-    console.log('click')
     window.open(this.excursion.imgs[this.currentImgID], '_blank')
   }
 }
