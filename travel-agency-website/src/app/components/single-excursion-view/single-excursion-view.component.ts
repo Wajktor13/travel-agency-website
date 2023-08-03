@@ -8,7 +8,6 @@ import { ReviewsService } from 'src/app/services/reviews/reviews.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ReviewData } from 'src/app/shared/models/review-data';
 import { UserData } from 'src/app/shared/models/user-data';
-import { DOCUMENT } from '@angular/common'; 
 
 
 @Component({

@@ -6,12 +6,12 @@ import { ExcursionData } from 'src/app/shared/models/excursion-data';
 
 
 @Component({
-  selector: 'app-add-excursion-form',
-  templateUrl: './add-excursion-form.component.html',
-  styleUrls: ['./add-excursion-form.component.css']
+  selector: 'manager-panel.',
+  templateUrl: './manager-panel.component.html',
+  styleUrls: ['./manager-panel.component.css']
 })
 
-export class AddExcursionFormComponent {
+export class ManagerPanelComponent {
   info: string = " (lowest available)"
   public radioExcursionListChecked: boolean = true
   public excursionsData: ExcursionData[] = []
@@ -48,14 +48,8 @@ export class AddExcursionFormComponent {
     }
   }
 
-  public changePanelOption(event: any): void{
-    let value: string = event.target.value
-
-    if (value == "1"){
-      this.radioExcursionListChecked = true
-    } else{
-      this.radioExcursionListChecked = false
-    }
+  public changePanelOption(): void{
+    this.radioExcursionListChecked = !this.radioExcursionListChecked
   }
 
   public navigateToSingleExcursionView(id: number): void {
@@ -67,6 +61,9 @@ export class AddExcursionFormComponent {
   }
 
   public updateButtonClicked(excursion: ExcursionData): void {
-    alert('Updating excursion is currently not available!')
+    this.router.navigate(['update-excursion-form/', excursion.id])
+      .then(() => {
+        // window.location.reload()
+      })
   }
 }

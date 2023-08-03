@@ -1,26 +1,30 @@
 <section id="panel">
 
-    <div>
-        <input type="radio" id="radio-excursions-list" name="manager-panel-option" value=1 (click)="changePanelOption($event)" checked>
-        <label for="radio-excursions-list">Excursions List</label>
+    <div class="switch-wrapper">
+        
+        <p>excursions list</p>
 
-        <input type="radio" id="radio-add-excursion" name="manager-panel-option" value=0 (click)="changePanelOption($event)">
-        <label for="radio-add-excursion">Add Excursion</label>
+        <label class="switch">
+            <input type="checkbox" (click)="changePanelOption()">
+            <div></div>
+        </label>
+
+        <p>add excursion</p>
     </div>
 
-    <div *ngIf="radioExcursionListChecked" id="cart">
-        <div *ngIf="excursionsData.length > 0; else empty_cart">
+    <div *ngIf="radioExcursionListChecked" id="excursions-list">
+        <div *ngIf="excursionsData.length > 0; else no_excursions">
         </div>
     
-        <ng-template class="cart-info" #empty_cart>
-            <p class="cart-info">
+        <ng-template #no_excursions>
+            <p class="no-excursions-info">
                 There are no excursion in the database.
             </p>
         </ng-template>
     
-        <div class="cart-item" *ngFor="let excursion of excursionsData">
+        <div class="excursion-card-wrapper" *ngFor="let excursion of excursionsData">
     
-            <div class="main-reservation-info">
+            <div class="excursion-card">
                 <img src={{excursion.imgs[0]}} (click)="navigateToSingleExcursionView(excursion.id)">
                 <p>{{excursion.name}}</p>
                 <p>{{excursion.country}}</p>
@@ -31,16 +35,16 @@
 
             <div class="buttons-div">
 
-                <div class="remove-excursion-button" (click)="removeButtonClicked(excursion)"></div>
-
                 <div class="edit-excursion-button" (click)="updateButtonClicked(excursion)"></div>
+
+                <div class="remove-excursion-button" (click)="removeButtonClicked(excursion)"></div>
 
             </div>
 
         </div>
     </div>
 
-    <div *ngIf="!radioExcursionListChecked">
+    <div *ngIf="!radioExcursionListChecked" id="form-wrapper">
         <form #addExcursionForm="ngForm" (submit)="submitClicked(addExcursionForm.value)">
 
             <div class="input-wrapper">
