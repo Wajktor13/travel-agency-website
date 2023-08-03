@@ -1,0 +1,55 @@
+form {
+    width: max(40%, 400px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 100px;
+}
+
+.input-wrapper {
+    width: 100%;
+    margin: 20px;
+    font-size: 20px;
+}
+
+#long-description-input {
+    font-size: 20px;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+    font-size: 18px;
+}
+
+form button {
+    background-color: rgb(68, 59, 54);
+    color: white;
+    width: 200px;
+    height: 40px;
+    border-radius: 15px;
+    border: 1px solid black;
+    transition: transform 0.4s;
+    margin-top: 20px;
+}
+
+form button:hover {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+form button:active {
+    filter: brightness(0.8);
+}
+
+#id-input {
+    cursor: not-allowed;
+}
+
+#textarea-wrapper {
+    display: flex;
+    flex-direction: column;
+}

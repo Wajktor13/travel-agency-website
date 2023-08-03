@@ -1,0 +1,56 @@
+<form #addExcursionForm="ngForm" (submit)="submitClicked(addExcursionForm.value)">
+
+    <div class="input-wrapper">
+        <label for="id-input">ID:</label>
+        <input type="number" name="id" id="id-input"
+            placeholder={{this.id}} [ngModel]="this.id" disabled>
+    </div>
+
+    <div class="input-wrapper">
+        <label for="name-input">Name:</label>
+        <input type="text" name="name" id="name-input" [ngModel]="this.excursion.name">
+    </div>
+
+    <div class="input-wrapper">
+        <label for="country-input">Country:</label>
+        <input type="text" name="country" id="country-input" [ngModel]="this.excursion.country">
+    </div>
+
+    <div class="input-wrapper">
+        <label for="start-date-input">Start date:</label>
+        <input type="date" name="startDate" id="start-date-input" [ngModel]="this.excursion.startDate">
+    </div>
+
+    <div class="input-wrapper">
+        <label for="end-date-input">End date:</label>
+        <input type="date" name="endDate" id="end-date-input" [ngModel]="this.excursion.endDate">
+    </div>
+
+    <div class="input-wrapper">
+        <label for="unit-price-input">Unit price $:</label>
+        <input type="number" name="unitPrice" id="unit-price-input" [ngModel]="this.excursion.unitPrice">
+    </div>
+
+    <div class="input-wrapper">
+        <label for="max-in-stock-input">In stock:</label>
+        <input type="number" name="inStock" id="max-in-stock-input" [ngModel]="this.excursion.inStock">
+    </div>
+
+    <div class="input-wrapper">
+        <label for="description-input">Short description:</label>
+        <input type="text" name="shortDescription" id="description-input" [ngModel]="this.excursion.shortDescription">
+    </div>
+
+    <div class="input-wrapper" id="textarea-wrapper">
+        <label for="long-description-input">Long description:</label>
+        <textarea name="longDescription" id="long-description-input" cols="30" rows="10" [ngModel]="this.excursion.longDescription"></textarea>
+    </div>
+
+    <div class="input-wrapper">
+        <label for="img-input">Image urls (separated by comma, the first image will be used as a thumbnail):</label>
+        <input type="text" name="imgs" id="img-input" [ngModel]="this.excursion.imgs">
+    </div>
+
+    <button type="submit">UPDATE</button>
+
+</form>

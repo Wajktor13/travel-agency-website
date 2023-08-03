@@ -30,8 +30,8 @@ export class AppComponent {
     this.router.navigate(['excursions'])
   }
 
-  public navigateToAddExcursionForm(): void {
-    this.router.navigate(['add-excursion-form'])
+  public navigateToManagerPanel(): void {
+    this.router.navigate(['manager-panel'])
   }
 
   public navigateToReservationsHistory(): void {
@@ -46,8 +46,8 @@ export class AppComponent {
     this.router.navigate(['login-register'])
   }
 
-  public navigateToAdminPanelUsers(): void{
-    this.router.navigate(['admin-panel-users'])
+  public navigateToAdminPanel(): void{
+    this.router.navigate(['admin-panel'])
   }
 
   public logOutButtonClicked(): void{

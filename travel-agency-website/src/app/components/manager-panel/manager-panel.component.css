@@ -5,12 +5,17 @@ form {
     align-items: center;
     margin: auto;
     margin-bottom: 100px;
+    width: max(40%, 400px);
+}
+
+#form-wrapper {
+    width: 100%;
 }
 
 .input-wrapper {
-    width: 100%;
     margin: 20px;
     font-size: 20px;
+    width: 100%;
 }
 
 .input-wrapper input {
@@ -23,7 +28,6 @@ form {
 form button {
     background-color: rgb(68, 59, 54);
     color: white;
-    width: 40%;
     height: 40px;
     border-radius: 15px;
     border: 1px solid black;
@@ -43,15 +47,16 @@ form button:active {
     cursor: not-allowed;
 }
 
-#cart {
+#excursions-list {
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin: auto;
+    justify-content: center;
 }
 
-.cart-info {
+.no-excursions-info {
     margin: auto;
     width: 90%;
     font-size: 22px;
@@ -59,13 +64,13 @@ form button:active {
     display: block;
 }
 
-.cart-item {
+.excursion-card-wrapper {
     margin: auto;
     width: 300px;
     height: 400px;
     box-shadow: 0px 0px 23px 2px rgba(66, 68, 90, 1);
     border-radius: 15px;
-    margin-top: 50px;
+    margin: 50px;
     padding: 20px;
     font-size: 22px;
     background-color: white;
@@ -75,16 +80,17 @@ form button:active {
     align-items: center;
 }
 
-.main-reservation-info {
+.excursion-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
-.main-reservation-info img {
+.excursion-card img {
     display: block;
     width: 150px;
     height: 110px;
@@ -92,11 +98,15 @@ form button:active {
     border-radius: 15px;
 }
 
-.main-reservation-info p {
-    margin: 0;
+.excursion-card p {
+    font-size: 20px;
+    text-align: center;
+    margin: 5;
+    width: 90%;
+    border-bottom: 1px solid gray;
 }
 
-.main-reservation-info img:hover {
+.excursion-card img:hover {
     cursor: pointer;
     filter: brightness(0.85);
 }
@@ -108,7 +118,7 @@ form button:active {
 }
 
 #summary p,
-.cart-info {
+.no-excursions-info {
     border-bottom: 1px solid gray;
 }
 
@@ -127,9 +137,7 @@ form button:active {
 .buttons-div {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
     width: 200px;
-    padding-top: 20px;
     justify-content: space-between;
 }
 
@@ -176,3 +184,51 @@ form button:active {
     display: flex;
     flex-direction: column;
 }
+
+#long-description-input {
+    font-size: 20px;
+}
+
+/* switch */
+  
+.switch-wrapper {
+    height: 40px;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.switch-wrapper p {
+    font-size: 20px;
+}
+
+.switch input {
+    position: absolute;
+    opacity: 0;
+  }
+  
+.switch {
+    display: inline-block;
+    font-size: 20px; /* 1 */
+    height: 1em;
+    width: 2.5em;
+    background: #867465;
+    border-radius: 1em;
+    margin: 15px;
+  }
+  
+.switch div {
+    height: 1em;
+    width: 1em;
+    border-radius: 1em;
+    background: #413429;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.3);
+    transition: 0.4s;
+  }
+  
+.switch input:checked + div {
+    transform: translate3d(150%, 0, 0);
+  }

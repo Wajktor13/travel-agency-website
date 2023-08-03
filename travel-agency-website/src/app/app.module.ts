@@ -12,7 +12,7 @@ import { ExcursionCardComponent } from './components/excursion-card/excursion-ca
 import { ExcursionsDataManagerService } from './services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionCardsListComponent } from './components/excursion-cards-list/excursion-cards-list.component'
 import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
-import { AddExcursionFormComponent } from './components/add-excursion-form/add-excursion-form.component';
+import { ManagerPanelComponent } from './components/manager-panel/manager-panel.component';
 import { CartService } from './services/cart/cart.service';
 import { CartComponent } from './components/cart/cart.component';
 import { FilterExcursionsPipe } from './pipes/filter-excursions-pipe/filter-excursions.pipe';
@@ -29,6 +29,7 @@ import { LoginRegisterComponent } from './components/login-register/login-regist
 import { AuthService } from './services/auth/auth.service';
 import { UserDataManagerService } from './services/user-data-manager/user-data-manager.service';
 import { AdminPanelUsersComponent } from './components/admin-panel-users/admin-panel-users.component';
+import { UpdateExcursionFormComponent } from './components/update-excursion-form/update-excursion-form.component';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { AdminPanelUsersComponent } from './components/admin-panel-users/admin-p
     ExcursionCardComponent,
     ExcursionCardsListComponent,
     CartPreviewComponent,
-    AddExcursionFormComponent,
+    ManagerPanelComponent,
     CartComponent,
     FilterExcursionsPipe,
     FilterExcursionsComponent,
@@ -47,7 +48,8 @@ import { AdminPanelUsersComponent } from './components/admin-panel-users/admin-p
     NotificationsComponent,
     SingleExcursionViewComponent,
     LoginRegisterComponent,
-    AdminPanelUsersComponent
+    AdminPanelUsersComponent,
+    UpdateExcursionFormComponent
   ],
 
   imports: [

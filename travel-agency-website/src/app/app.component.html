@@ -30,8 +30,8 @@
                         <a (click)="navigateToLoginRegister()" *ngIf="!isLoggedIn">LOG IN / REGISTER</a>
                         <a (click)="logOutButtonClicked()" *ngIf="isLoggedIn">LOG OUT</a>
                         <a (click)="navigateToReservationsHistory()" *ngIf="this.authService.checkRolesForReservationsHistory()">RESERVATIONS HISTORY</a>
-                        <a (click)="navigateToAddExcursionForm()" *ngIf="this.authService.checkRolesForAddingExcursions()">MANAGER PANEL - EXCURSIONS</a>
-                        <a (click)="navigateToAdminPanelUsers()" *ngIf="this.authService.checkRolesForAdminPanel()">ADMIN PANEL - USERS</a>
+                        <a (click)="navigateToManagerPanel()" *ngIf="this.authService.checkRolesForAddingExcursions()">MANAGER PANEL - EXCURSIONS</a>
+                        <a (click)="navigateToAdminPanel()" *ngIf="this.authService.checkRolesForAdminPanel()">ADMIN PANEL - USERS</a>
                     </div>
                 </div>
             </label>

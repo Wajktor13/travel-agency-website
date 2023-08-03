@@ -15,7 +15,7 @@ export class FilterExcursionsComponent {
   public maxPrice:number = Infinity
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
-  public filtersHidden: boolean = true
+  public filtersHidden: boolean = false
 
   constructor(public dataManager: ExcursionsDataManagerService, public filterService: FilterExcursionsService){
     filterService.selectedMaxPrice$.subscribe(
