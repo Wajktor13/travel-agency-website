@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div *ngIf="!radioExcursionListChecked" id="form-wrapper">
+    <div *ngIf="!radioExcursionListChecked">
         <form #addExcursionForm="ngForm" (submit)="submitClicked(addExcursionForm.value)">
 
             <div class="input-wrapper">
@@ -96,7 +96,7 @@
         
             <div class="input-wrapper">
                 <label for="img-input">Image url:</label>
-                <input type="text" name="img" id="img-input"
+                <input type="text" name="imgs" id="img-input"
                     placeholder="for ex. https://www.routesnorth.com/wp-content/uploads/2019/09/4-pexels-photo-2113557.jpg"
                     ngModel>
             </div>

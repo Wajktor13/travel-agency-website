@@ -31,9 +31,20 @@ export class UpdateExcursionFormComponent  {
   }
 
   public submitClicked(data: any) {
-    let excursionData = data as ExcursionData
+    let excursionData: ExcursionData = data as ExcursionData
     excursionData.id = this.id
     excursionData.reviews = this.excursion.reviews
+
+    if (!Array.isArray(excursionData.imgs)) {
+      let imgsString: string = excursionData.imgs as string
+      excursionData.imgs = imgsString.split(',')
+    }
+    
+    if (!this.excursionsDataManager.validateExcursionData(excursionData)) {
+      alert('Wrong data!')
+      return
+    }
+
     this.excursionsDataManager.updateExcursionData(excursionData)
     alert('Excursion updated successfully!')
   }

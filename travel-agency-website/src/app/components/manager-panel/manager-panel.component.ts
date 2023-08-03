@@ -33,7 +33,6 @@ export class ManagerPanelComponent {
   public submitClicked(data: any) {
     data["id"] = this.getMinAvailableID()
     data["reviews"] = []
-    data["longDescription"] = this.textAreaValue
     
     let newExcursionData: ExcursionData = data as ExcursionData
 
@@ -62,8 +61,5 @@ export class ManagerPanelComponent {
 
   public updateButtonClicked(excursion: ExcursionData): void {
     this.router.navigate(['update-excursion-form/', excursion.id])
-      .then(() => {
-        // window.location.reload()
-      })
   }
 }
