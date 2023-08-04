@@ -6,6 +6,7 @@ import { ReservationData } from 'src/app/shared/models/reservation-data';
 import { UserData } from 'src/app/shared/models/user-data';
 import { UserRoles } from 'src/app/shared/models/user-roles';
 import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
+import firebase from 'firebase/compat/app'
 
 
 @Injectable({
@@ -135,5 +136,56 @@ export class AuthService {
 
   public checkRolesForPostingReviewWithoutStars(): boolean {
     return this.isLoggedIn() && (this.getCurrentUser().roles.admin || this.getCurrentUser().roles.manager)
+  }
+
+  public async logInWithProvider(loginData: any): Promise<boolean> {
+    let loggedIn: boolean = false;
+
+    await this.fireAuth.setPersistence(this.keepLoggedIn ? "local" : "session")
+      .then(async () => {
+            localStorage.setItem("user", loginData.user?.uid!)
+            loggedIn = true
+          })
+          .catch((error) => {
+            alert(error.code.slice(5))
+          })
+
+      if (this.keepLoggedIn){
+        localStorage.setItem("keepLoggedIn", "true")
+      } else{
+        localStorage.setItem("keepLoggedIn", "false")
+      }
+
+    let userData: UserData = {uid: loginData?.user!.uid, email: loginData?.user!.email, nickname: loginData?.user!.displayName, roles: { customer: true, manager: false, admin: false } as UserRoles, banned: false, inCart: [], reservations: []} as UserData
+
+    if (!await this.userDataManger.userExists(userData.uid)) {
+      await this.userDataManger.addUserData(userData)
+    }
+    
+    localStorage.setItem("user", loginData.user?.uid!)
+    this.isLoggedIn$.next(true)
+    alert("Successfully logged in!")
+
+    return loggedIn;
+  }
+
+  public logInWithGoogle(): void {
+    this.fireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(async (loginData) => {
+        this.logInWithProvider(loginData)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  public logInWithFacebook(): void {
+    this.fireAuth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    .then(async (loginData) => {
+      this.logInWithProvider(loginData)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 }

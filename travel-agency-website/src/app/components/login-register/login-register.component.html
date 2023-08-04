@@ -23,6 +23,11 @@
         </div>
 
         <button class="submit-button" id="login-button" type="submit" *ngIf="radioLoginChecked" (click)="loginButtonClicked()">LOG IN</button>
+        <button id="google-login-button" *ngIf="radioLoginChecked" (click)="authService.logInWithGoogle()">
+            <img src="../../../assets/images/google_logo.png" alt="google logo" width="30px" height="30px">
+            <p>LOG IN WITH GOOGLE</p>
+        </button>
+        <!-- <button id="facebook-login-button" *ngIf="radioLoginChecked" (click)="authService.logInWithFacebook()">LOG IN WITH FACEBOOK</button> -->
         <button class="submit-button" id="register-button" type="submit" *ngIf="!radioLoginChecked" (click)="registerButtonClicked()">REGISTER</button>
     </form>
 

@@ -27,4 +27,10 @@ export class UserDataManagerService {
   public updateUserData(updatedUserData: UserData): void {    
     this.db.doc(`users/${updatedUserData.uid}`).update(updatedUserData)
   }
+
+  public userExists(uid: string): Promise<boolean> {
+    return this.db.collection('users').doc(uid).ref.get().then((doc) => {
+      return doc.exists
+    })
+  }
 }
