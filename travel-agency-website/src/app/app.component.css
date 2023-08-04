@@ -16,7 +16,7 @@ header {
     border: 2px solid black;
     transition: background-color 0.8s;
     margin-bottom: 40px;
-    font-size: 16px;
+    font-size: 17px;
     position: fixed;
     z-index: 4;
 }
@@ -140,7 +140,7 @@ header {
 }
 
 .dropdown {
-    overflow: hidden;
+    height: 60px;
 }
 
 .dropdown .dropbtn {
@@ -161,7 +161,6 @@ header {
 }
 
 .dropdown-content {
-    display: none;
     position: relative;
     top: -8px;
     background-color: white;
@@ -170,6 +169,9 @@ header {
     margin: 10px auto 10px auto;
     box-sizing: border-box;
     box-shadow: 0px 0px 10px 0px rgba(66, 68, 90, 1);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s;
 }
 
 .dropdown-content a {
@@ -190,7 +192,52 @@ header {
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+    transform: scaleY(1);
+}
+
+/* notifications */
+
+#notifications-div {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#notifications-div img {
+    transition: all 0.25s;
+}
+
+#notifications-dropdown {
+    width: 350px;
+    background-color: white;
+    position: absolute;
+    top: 80px;
+    border: 1px solid black;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s;
+}
+
+#notifications-div:hover #notifications-dropdown {
+    transform: scaleY(1);
+}
+
+#notifications-div:hover img {
+    scale: 1.45;
+}
+
+#notifications-dropdown img {
+    position: absolute;
+    left: 158px;
+}
+
+#triangle-img-wrapper {
+    width: 350px;
+    height: 35px;
+    position: relative;
+    top: -24px;
+    margin-bottom: -35px;
 }
 
 /* main section */
@@ -307,8 +354,13 @@ footer hr {
         text-align: left;
     }
 
+    .dropdown-content {
+        margin-left: 0;
+    }
+
     .dropdown-content a {
-        justify-content: center;
+        justify-content: left;
+        margin-left: 5px;
     }
 
     #nav-btn-checkbox:not(:checked) ~ #nav-flex-container .nav-tile,
@@ -340,5 +392,16 @@ footer hr {
 
     .dropdown-content a:hover {
         box-shadow: 0px 0px 10px 0px rgb(174, 174, 174);
+    }
+
+    /* notifications */
+
+    #notifications-div {
+        align-items: flex-start;
+    }
+
+    #notifications-dropdown img {
+        left: -3px;
+        top: 1px;
     }
 }
