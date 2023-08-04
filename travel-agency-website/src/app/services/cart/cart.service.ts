@@ -112,4 +112,23 @@ export class CartService {
       console.error('transaction failed:', error);
     }
   }
+
+  public checkCartItemsAvailability(): boolean {
+    let madeChanges: boolean = false
+    let updatedCart: CartItem[] = this.getCart()
+
+    for (let cartItem of updatedCart) {
+      if (cartItem.amount > this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!?.inStock) {
+        cartItem.amount = this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!?.inStock 
+        madeChanges = true
+      }
+    }
+
+    if (madeChanges) {
+      this.setCartAndUpdateUser(updatedCart)
+      alert("Some of the items in your cart are no longer available in the quantity you have selected. The quantity of these items has been changed or they have been removed.")
+    }
+
+    return madeChanges
+  }
 }

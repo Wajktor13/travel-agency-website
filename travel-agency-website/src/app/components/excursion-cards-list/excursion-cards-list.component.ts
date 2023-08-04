@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data';
@@ -12,7 +12,7 @@ import { FilterExcursionsService } from 'src/app/services/filter-excursions/filt
   styleUrls: ['./excursion-cards-list.component.css']
 })
 
-export class ExcursionCardsListComponent {
+export class ExcursionCardsListComponent implements OnInit {
   public excursionsData: ExcursionData[] = []
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
@@ -22,7 +22,10 @@ export class ExcursionCardsListComponent {
       
     dataManager.excursionsData$.subscribe(
       {
-        next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,
+        next: (excursionsData: ExcursionData[]) => {
+          this.excursionsData = excursionsData
+          this.cartService.checkCartItemsAvailability()
+        },
         error: (err: any) => console.log(err)
       }
     )
@@ -46,5 +49,9 @@ export class ExcursionCardsListComponent {
     let toRemove: RemoveExcursionData = event
     this.dataManager.removeFromExcursionsDB(toRemove.excursionData)
     this.cartService.removeFromCart(toRemove.excursionData.id)
+  }
+
+  ngOnInit(): void {
+    this.cartService.checkCartItemsAvailability()
   }
 }

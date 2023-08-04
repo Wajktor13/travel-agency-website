@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
-import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
 import { CartItem } from 'src/app/shared/models/cart-item';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 
@@ -22,7 +21,7 @@ export class CartComponent {
     excursionDataManager.excursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => {
-        this.checkCartItemsAvailability()
+        this.cartService.checkCartItemsAvailability()
         this.recalculateCart()
         }
         ,
@@ -71,24 +70,6 @@ export class CartComponent {
 
   public removeExcursionButtonClicked(excursionID: number): void {
     this.cartService.removeFromCart(excursionID)
-  }
-
-  private checkCartItemsAvailability(): boolean {
-    let madeChanges: boolean = false
-
-    for (let cartItem of this.cart) {
-      if (cartItem.amount > this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!?.inStock) {
-        cartItem.amount = this.excursionDataManager.getExcursionDetails(cartItem.excursionID)!?.inStock 
-        madeChanges = true
-      }
-    }
-
-    if (madeChanges) {
-      this.cartService.setCartAndUpdateUser(this.cart)
-      alert("Some of the items in your cart are no longer available in the quantity you have selected. The quantity of these items has been changed or they have been removed.")
-    }
-
-    return madeChanges
   }
 
   public recalculateCart(): void {
