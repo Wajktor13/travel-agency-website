@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { EventType } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
 
@@ -10,7 +9,7 @@ import { FilterExcursionsService } from 'src/app/services/filter-excursions/filt
   styleUrls: ['./filter-excursions.component.css']
 })
 
-export class FilterExcursionsComponent {
+export class FilterExcursionsComponent implements OnInit {
   public minPrice: number = 0
   public maxPrice:number = Infinity
   public selectedMinPrice: number = 0
@@ -61,6 +60,10 @@ export class FilterExcursionsComponent {
     )
   }
 
+  ngOnInit(): void {
+    this.resetFilters()
+  }
+
   public changeSelectedMinPrice(event: any): void {
     this.filterService.setSelectedMinPrice(event.target.value)
   }
@@ -100,6 +103,8 @@ export class FilterExcursionsComponent {
     let maxStarsRange = document.getElementById("max-stars-range") as HTMLInputElement
     let minStarsOutput = document.getElementById("min-stars-output") as HTMLInputElement
     let maxStarsOutput = document.getElementById("max-stars-output") as HTMLInputElement
+    let startDateInput = document.getElementById("start-date-input") as HTMLInputElement
+    let endDateInput = document.getElementById("end-date-input") as HTMLInputElement
     
 
     this.filterService.resetFilters(this.minPrice, this.maxPrice)
@@ -110,6 +115,8 @@ export class FilterExcursionsComponent {
     minStarsOutput.value = "1"
     maxStarsRange.value = "5"
     maxStarsOutput.value = "5"
+    startDateInput.value = ""
+    endDateInput.value = ""
   }
 
   public changeFiltersVisibilty(): void{
