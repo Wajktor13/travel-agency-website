@@ -16,7 +16,7 @@ header {
     border: 2px solid black;
     transition: background-color 0.8s;
     margin-bottom: 40px;
-    font-size: 17px;
+    font-size: 16px;
     position: fixed;
     z-index: 4;
 }
@@ -111,8 +111,15 @@ header {
 }
 
 .nav-tile:hover,
+.nav-tile .dropdown .dropbtn:hover,
+.nav-tile .dropdown:hover > button {
+    cursor: pointer;
+    font-size: 25px !important;
+    color: white !important;
+}
+
 .nav-tile-radio:checked + label,
-.nav-tile .dropdown .dropbtn:hover {
+.nav-tile-radio:checked + label > .dropdown > button {
     cursor: pointer;
     font-size: 25px !important;
     color: white !important;
@@ -137,7 +144,7 @@ header {
 }
 
 .dropdown .dropbtn {
-    font-size: 17px;
+    font-size: 16px;
     border: none;
     outline: none;
     color: rgb(210, 210, 210);

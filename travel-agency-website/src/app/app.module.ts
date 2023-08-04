@@ -28,7 +28,7 @@ import { ReservationHistoryService } from './services/reservation-history/reserv
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { AuthService } from './services/auth/auth.service';
 import { UserDataManagerService } from './services/user-data-manager/user-data-manager.service';
-import { AdminPanelUsersComponent } from './components/admin-panel-users/admin-panel-users.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { UpdateExcursionFormComponent } from './components/update-excursion-form/update-excursion-form.component';
 
 
@@ -48,7 +48,7 @@ import { UpdateExcursionFormComponent } from './components/update-excursion-form
     NotificationsComponent,
     SingleExcursionViewComponent,
     LoginRegisterComponent,
-    AdminPanelUsersComponent,
+    AdminPanelComponent,
     UpdateExcursionFormComponent
   ],
 

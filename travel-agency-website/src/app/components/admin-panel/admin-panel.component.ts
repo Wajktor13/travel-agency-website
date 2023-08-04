@@ -5,12 +5,12 @@ import { UserRoles } from 'src/app/shared/models/user-roles';
 
 
 @Component({
-  selector: 'app-admin-panel-users',
-  templateUrl: './admin-panel-users.component.html',
-  styleUrls: ['./admin-panel-users.component.css']
+  selector: 'app-admin-panel',
+  templateUrl: './admin-panel.component.html',
+  styleUrls: ['./admin-panel.component.css']
 })
 
-export class AdminPanelUsersComponent {
+export class AdminPanelComponent {
   public allUsersData: UserData[] = []
 
   constructor(public userDataManager: UserDataManagerService){
