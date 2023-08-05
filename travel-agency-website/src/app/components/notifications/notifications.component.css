@@ -11,6 +11,11 @@ p {
     border-bottom: 1px solid black;
 }
 
+.notification:hover {
+    filter: brightness(90%);
+    background-color: #d8d8d8;
+}
+
 .notification:last-child {
     border-bottom: none;
 }
