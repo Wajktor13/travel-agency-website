@@ -37,12 +37,15 @@
             </label>
 
             <div class="nav-tile" id="notifications-div">
-                <img src="../assets/images/bell.png" alt="notifications icon" width="26px">
+                <div id="bell-img-wrapper">
+                    <div id="notifications-counter" [ngClass]="{'no-notifications' : notificationsNumber == 0}">{{notificationsNumber}}</div>
+                    <img src="../assets/images/bell.png" alt="notifications icon" width="26px">
+                </div>
                 <div id="notifications-dropdown">
                     <div id="triangle-img-wrapper">
                         <img src="../assets/images/traingle.png" alt="traingle" width="35px">
                     </div>
-                    <app-notifications></app-notifications>
+                    <app-notifications (emittedNotificationsNumber)="receivedNotificationsNumber($event)"></app-notifications>
                 </div>
             </div>
 

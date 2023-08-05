@@ -1,4 +1,10 @@
-<p>app-notification works!</p>
-<p>app-notification works!</p>
-<p>app-notification works!</p>
-<p>app-notification works!</p>
+<div id="info">
+    <p *ngIf="getNotificationsNumber() == 0 && isLoggedIn">you don't have any new notifications</p>
+    <p *ngIf="!isLoggedIn">log in to see notifications</p>
+</div>
+
+<div id="notifications">
+    <div class="notification" *ngFor="let reservation of upcomingReservations">{{reservation.excursionData.startDate}}</div>
+</div>
+
+
