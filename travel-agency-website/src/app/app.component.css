@@ -431,8 +431,17 @@ footer hr {
         align-items: flex-start;
     }
 
+    #bell-img-wrapper {
+        left: 20px;
+    }
+
+    #notifications-dropdown {
+        left: 20px;
+        top: 55px;
+    }
+
     #notifications-dropdown img {
         left: -3px;
-        top: 1px;
+        top: 0px;
     }
 }
