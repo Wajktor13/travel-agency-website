@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
@@ -17,7 +18,7 @@ export class NotificationsComponent implements OnInit {
   isLoggedIn: boolean = false;
   upcomingReservations: ReservationData[] = [];
 
-  constructor(private authService: AuthService, private reservationHistory: ReservationHistoryService) {
+  constructor(private authService: AuthService, private reservationHistory: ReservationHistoryService, private router: Router) {
     this.authService.isLoggedIn$.subscribe(
       {
         next: (value) => {
@@ -52,6 +53,7 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.emittedNotificationsNumber.emit(0);
+    setInterval(()=> { this.updateUpcomingReservations }, 60000);
   }
 
   public getNotificationsNumber(): number {
@@ -61,8 +63,18 @@ export class NotificationsComponent implements OnInit {
   public async updateUpcomingReservations(): Promise<void> {
     let reservationHistory: ReservationData[] = await this.reservationHistory.getReservationsHistory();
 
-    this.upcomingReservations = reservationHistory.filter((reservation) => new Date(reservation.excursionData.startDate) > new Date()).sort((a, b) => new Date(a.excursionData.startDate).getTime() - new Date(b.excursionData.startDate).getTime());
+    this.upcomingReservations = reservationHistory
+    .filter((reservation) => {
+      const diffTime = Math.abs(new Date(reservation.excursionData.startDate).getTime() - new Date().getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+      return new Date(reservation.excursionData.startDate) > new Date() && diffDays <= 30;
+    })
+    .sort((a, b) => new Date(a.excursionData.startDate).getTime() - new Date(b.excursionData.startDate).getTime());
 
     this.notificationsNumber.next(this.upcomingReservations.length);
+  }
+
+  public notificationClicked(): void {
+    this.router.navigate(['/reservations-history']);
   }
 }

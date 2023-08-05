@@ -66,6 +66,9 @@ export class CartComponent {
 
   public bookButtonClicked(): void {
     this.cartService.bookCart()
+      .then(() => {
+        window.location.reload()
+      })
   }
 
   public removeExcursionButtonClicked(excursionID: number): void {

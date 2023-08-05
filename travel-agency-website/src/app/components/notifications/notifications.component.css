@@ -1,9 +1,20 @@
 p {
     color: black;
-    font-size: 14px;
+    font-size: 13px;
     text-align: center;
 }
 
 .notification {
     color: black;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.notification:last-child {
+    border-bottom: none;
+}
+
+#upcoming-reservation-info {
+    margin-left: 30px;
 }
