@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
 
 @Component({
@@ -15,7 +16,14 @@ export class ContactUsFormComponent {
 
   constructor() { }
 
-  onSubmit() {
-    console.log(this.name + this.surname + this.email + this.message);
+  onSubmit(e: Event) {
+    e.preventDefault();
+
+    emailjs.sendForm('travel-agency-website', 'template_7c8tdt7', e.target as HTMLFormElement, 'wL8YyNQC9vEfsNiD2')
+      .then((result: EmailJSResponseStatus) => {
+        alert('Your message has been sent!');
+      }, (error) => {
+        console.log(error.text);
+      });
   }
 }
