@@ -14,7 +14,7 @@ export class FilterExcursionsPipe implements PipeTransform {
 
   transform(excursionsData: ExcursionData[], args: FilterArguments): ExcursionData[] {
     return excursionsData.filter((e) => {
-      return this.priceFilter(e, args.minPrice, args.maxPrice) && this.dateFilter(e, args.fromDate, args.toDate) && this.countryFilter(e, args.country) && this.starsFilter(e, args.minStars, args.maxStars, args.noReviews)
+      return this.priceFilter(e, args.minPrice, args.maxPrice) && this.dateFilter(e, args.fromDate, args.toDate) && this.countryFilter(e, args.country) && this.starsFilter(e, args.minStars, args.maxStars, args.noReviews) && this.hasNotStartedFilter(e)
     })
   }
 
@@ -54,5 +54,9 @@ export class FilterExcursionsPipe implements PipeTransform {
     let stars: number = this.reviewsService.getAverageStars(e.reviews)
 
     return stars >= minStars && stars <= maxStars || (noReviews && stars == 0)
+  }
+
+  private hasNotStartedFilter(e: ExcursionData): boolean {
+    return new Date(e.startDate) >= new Date()
   }
 }
