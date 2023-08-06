@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 })
 
 export class NotificationsService {
-  $notificationsNumber: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  $upcomingReservations: BehaviorSubject<ReservationData[]> = new BehaviorSubject<ReservationData[]>([]);
+  notificationsNumber$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  upcomingReservations$: BehaviorSubject<ReservationData[]> = new BehaviorSubject<ReservationData[]>([]);
   isLoggedIn: boolean = false;
 
   constructor(private authService: AuthService, private reservationHistory: ReservationHistoryService, private router: Router) {
@@ -21,8 +21,8 @@ export class NotificationsService {
         next: (value) => {
           this.isLoggedIn = value
           if (!this.isLoggedIn) {
-            this.$upcomingReservations.next([]);
-            this.$notificationsNumber.next(0);
+            this.upcomingReservations$.next([]);
+            this.notificationsNumber$.next(0);
           }
         },
         error: (err) => console.log(err)
@@ -42,13 +42,13 @@ export class NotificationsService {
   }
 
   public getNotificationsNumber(): number {
-    return this.$notificationsNumber.value;
+    return this.notificationsNumber$.value;
   }
 
   public async updateUpcomingReservations(): Promise<void> {
     let reservationHistory: ReservationData[] = await this.reservationHistory.getReservationsHistory();
 
-    this.$upcomingReservations.next(reservationHistory
+    this.upcomingReservations$.next(reservationHistory
     .filter((reservation) => {
       const diffTime = Math.abs(new Date(reservation.excursionData.startDate).getTime() - new Date().getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
@@ -56,7 +56,7 @@ export class NotificationsService {
     })
     .sort((a, b) => new Date(a.excursionData.startDate).getTime() - new Date(b.excursionData.startDate).getTime()))
 
-    this.$notificationsNumber.next(this.$upcomingReservations.value.length);
+    this.notificationsNumber$.next(this.upcomingReservations$.value.length);
   }
 
   public notificationClicked(): void {

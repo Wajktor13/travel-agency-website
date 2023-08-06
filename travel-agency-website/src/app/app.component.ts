@@ -23,7 +23,7 @@ export class AppComponent {
       }
     )
 
-    this.notificationService.$notificationsNumber.subscribe(
+    this.notificationService.notificationsNumber$.subscribe(
       {
         next: (value) => this.notificationsNumber = value,
         error: (err) => console.log(err)

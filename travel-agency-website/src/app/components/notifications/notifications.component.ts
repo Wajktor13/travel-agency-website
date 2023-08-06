@@ -23,14 +23,14 @@ export class NotificationsComponent {
       }
     )
 
-    this.notificationService.$notificationsNumber.subscribe(
+    this.notificationService.notificationsNumber$.subscribe(
       {
         next: (value) => { this.notificationsNumber = value },
         error: (err) => console.log(err)
       }
     )
 
-    this.notificationService.$upcomingReservations.subscribe(
+    this.notificationService.upcomingReservations$.subscribe(
       {
         next: (value) => { this.upcomingReservations = value },
         error: (err) => console.log(err)
