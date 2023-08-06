@@ -14,5 +14,12 @@ export class HomeComponent {
   public markerPosition: google.maps.LatLngLiteral = { lat: 50.068004, lng: 19.912515 };
 
   constructor() { }
+
+  public ngOnInit(): void {
+    let radio: HTMLInputElement = document.getElementById('radio-home') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
+  }
 }
 

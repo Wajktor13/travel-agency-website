@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -9,13 +9,20 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./login-register.component.css']
 })
 
-export class LoginRegisterComponent {
+export class LoginRegisterComponent implements OnInit {
   public radioLoginChecked: boolean = true
   public nickname: string = ''
   public email: string = ''
   public password: string = ''
 
   constructor(public authService: AuthService, private router: Router){}
+
+  public ngOnInit(): void {
+    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
+  }
 
   public changeLoginRegister(): void {
     this.radioLoginChecked = !this.radioLoginChecked

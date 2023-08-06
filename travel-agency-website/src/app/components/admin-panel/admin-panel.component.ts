@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserDataManagerService } from 'src/app/services/user-data-manager/user-data-manager.service';
 import { UserData } from 'src/app/shared/models/user-data';
 import { UserRoles } from 'src/app/shared/models/user-roles';
@@ -10,7 +10,7 @@ import { UserRoles } from 'src/app/shared/models/user-roles';
   styleUrls: ['./admin-panel.component.css']
 })
 
-export class AdminPanelComponent {
+export class AdminPanelComponent implements OnInit {
   public allUsersData: UserData[] = []
 
   constructor(public userDataManager: UserDataManagerService){
@@ -21,6 +21,13 @@ export class AdminPanelComponent {
         error: (err) => console.log(err)
       }
     )
+  }
+
+  public ngOnInit(): void {
+    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
   }
 
   public reverseBan(userData: UserData): void{

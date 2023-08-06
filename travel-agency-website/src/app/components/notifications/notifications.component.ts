@@ -75,6 +75,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   public notificationClicked(): void {
-    this.router.navigate(['/reservations-history']);
+    this.router.navigate(['/reservations-history'])
   }
 }

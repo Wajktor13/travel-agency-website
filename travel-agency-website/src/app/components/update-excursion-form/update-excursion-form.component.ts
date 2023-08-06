@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./update-excursion-form.component.css']
 })
 
-export class UpdateExcursionFormComponent  {
+export class UpdateExcursionFormComponent implements OnInit {
   public id: any = -1
   public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', imgs: [] , reviews: [], longDescription: ''}
 
@@ -28,6 +28,11 @@ export class UpdateExcursionFormComponent  {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id')
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
+
+    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
   }
 
   public submitClicked(data: any) {

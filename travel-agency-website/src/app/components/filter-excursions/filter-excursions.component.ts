@@ -62,6 +62,10 @@ export class FilterExcursionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.resetFilters()
+    let radio = document.getElementById('radio-excursions')
+    if (radio) {
+      radio.setAttribute('checked', 'true')
+    }
   }
 
   public changeSelectedMinPrice(event: any): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
@@ -11,7 +11,7 @@ import { ExcursionData } from 'src/app/shared/models/excursion-data';
   styleUrls: ['./manager-panel.component.css']
 })
 
-export class ManagerPanelComponent {
+export class ManagerPanelComponent implements OnInit {
   info: string = " (lowest available)"
   public radioExcursionListChecked: boolean = true
   public excursionsData: ExcursionData[] = []
@@ -24,7 +24,14 @@ export class ManagerPanelComponent {
         error: (err: any) => console.log(err) 
       }
     )
-   }
+  }
+
+  public ngOnInit(): void {
+    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
+  }
 
   public getMinAvailableID(): number {
     return this.excursionDataManager.getMinAvailableID()

@@ -53,5 +53,10 @@ export class ExcursionCardsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.checkCartItemsAvailability()
+
+    let radio: HTMLInputElement = document.getElementById('radio-home') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
   }
 }

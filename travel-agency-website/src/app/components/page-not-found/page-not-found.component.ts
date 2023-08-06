@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 @Component({
@@ -7,6 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./page-not-found.component.css']
 })
 
-export class PageNotFoundComponent {
+export class PageNotFoundComponent implements OnInit {
 
+  public ngOnInit(): void {
+    let radio: HTMLInputElement = document.getElementById('radio-home') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
+  }
 }
+

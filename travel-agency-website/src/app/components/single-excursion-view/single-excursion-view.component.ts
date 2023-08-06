@@ -56,6 +56,11 @@ export class SingleExcursionViewComponent implements OnInit {
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
     this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
     this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
+
+    let radio: HTMLInputElement = document.getElementById('radio-excursions') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
   }
 
   public changeReservationCounter(diff: number): void {

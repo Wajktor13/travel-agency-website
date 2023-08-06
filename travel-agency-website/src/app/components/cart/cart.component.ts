@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
@@ -12,7 +12,7 @@ import { ExcursionData } from 'src/app/shared/models/excursion-data';
   styleUrls: ['./cart.component.css']
 })
 
-export class CartComponent {
+export class CartComponent implements OnInit {
   public cart: CartItem[] = []
   public totalPrice: number = 0
   public totalReservations: number = 0
@@ -38,6 +38,13 @@ export class CartComponent {
         error: (err: any) => console.log(err)
       }
     )
+  }
+
+  public ngOnInit(): void {    
+    let radio: HTMLInputElement = document.getElementById('radio-cart-preview') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
   }
 
   public getReservations(id: number | undefined): number {
