@@ -1,10 +1,10 @@
 <div id="info">
-    <p *ngIf="getNotificationsNumber() == 0 && isLoggedIn">you don't have any new notifications</p>
+    <p *ngIf="notificationsNumber == 0 && isLoggedIn">you don't have any new notifications</p>
     <p *ngIf="!isLoggedIn">log in to see notifications</p>
 </div>
 
 <div id="notifications">
-    <div class="notification" *ngFor="let reservation of upcomingReservations" (click)="notificationClicked()">
+    <div class="notification" *ngFor="let reservation of upcomingReservations">
         <img src="{{reservation.excursionData.imgs[0]}}" alt="excursion image" width="100px" height="70px">
         <div>
             <p id="upcoming-reservation-info">upcoming reservation - {{reservation.excursionData.startDate}}</p>
