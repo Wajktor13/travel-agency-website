@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { ReservationHistoryService } from 'src/app/services/reservation-history/reservation-history.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { ReservationData } from 'src/app/shared/models/reservation-data';
 
 
@@ -12,69 +10,31 @@ import { ReservationData } from 'src/app/shared/models/reservation-data';
   styleUrls: ['./notifications.component.css']
 })
 
-export class NotificationsComponent implements OnInit {
-  @Output() emittedNotificationsNumber: EventEmitter<number> = new EventEmitter<number>()
-  notificationsNumber: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+export class NotificationsComponent {
+  notificationsNumber: number = 0;
   isLoggedIn: boolean = false;
   upcomingReservations: ReservationData[] = [];
 
-  constructor(private authService: AuthService, private reservationHistory: ReservationHistoryService, private router: Router) {
+  constructor (private authService: AuthService, private notificationService: NotificationsService) {
     this.authService.isLoggedIn$.subscribe(
       {
-        next: (value) => {
-          this.isLoggedIn = value
-          if (!this.isLoggedIn) {
-            this.upcomingReservations = [];
-            this.notificationsNumber.next(0);
-          }
-        },
+        next: (value) => { this.isLoggedIn = value },
         error: (err) => console.log(err)
       }
     )
 
-    this.reservationHistory.reservationsHistory$.subscribe(
+    this.notificationService.$notificationsNumber.subscribe(
       {
-        next: (value) => this.updateUpcomingReservations(),
+        next: (value) => { this.notificationsNumber = value },
         error: (err) => console.log(err)
       }
     )
 
-    this.notificationsNumber.subscribe(
+    this.notificationService.$upcomingReservations.subscribe(
       {
-        next: (value) => this.emitNotificationsNumber(value),
+        next: (value) => { this.upcomingReservations = value },
         error: (err) => console.log(err)
       }
     )
-  }
-
-  public emitNotificationsNumber(notificationsNumber: number): void {
-    this.emittedNotificationsNumber.emit(notificationsNumber);
-  }
-
-  ngOnInit(): void {
-    this.emittedNotificationsNumber.emit(0);
-    setInterval(()=> { this.updateUpcomingReservations }, 60000);
-  }
-
-  public getNotificationsNumber(): number {
-    return this.notificationsNumber.value;
-  }
-
-  public async updateUpcomingReservations(): Promise<void> {
-    let reservationHistory: ReservationData[] = await this.reservationHistory.getReservationsHistory();
-
-    this.upcomingReservations = reservationHistory
-    .filter((reservation) => {
-      const diffTime = Math.abs(new Date(reservation.excursionData.startDate).getTime() - new Date().getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-      return new Date(reservation.excursionData.startDate) > new Date() && diffDays <= 30;
-    })
-    .sort((a, b) => new Date(a.excursionData.startDate).getTime() - new Date(b.excursionData.startDate).getTime());
-
-    this.notificationsNumber.next(this.upcomingReservations.length);
-  }
-
-  public notificationClicked(): void {
-    this.router.navigate(['/reservations-history'])
   }
 }

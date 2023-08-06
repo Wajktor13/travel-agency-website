@@ -2,6 +2,7 @@ import { Component, HostListener} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 import { CartService } from './services/cart/cart.service';
+import { NotificationsService } from './services/notifications/notifications.service';
 
 
 @Component({
@@ -14,10 +15,17 @@ export class AppComponent {
   public isLoggedIn: boolean = false
   public notificationsNumber: number = 0
 
-  constructor(private router: Router, public authService: AuthService, private cartService: CartService) {
+  constructor(private router: Router, public authService: AuthService, private cartService: CartService, private notificationService: NotificationsService) {
     this.authService.isLoggedIn$.subscribe(
       {
         next: (value) => this.isLoggedIn = value,
+        error: (err) => console.log(err)
+      }
+    )
+
+    this.notificationService.$notificationsNumber.subscribe(
+      {
+        next: (value) => this.notificationsNumber = value,
         error: (err) => console.log(err)
       }
     )
@@ -56,10 +64,6 @@ export class AppComponent {
     this.cartService.setCart([])
     alert("Successfully logged out!")
     this.router.navigate(['home'])
-  }
-
-  public receivedNotificationsNumber(notificationsNumber: number): void{
-    this.notificationsNumber = notificationsNumber
   }
 
   @HostListener('window:unload', ['$event'])

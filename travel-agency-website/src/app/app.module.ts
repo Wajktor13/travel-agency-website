@@ -30,6 +30,7 @@ import { AuthService } from './services/auth/auth.service';
 import { UserDataManagerService } from './services/user-data-manager/user-data-manager.service';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { UpdateExcursionFormComponent } from './components/update-excursion-form/update-excursion-form.component';
+import { NotificationsService } from './services/notifications/notifications.service';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { UpdateExcursionFormComponent } from './components/update-excursion-form
     ReviewsService,
     ReservationHistoryService,
     AuthService,
-    UserDataManagerService
+    UserDataManagerService,
+    NotificationsService
   ],
 
   bootstrap: [AppComponent]

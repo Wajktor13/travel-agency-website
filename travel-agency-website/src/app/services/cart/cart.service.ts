@@ -8,6 +8,7 @@ import { ExcursionsDataManagerService } from '../excursion-data-manager/excursio
 import { ReservationHistoryService } from '../reservation-history/reservation-history.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { AngularFirestore, CollectionReference } from '@angular/fire/compat/firestore';
+import { NotificationsService } from '../notifications/notifications.service';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class CartService {
   public cart$: BehaviorSubject<CartItem[]> = new BehaviorSubject([] as CartItem[])
 
   constructor(private authService: AuthService, private userDataManager: UserDataManagerService, private excursionDataManager: ExcursionsDataManagerService, private reservationHistory: ReservationHistoryService, 
-  private db: AngularFirestore) { 
+  private db: AngularFirestore, private notificationService: NotificationsService) { 
     authService.currentUser$.subscribe(
       {
         next: (userData: UserData) => this.cart$.next(userData.inCart),
@@ -93,11 +94,13 @@ export class CartService {
                 reservationDate: currentDate,
                 status: "upcoming",
                 amount: cartItem.amount,
-              });
+              })
   
               transaction.update(this.db.firestore.collection('excursions').doc(excursionDetails.id.toString()), {
                 inStock: updatedInStock,
-              });
+              })
+
+              this.notificationService.updateUpcomingReservations()
 
             } else {
               throw new Error('not enough stock for excursion: ' + excursionDetails.name);
