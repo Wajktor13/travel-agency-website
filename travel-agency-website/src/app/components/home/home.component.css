@@ -16,10 +16,16 @@
     font-size: 18px;
 }
 
-#map-section {
+#map-section,
+#contact-section {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 100px;
     margin: 100px auto 0 auto;
 }
+
+app-contact-us-form {
+    width: 100%;
+}
+
