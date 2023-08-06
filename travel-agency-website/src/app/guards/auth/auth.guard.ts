@@ -29,9 +29,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
       } else{
         alert("You don't have permission to view this site.")
         this.router.navigate(['home'])
-        .then(() => {
-          window.location.reload();
-        });
+          .then(() => {
+            window.location.reload();
+          });
         return false
       }
     }

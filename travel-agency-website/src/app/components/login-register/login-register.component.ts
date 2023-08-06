@@ -31,7 +31,7 @@ export class LoginRegisterComponent implements OnInit {
   public async loginButtonClicked(): Promise<void> {
     this.authService.logout()
     if (await this.authService.login(this.email, this.password)){
-      // this.router.navigate(['home'])
+      this.router.navigate(['home'])
     }
   }
 

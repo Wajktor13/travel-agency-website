@@ -73,9 +73,6 @@ export class CartComponent implements OnInit {
 
   public bookButtonClicked(): void {
     this.cartService.bookCart()
-      .then(() => {
-        window.location.reload()
-      })
   }
 
   public removeExcursionButtonClicked(excursionID: number): void {

@@ -7,6 +7,7 @@ import { UserData } from 'src/app/shared/models/user-data';
 import { UserRoles } from 'src/app/shared/models/user-roles';
 import { UserDataManagerService } from '../user-data-manager/user-data-manager.service';
 import firebase from 'firebase/compat/app'
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class AuthService {
   public currentUser$: BehaviorSubject<UserData> = new BehaviorSubject({ uid:"",banned: true, roles: {} as UserRoles, inCart: [], reservations: [], email: "", nickname: ""} as UserData)
   public keepLoggedIn: boolean = false
 
-  constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService) {
+  constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService, private router: Router) {
     this.fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
         let userData = (await this.userDataManger.getUserDataByUid(user.uid)) as { uid: string, banned: boolean, roles: UserRoles, inCart: CartItem[], reservations: ReservationData[] }
@@ -53,7 +54,6 @@ export class AuthService {
       .then(async () => {
         await this.fireAuth.signInWithEmailAndPassword(email, password)
           .then((loginData) => {
-            alert("Successfully logged in!")
             localStorage.setItem("user", loginData.user?.uid!)
             loggedIn = true
           })
@@ -164,7 +164,6 @@ export class AuthService {
     
     localStorage.setItem("user", loginData.user?.uid!)
     this.isLoggedIn$.next(true)
-    alert("Successfully logged in!")
 
     return loggedIn;
   }
@@ -173,6 +172,7 @@ export class AuthService {
     this.fireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(async (loginData) => {
         this.logInWithProvider(loginData)
+        this.router.navigate(["home"])
       })
       .catch((error) => {
         console.log(error)
@@ -183,6 +183,7 @@ export class AuthService {
     this.fireAuth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
     .then(async (loginData) => {
       this.logInWithProvider(loginData)
+      this.router.navigate(["home"])
     })
     .catch((error) => {
       console.log(error)
