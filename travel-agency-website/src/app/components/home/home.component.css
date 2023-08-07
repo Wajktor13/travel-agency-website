@@ -6,9 +6,10 @@
 }
 
 #about h1 {
-    font-size: 70px;
+    font-size: 80px;
     font-family: Brush Script MT, Brush Script Std, cursive;
     color: rgb(68, 59, 54);
+    text-align: center;
 }
 
 #about p {
