@@ -19,7 +19,11 @@ export class AuthService {
   public currentUser$: BehaviorSubject<UserData> = new BehaviorSubject({ uid:"",banned: true, roles: {} as UserRoles, inCart: [], reservations: [], email: "", nickname: ""} as UserData)
   public keepLoggedIn: boolean = false
 
-  constructor(private fireAuth: AngularFireAuth, private userDataManger: UserDataManagerService, private router: Router) {
+  constructor(
+    private fireAuth: AngularFireAuth,
+    private userDataManger: UserDataManagerService,
+    private router: Router
+    ) {
     this.fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
         let userData = (await this.userDataManger.getUserDataByUid(user.uid)) as { uid: string, banned: boolean, roles: UserRoles, inCart: CartItem[], reservations: ReservationData[] }
@@ -138,7 +142,7 @@ export class AuthService {
     return this.isLoggedIn() && (this.getCurrentUser().roles.admin || this.getCurrentUser().roles.manager)
   }
 
-  public async logInWithProvider(loginData: any): Promise<boolean> {
+  private async logInWithProvider(loginData: any): Promise<boolean> {
     let loggedIn: boolean = false;
 
     await this.fireAuth.setPersistence(this.keepLoggedIn ? "local" : "session")

@@ -10,9 +10,11 @@ import { FilterArguments } from '../../shared/models/filter-arguments';
 
 export class FilterExcursionsPipe implements PipeTransform {
 
-  constructor(private reviewsService: ReviewsService) { }
+  constructor(
+    private reviewsService: ReviewsService
+    ) { }
 
-  transform(excursionsData: ExcursionData[], args: FilterArguments): ExcursionData[] {
+  public transform(excursionsData: ExcursionData[], args: FilterArguments): ExcursionData[] {
     return excursionsData.filter((e) => {
       return this.priceFilter(e, args.minPrice, args.maxPrice) && this.dateFilter(e, args.fromDate, args.toDate) && this.countryFilter(e, args.country) && this.starsFilter(e, args.minStars, args.maxStars, args.noReviews) && this.hasNotStartedFilter(e)
     })

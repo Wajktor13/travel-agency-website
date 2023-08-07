@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
@@ -16,7 +17,7 @@ import { UserData } from 'src/app/shared/models/user-data';
   styleUrls: ['./single-excursion-view.component.css']
 })
 
-export class SingleExcursionViewComponent implements OnInit {
+export class SingleExcursionViewComponent implements OnInit, OnDestroy {
   public reservationCounter: number = 0
   public leftToAddToCart: number = 0
   public id: any = -1
@@ -31,27 +32,20 @@ export class SingleExcursionViewComponent implements OnInit {
 
   public currentImgID: number = 0
 
-  constructor(private dataManager: ExcursionsDataManagerService, private route: ActivatedRoute, private cartService: CartService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, public authService: AuthService) {
-    this.dataManager.excursionsData$.subscribe(
-      {
-        next: (data) => {
-          this.excursion = this.dataManager.getExcursionDataByID(this.id)
-          this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
-          this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
-        },
-        error: (err) => console.log(err)
-      }
-    )
+  private excursionsDataSub: Subscription | null = null
+  private cartSub: Subscription | null = null
 
-    this.cartService.cart$.subscribe(
-      {
-        next: (data) => this.reservationCounter = cartService.getReservationsOf(this.excursion.id)!,
-        error: (err: any) => console.log(err)
-      }
-    )
-  }
+  constructor(
+    private dataManager: ExcursionsDataManagerService,
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private router: Router,
+    private reviewsService: ReviewsService,
+    private reservationHistory: ReservationHistoryService,
+    public authService: AuthService
+    ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id')
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
     this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
@@ -61,6 +55,29 @@ export class SingleExcursionViewComponent implements OnInit {
     if (radio) {
       radio.checked = true
     }
+
+    this.excursionsDataSub = this.dataManager.excursionsData$.subscribe(
+      {
+        next: (_) => {
+          this.excursion = this.dataManager.getExcursionDataByID(this.id)
+          this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!
+          this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
+        },
+        error: (err) => console.log(err)
+      }
+    )
+
+    this.cartSub = this.cartService.cart$.subscribe(
+      {
+        next: (_) => this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id)!,
+        error: (err: any) => console.log(err)
+      }
+    )
+  }
+
+  public ngOnDestroy(): void {
+    this.excursionsDataSub?.unsubscribe()
+    this.cartSub?.unsubscribe()
   }
 
   public changeReservationCounter(diff: number): void {

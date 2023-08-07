@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 @Component({
@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   public center: google.maps.LatLngLiteral = { lat: 50.068004, lng: 19.912515 };
   public zoom: number = 13;
   public markerOptions: google.maps.MarkerOptions = { draggable: false };

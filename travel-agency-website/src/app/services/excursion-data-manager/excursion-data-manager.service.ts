@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ExcursionData } from '../../shared/models/excursion-data';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
@@ -8,16 +8,20 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   providedIn: 'root'
 })
 
-export class ExcursionsDataManagerService {
+export class ExcursionsDataManagerService implements OnDestroy {
   private fetchedExcursionsData$: Observable<ExcursionData[]>
   public excursionsData$: BehaviorSubject<ExcursionData[]> = new BehaviorSubject([] as ExcursionData[])
   public minUnitPrice$: BehaviorSubject<number> = new BehaviorSubject(Infinity)
   public maxUnitPrice$: BehaviorSubject<number> = new BehaviorSubject(0)
+  private fetchedExcursionsDataSub: Subscription | null = null
+  private excursionsDataSub: Subscription | null = null
 
-  constructor(private db: AngularFirestore) {
+  constructor(
+    private db: AngularFirestore
+    ) {
     this.fetchedExcursionsData$ = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
 
-    this.fetchedExcursionsData$.subscribe(
+    this.fetchedExcursionsDataSub = this.fetchedExcursionsData$.subscribe(
       {
         next: (data: ExcursionData[]) => {
           this.excursionsData$.next(data)
@@ -27,7 +31,7 @@ export class ExcursionsDataManagerService {
       }
     )
 
-    this.excursionsData$.subscribe(
+    this.excursionsDataSub = this.excursionsData$.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => {
           this.updateMinMaxPrice(excursionsData)
@@ -35,6 +39,11 @@ export class ExcursionsDataManagerService {
         error: (err: any) => console.log(err)
       }
     )
+  }
+
+  public ngOnDestroy(): void {
+    this.fetchedExcursionsDataSub?.unsubscribe()
+    this.excursionsDataSub?.unsubscribe()
   }
 
   private existsInExcursionsData(excursion: ExcursionData): boolean {

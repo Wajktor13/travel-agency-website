@@ -9,14 +9,14 @@ import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 })
 
 export class ContactUsFormComponent {
-  name: string = '';
-  surname: string = '';
-  email: string = '';
-  message: string = '';
+  public name: string = '';
+  public surname: string = '';
+  public email: string = '';
+  public message: string = '';
 
   constructor() { }
 
-  onSubmit(e: Event) {
+  public onSubmit(e: Event): void {
     e.preventDefault();
 
     emailjs.sendForm('travel-agency-website', 'template_7c8tdt7', e.target as HTMLFormElement, 'wL8YyNQC9vEfsNiD2')

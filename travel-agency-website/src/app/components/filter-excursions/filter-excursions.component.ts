@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
 
@@ -9,29 +10,44 @@ import { FilterExcursionsService } from 'src/app/services/filter-excursions/filt
   styleUrls: ['./filter-excursions.component.css']
 })
 
-export class FilterExcursionsComponent implements OnInit {
+export class FilterExcursionsComponent implements OnInit, OnDestroy {
   public minPrice: number = 0
   public maxPrice:number = Infinity
   public selectedMinPrice: number = 0
   public selectedMaxPrice: number = Infinity
   public filtersHidden: boolean = false
+  private minPriceSub: Subscription | null = null
+  private maxPriceSub: Subscription | null = null
+  private selectedMinPriceSub: Subscription | null = null
+  private selectedMaxPriceSub: Subscription | null = null
 
-  constructor(public dataManager: ExcursionsDataManagerService, public filterService: FilterExcursionsService){
-    filterService.selectedMaxPrice$.subscribe(
+  constructor(
+    public dataManager: ExcursionsDataManagerService,
+    public filterService: FilterExcursionsService
+    ) { }
+
+  public ngOnInit(): void {
+    this.resetFilters()
+    let radio = document.getElementById('radio-excursions')
+    if (radio) {
+      radio.setAttribute('checked', 'true')
+    }
+
+    this.selectedMaxPriceSub = this.filterService.selectedMaxPrice$.subscribe(
       {
         next: (price: number) => this.selectedMaxPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    filterService.selectedMinPrice$.subscribe(
+    this.selectedMinPriceSub = this.filterService.selectedMinPrice$.subscribe(
       {
         next: (price: number) => this.selectedMinPrice = price,
         error: (err: any) => console.log(err)
       }
     )
     
-    dataManager.maxUnitPrice$.subscribe(
+    this.maxPriceSub = this.dataManager.maxUnitPrice$.subscribe(
       {
         next: (price: number) => 
         {
@@ -46,7 +62,7 @@ export class FilterExcursionsComponent implements OnInit {
       }
     )
 
-    dataManager.minUnitPrice$.subscribe(
+    this.minPriceSub = this.dataManager.minUnitPrice$.subscribe(
       {
         next: (price: number) => 
         {
@@ -60,12 +76,11 @@ export class FilterExcursionsComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {
-    this.resetFilters()
-    let radio = document.getElementById('radio-excursions')
-    if (radio) {
-      radio.setAttribute('checked', 'true')
-    }
+  public ngOnDestroy(): void {
+    this.minPriceSub?.unsubscribe()
+    this.maxPriceSub?.unsubscribe()
+    this.selectedMinPriceSub?.unsubscribe()
+    this.selectedMaxPriceSub?.unsubscribe()
   }
 
   public changeSelectedMinPrice(event: any): void {
@@ -100,7 +115,7 @@ export class FilterExcursionsComponent implements OnInit {
     this.filterService.setSelectedNoReviews(event.target.checked)
   }
 
-  public resetFilters(): void{
+  public resetFilters(): void {
     let noReviewsCheckbox = document.getElementById("no-reviews-input") as HTMLInputElement
     let countryInput = document.getElementById("country-input") as HTMLInputElement
     let minStarsRange = document.getElementById("min-stars-range") as HTMLInputElement
@@ -123,7 +138,7 @@ export class FilterExcursionsComponent implements OnInit {
     endDateInput.value = ""
   }
 
-  public changeFiltersVisibilty(): void{
+  public changeFiltersVisibilty(): void {
     this.filtersHidden = !this.filtersHidden
   }
 }

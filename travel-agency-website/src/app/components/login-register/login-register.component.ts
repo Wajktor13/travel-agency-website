@@ -15,7 +15,10 @@ export class LoginRegisterComponent implements OnInit {
   public email: string = ''
   public password: string = ''
 
-  constructor(public authService: AuthService, private router: Router){}
+  constructor(
+    public authService: AuthService,
+    private router: Router
+    ) { }
 
   public ngOnInit(): void {
     let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement

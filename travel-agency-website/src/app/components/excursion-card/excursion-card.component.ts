@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
@@ -15,33 +16,46 @@ import { RemoveExcursionData } from 'src/app/shared/models/remove-excursion-data
   styleUrls: ['./excursion-card.component.css'],
 })
 
-export class ExcursionCardComponent implements OnChanges {
+export class ExcursionCardComponent implements OnChanges, OnInit, OnDestroy {
   static minPrice: number = Infinity
   static maxPrice: number = 0
   public reservationCounter: number = 0
   public leftToAddToCart: number = 0
+  private maxPriceSub: Subscription | null = null
+  private minPriceSub: Subscription | null = null
+  private cartSub: Subscription | null = null
+
 
   @Input() excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', imgs: [] , reviews: [], longDescription: ''}
   @Output() removeExcursionCardEvent = new EventEmitter<RemoveExcursionData>()
 
-  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router, private reviewsService: ReviewsService, private reservationHistory: ReservationHistoryService, private authService: AuthService) {
-    excursionDataManager.minUnitPrice$.subscribe(
+  constructor(
+    private cartService: CartService,
+    private excursionDataManager: ExcursionsDataManagerService,
+    private router: Router,
+    private reviewsService: ReviewsService,
+    private reservationHistory: ReservationHistoryService,
+    private authService: AuthService
+    ) { }
+
+  public ngOnInit(): void {
+    this.minPriceSub = this.excursionDataManager.minUnitPrice$.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.minPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    excursionDataManager.maxUnitPrice$.subscribe(
+    this.maxPriceSub = this.excursionDataManager.maxUnitPrice$.subscribe(
       {
         next: (price: number) => ExcursionCardComponent.maxPrice = price,
         error: (err: any) => console.log(err)
       }
     )
 
-    this.cartService.cart$.subscribe(
+    this.cartSub = this.cartService.cart$.subscribe(
       {
-        next: (cartData) => this.reservationCounter = cartService.getReservationsOf(this.excursion.id),
+        next: (_) => this.reservationCounter = this.cartService.getReservationsOf(this.excursion.id),
         error: (err: any) => console.log(err)
       }
     )
@@ -54,6 +68,12 @@ export class ExcursionCardComponent implements OnChanges {
     } 
 
     this.leftToAddToCart = this.excursion.inStock - this.reservationCounter
+  }
+
+  public ngOnDestroy(): void {
+    this.maxPriceSub?.unsubscribe()
+    this.minPriceSub?.unsubscribe()
+    this.cartSub?.unsubscribe()
   }
 
   public changeReservationCounter(diff: number): void {

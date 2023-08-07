@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { CartItem } from 'src/app/shared/models/cart-item';
@@ -12,15 +13,28 @@ import { ExcursionData } from 'src/app/shared/models/excursion-data';
   styleUrls: ['./cart.component.css']
 })
 
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   public cart: CartItem[] = []
   public totalPrice: number = 0
   public totalReservations: number = 0
+  private excursionsDataSub: Subscription | null = null
+  private cartSub: Subscription | null = null
 
-  constructor(private cartService: CartService, private excursionDataManager: ExcursionsDataManagerService, private router: Router) {
-    excursionDataManager.excursionsData$.subscribe(
+  constructor(
+    private cartService: CartService,
+    private excursionDataManager: ExcursionsDataManagerService,
+    private router: Router
+    ) { }
+
+  public ngOnInit(): void {    
+    let radio: HTMLInputElement = document.getElementById('radio-cart-preview') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
+
+    this.excursionsDataSub = this.excursionDataManager.excursionsData$.subscribe(
       {
-        next: (data: ExcursionData[]) => {
+        next: (_: ExcursionData[]) => {
         this.cartService.checkCartItemsAvailability()
         this.recalculateCart()
         }
@@ -29,7 +43,7 @@ export class CartComponent implements OnInit {
       }
     )
 
-    cartService.cart$.subscribe(
+    this.cartSub = this.cartService.cart$.subscribe(
       {
         next: (cartData: CartItem[]) => {
           this.cart = cartData
@@ -40,11 +54,9 @@ export class CartComponent implements OnInit {
     )
   }
 
-  public ngOnInit(): void {    
-    let radio: HTMLInputElement = document.getElementById('radio-cart-preview') as HTMLInputElement
-    if (radio) {
-      radio.checked = true
-    }
+  public ngOnDestroy(): void {
+    this.excursionsDataSub?.unsubscribe()
+    this.cartSub?.unsubscribe()
   }
 
   public getReservations(id: number | undefined): number {
@@ -79,7 +91,7 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(excursionID)
   }
 
-  public recalculateCart(): void {
+  private recalculateCart(): void {
     this.totalPrice = 0
     this.totalReservations = 0
     for (let cartItem of this.cart) {

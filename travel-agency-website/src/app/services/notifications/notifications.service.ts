@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ReservationData } from 'src/app/shared/models/reservation-data';
 import { AuthService } from '../auth/auth.service';
 import { ReservationHistoryService } from '../reservation-history/reservation-history.service';
@@ -10,13 +10,20 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 
-export class NotificationsService {
-  notificationsNumber$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  upcomingReservations$: BehaviorSubject<ReservationData[]> = new BehaviorSubject<ReservationData[]>([]);
-  isLoggedIn: boolean = false;
+export class NotificationsService implements OnInit, OnDestroy {
+  public notificationsNumber$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public upcomingReservations$: BehaviorSubject<ReservationData[]> = new BehaviorSubject<ReservationData[]>([]);
+  public isLoggedIn: boolean = false;
+  private isLoggedInSub: Subscription | null = null;
+  private reservationsHistorySub: Subscription | null = null;
+  private updateUpcomingReservationsInterval: NodeJS.Timer | null = null;
 
-  constructor(private authService: AuthService, private reservationHistory: ReservationHistoryService, private router: Router) {
-    this.authService.isLoggedIn$.subscribe(
+  constructor(
+    private authService: AuthService,
+    private reservationHistory: ReservationHistoryService,
+    private router: Router
+    ) {
+    this.isLoggedInSub = this.authService.isLoggedIn$.subscribe(
       {
         next: (value) => {
           this.isLoggedIn = value
@@ -29,16 +36,22 @@ export class NotificationsService {
       }
     )
 
-    this.reservationHistory.reservationsHistory$.subscribe(
+    this.reservationsHistorySub = this.reservationHistory.reservationsHistory$.subscribe(
       {
-        next: (value) => this.updateUpcomingReservations(),
+        next: (_) => this.updateUpcomingReservations(),
         error: (err) => console.log(err)
       }
     )
   }
 
-  ngOnInit(): void {
-    setInterval(()=> { this.updateUpcomingReservations }, 10000);
+  public ngOnInit(): void {
+    this.updateUpcomingReservationsInterval = setInterval(()=> { this.updateUpcomingReservations }, 10000);
+  }
+
+  public ngOnDestroy(): void {
+    this.isLoggedInSub?.unsubscribe();
+    this.reservationsHistorySub?.unsubscribe();
+    clearInterval(this.updateUpcomingReservationsInterval!);
   }
 
   public getNotificationsNumber(): number {

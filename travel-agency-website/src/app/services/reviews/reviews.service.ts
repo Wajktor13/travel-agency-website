@@ -11,7 +11,10 @@ import { AuthService } from '../auth/auth.service';
 
 export class ReviewsService {
 
-  constructor(private excursionsDataManager: ExcursionsDataManagerService, private authService: AuthService) { }
+  constructor(
+    private excursionsDataManager: ExcursionsDataManagerService,
+    private authService: AuthService
+    ) { }
 
   public validateReview(newReview: ReviewData): boolean {
     return this.validateNick(newReview.nick) && this.validateStars(newReview.stars) && this.validateText(newReview.text)

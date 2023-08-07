@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { CartItem } from 'src/app/shared/models/cart-item';
@@ -10,24 +11,31 @@ import { CartItem } from 'src/app/shared/models/cart-item';
   styleUrls: ['./cart-preview.component.css']
 })
 
-export class CartPreviewComponent {
+export class CartPreviewComponent implements OnInit, OnDestroy {
   public totalReservationsCounter: number = 0
   public totalCartValue: number = 0
+  private excursionsDataSub: Subscription | null = null
+  private cartSub: Subscription | null = null
 
-  constructor(private cartService: CartService, private dataManager: ExcursionsDataManagerService, excursionDataManager: ExcursionsDataManagerService) {
+  constructor(
+    private cartService: CartService,
+    private dataManager: ExcursionsDataManagerService,
+    private excursionDataManager: ExcursionsDataManagerService
+    ) { }
 
-    excursionDataManager.excursionsData$.subscribe(
+  public ngOnInit(): void {
+    this.excursionsDataSub = this.excursionDataManager.excursionsData$.subscribe(
       {
-        next: (data) => {
+        next: (_) => {
           this.updatePreview()  
         },
         error: (err: any) => console.log(err)
       }
     )
 
-    cartService.cart$.subscribe(
+    this.cartSub = this.cartService.cart$.subscribe(
       {
-        next: (cartData: CartItem[]) => {
+        next: (_: CartItem[]) => {
           this.updatePreview()  
         },
         error: (err: any) => console.log(err)
@@ -35,7 +43,12 @@ export class CartPreviewComponent {
     )
   }
 
-  public updatePreview(): void {
+  public ngOnDestroy(): void {
+    this.excursionsDataSub?.unsubscribe()
+    this.cartSub?.unsubscribe()
+  }
+
+  private updatePreview(): void {
     let cartData = this.cartService.getCart()
     this.totalCartValue = 0
     this.totalReservationsCounter = 0

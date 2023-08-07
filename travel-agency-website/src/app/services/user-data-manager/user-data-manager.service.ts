@@ -10,7 +10,9 @@ import { UserData } from 'src/app/shared/models/user-data';
 
 export class UserDataManagerService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(
+    private db: AngularFirestore
+    ) { }
 
   public async addUserData(newUserData: UserData): Promise<void> {
     await this.db.collection('users').doc(newUserData.uid).set(newUserData)

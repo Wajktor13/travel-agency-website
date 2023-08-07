@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { FilterExcursionsService } from 'src/app/services/filter-excursions/filter-excursions.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
@@ -11,14 +12,26 @@ import { ExcursionData } from 'src/app/shared/models/excursion-data';
   styleUrls: ['./manager-panel.component.css']
 })
 
-export class ManagerPanelComponent implements OnInit {
-  info: string = " (lowest available)"
+export class ManagerPanelComponent implements OnInit, OnDestroy {
+  public info: string = " (lowest available)"
   public radioExcursionListChecked: boolean = true
   public excursionsData: ExcursionData[] = []
   public textAreaValue: string = ''
+  private excursionsDataSub: Subscription | null = null
 
-  constructor(private excursionDataManager: ExcursionsDataManagerService, private filterService: FilterExcursionsService, private router: Router) {
-    excursionDataManager.excursionsData$.subscribe(
+  constructor(
+    private excursionDataManager: ExcursionsDataManagerService,
+    private filterService: FilterExcursionsService,
+    private router: Router
+    ) {}
+
+  public ngOnInit(): void {
+    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
+
+    this.excursionsDataSub = this.excursionDataManager.excursionsData$.subscribe(
       {
         next: (excursionsData: ExcursionData[]) => this.excursionsData = excursionsData,
         error: (err: any) => console.log(err) 
@@ -26,18 +39,15 @@ export class ManagerPanelComponent implements OnInit {
     )
   }
 
-  public ngOnInit(): void {
-    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
-    if (radio) {
-      radio.checked = true
-    }
+  public ngOnDestroy(): void {
+    this.excursionsDataSub?.unsubscribe()
   }
 
   public getMinAvailableID(): number {
     return this.excursionDataManager.getMinAvailableID()
   }
 
-  public submitClicked(data: any) {
+  public submitClicked(data: any): void {
     data["id"] = this.getMinAvailableID()
     data["reviews"] = []
     
@@ -54,7 +64,7 @@ export class ManagerPanelComponent implements OnInit {
     }
   }
 
-  public changePanelOption(): void{
+  public changePanelOption(): void {
     this.radioExcursionListChecked = !this.radioExcursionListChecked
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanDeactivate, CanLoad, CanMatch, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { from, lastValueFrom, map, Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserDataManagerService } from 'src/app/services/user-data-manager/user-data-manager.service';
 import { UserData } from 'src/app/shared/models/user-data';
@@ -13,16 +13,17 @@ import { UserRoles } from 'src/app/shared/models/user-roles';
 
 export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad, CanMatch {
 
-  constructor(private authService: AuthService, private router: Router, private userDataManager: UserDataManagerService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userDataManager: UserDataManagerService
+    ) { }
 
-  async canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot) {
-
+  public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     let requiredRoles: UserRoles = route.data as UserRoles
     let userID: string | null = localStorage.getItem("user")
 
-    if (userID){
+    if (userID) {
       let user: UserData = await this.userDataManager.getUserDataByUid(localStorage.getItem("user")!) as UserData
       if (user && this.checkRoles(requiredRoles, user.roles)){
         return true

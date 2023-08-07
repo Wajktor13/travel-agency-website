@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { CartItem } from 'src/app/shared/models/cart-item';
 import { UserData } from 'src/app/shared/models/user-data';
 import { AuthService } from '../auth/auth.service';
@@ -15,17 +15,29 @@ import { NotificationsService } from '../notifications/notifications.service';
   providedIn: 'root'
 })
 
-export class CartService {
+export class CartService implements OnInit, OnDestroy {
   public cart$: BehaviorSubject<CartItem[]> = new BehaviorSubject([] as CartItem[])
+  private currentUserSub: Subscription | null = null
 
-  constructor(private authService: AuthService, private userDataManager: UserDataManagerService, private excursionDataManager: ExcursionsDataManagerService, private reservationHistory: ReservationHistoryService, 
-  private db: AngularFirestore, private notificationService: NotificationsService) { 
-    authService.currentUser$.subscribe(
+  constructor(
+    private authService: AuthService,
+    private userDataManager: UserDataManagerService,
+    private excursionDataManager: ExcursionsDataManagerService,
+    private reservationHistory: ReservationHistoryService, 
+    private db: AngularFirestore,
+    private notificationService: NotificationsService) { }
+
+  public ngOnInit(): void {
+    this.currentUserSub = this.authService.currentUser$.subscribe(
       {
         next: (userData: UserData) => this.cart$.next(userData.inCart),
         error: (err) => console.log(err)
       }
     )
+  }
+
+  public ngOnDestroy(): void {
+    this.currentUserSub?.unsubscribe()
   }
 
   public getCart(): CartItem[] {

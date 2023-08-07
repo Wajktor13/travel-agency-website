@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ExcursionsDataManagerService } from 'src/app/services/excursion-data-manager/excursion-data-manager.service';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,22 +11,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./update-excursion-form.component.css']
 })
 
-export class UpdateExcursionFormComponent implements OnInit {
+export class UpdateExcursionFormComponent implements OnInit, OnDestroy {
   public id: any = -1
   public excursion: ExcursionData = { id: -1, name: '', country: '', startDate: '', endDate: '', unitPrice: 0, inStock: 0, shortDescription: '', imgs: [] , reviews: [], longDescription: ''}
+  private excursionsDataSub: Subscription | null = null
 
-  constructor(private dataManager: ExcursionsDataManagerService, private route: ActivatedRoute, private excursionsDataManager: ExcursionsDataManagerService) { 
-    this.dataManager.excursionsData$.subscribe(
-      {
-        next: (data) => {
-          this.excursion = this.dataManager.getExcursionDataByID(this.id)
-        },
-        error: (err) => console.log(err)
-      }
-    )
-  }
+  constructor(
+    private dataManager: ExcursionsDataManagerService,
+    private route: ActivatedRoute,
+    private excursionsDataManager: ExcursionsDataManagerService
+    ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id')
     this.excursion = this.dataManager.getExcursionDataByID(this.id)
 
@@ -33,9 +30,22 @@ export class UpdateExcursionFormComponent implements OnInit {
     if (radio) {
       radio.checked = true
     }
+
+    this.excursionsDataSub = this.dataManager.excursionsData$.subscribe(
+      {
+        next: (_) => {
+          this.excursion = this.dataManager.getExcursionDataByID(this.id)
+        },
+        error: (err) => console.log(err)
+      }
+    )
   }
 
-  public submitClicked(data: any) {
+  public ngOnDestroy(): void {
+    this.excursionsDataSub?.unsubscribe()
+  }
+
+  public submitClicked(data: any): void {
     let excursionData: ExcursionData = data as ExcursionData
     excursionData.id = this.id
     excursionData.reviews = this.excursion.reviews

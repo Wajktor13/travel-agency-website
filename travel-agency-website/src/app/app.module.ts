@@ -31,7 +31,7 @@ import { UserDataManagerService } from './services/user-data-manager/user-data-m
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { UpdateExcursionFormComponent } from './components/update-excursion-form/update-excursion-form.component';
 import { NotificationsService } from './services/notifications/notifications.service';
-import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form/contact-us-form.component';
+import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form.component';
 
 
 @NgModule({
@@ -77,4 +77,5 @@ import { ContactUsFormComponent } from './components/contact-us-form/contact-us-
 
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

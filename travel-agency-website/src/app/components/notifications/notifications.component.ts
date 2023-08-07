@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { ReservationData } from 'src/app/shared/models/reservation-data';
@@ -10,12 +11,18 @@ import { ReservationData } from 'src/app/shared/models/reservation-data';
   styleUrls: ['./notifications.component.css']
 })
 
-export class NotificationsComponent {
-  notificationsNumber: number = 0;
-  isLoggedIn: boolean = false;
-  upcomingReservations: ReservationData[] = [];
+export class NotificationsComponent implements OnInit {
+  public notificationsNumber: number = 0;
+  public isLoggedIn: boolean = false;
+  public upcomingReservations: ReservationData[] = [];
 
-  constructor (private authService: AuthService, private notificationService: NotificationsService) {
+  constructor(
+    private authService: AuthService,
+    private notificationService: NotificationsService,
+    private router: Router
+    ) { }
+
+  public ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe(
       {
         next: (value) => { this.isLoggedIn = value },
@@ -37,4 +44,9 @@ export class NotificationsComponent {
       }
     )
   }
+
+  public notificationClicked(): void {
+    this.router.navigate(['reservations-history'])
+  }
 }
+

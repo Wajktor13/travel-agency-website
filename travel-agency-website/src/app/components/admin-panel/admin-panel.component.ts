@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { UserDataManagerService } from 'src/app/services/user-data-manager/user-data-manager.service';
 import { UserData } from 'src/app/shared/models/user-data';
 import { UserRoles } from 'src/app/shared/models/user-roles';
@@ -10,12 +11,21 @@ import { UserRoles } from 'src/app/shared/models/user-roles';
   styleUrls: ['./admin-panel.component.css']
 })
 
-export class AdminPanelComponent implements OnInit {
+export class AdminPanelComponent implements OnInit, OnDestroy {
   public allUsersData: UserData[] = []
+  private usersDataSub: Subscription | null = null;
 
-  constructor(public userDataManager: UserDataManagerService){
+  constructor(
+    public userDataManager: UserDataManagerService
+    ) { }
 
-    this.userDataManager.getAllUsersData().subscribe(
+  public ngOnInit(): void {
+    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
+    if (radio) {
+      radio.checked = true
+    }
+
+    this.usersDataSub = this.userDataManager.getAllUsersData().subscribe(
       {
         next:(data)=> this.allUsersData = data as UserData[],
         error: (err) => console.log(err)
@@ -23,11 +33,8 @@ export class AdminPanelComponent implements OnInit {
     )
   }
 
-  public ngOnInit(): void {
-    let radio: HTMLInputElement = document.getElementById('radio-account') as HTMLInputElement
-    if (radio) {
-      radio.checked = true
-    }
+  public ngOnDestroy(): void {
+    this.usersDataSub?.unsubscribe()
   }
 
   public reverseBan(userData: UserData): void{
@@ -35,7 +42,7 @@ export class AdminPanelComponent implements OnInit {
     this.userDataManager.updateUserData(userData)
   }
 
-  public changeRoles(userData: UserData ,rolesChange: UserRoles): void{
+  public changeRoles(userData: UserData ,rolesChange: UserRoles): void {
     if(rolesChange.customer){
       userData.roles.customer = !userData.roles.customer
     }
