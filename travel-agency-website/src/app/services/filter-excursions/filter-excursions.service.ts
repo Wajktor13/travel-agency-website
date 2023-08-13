@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ExcursionData } from 'src/app/shared/models/excursion-data';
-import { ReviewsService } from '../reviews/reviews.service';
 import { ReviewData } from 'src/app/shared/models/review-data';
 
 
@@ -23,7 +22,6 @@ export class FilterExcursionsService {
   constructor() { }
 
   public filterExcursions(excursionsData: ExcursionData[]): ExcursionData[] {
-
     return excursionsData.filter((e) => {
       return this.priceFilter(e, this.getSelectedMinPrice(), this.getSelectedMaxPrice()) && this.dateFilter(e, this.selectedFromDate, this.selectedToDate) && this.countryFilter(e, this.selectedCountry) && this.starsFilter(e, this.selectedMinStars, this.selectedMaxStars, this.noReviews) && this.hasNotStartedFilter(e)
     })
