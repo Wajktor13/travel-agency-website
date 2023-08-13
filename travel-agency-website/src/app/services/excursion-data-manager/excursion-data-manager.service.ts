@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ExcursionData } from '../../shared/models/excursion-data';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FilterExcursionsService } from '../filter-excursions/filter-excursions.service';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class ExcursionsDataManagerService implements OnDestroy {
   private excursionsDataSub: Subscription | null = null
 
   constructor(
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private filterExcursionsService: FilterExcursionsService
     ) {
     this.fetchedExcursionsData$ = db.collection('excursions').valueChanges() as Observable<ExcursionData[]>;
 
@@ -33,8 +35,8 @@ export class ExcursionsDataManagerService implements OnDestroy {
 
     this.excursionsDataSub = this.excursionsData$.subscribe(
       {
-        next: (excursionsData: ExcursionData[]) => {
-          this.updateMinMaxPrice(excursionsData)
+        next: (_: any) => {
+          this.updateMinMaxPrice()
         },
         error: (err: any) => console.log(err)
       }
@@ -53,16 +55,15 @@ export class ExcursionsDataManagerService implements OnDestroy {
   public removeFromExcursionsDB(toRemove: ExcursionData): void {
 
     /*
-     uncomment below line to enable permanent deletion from database
+      comment below line to disable permanent deletion from database
     */
-
-    // this.db.collection('excursions').doc(toRemove.id.toString()).delete()
+    this.db.collection('excursions').doc(toRemove.id.toString()).delete()
 
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
     currentExcursionsData = currentExcursionsData.filter(e => e.id != toRemove.id)
     this.setExcursionsData(currentExcursionsData)
 
-    this.updateMinMaxPrice(this.getExcursionsData())
+    this.updateMinMaxPrice()
   }
 
   public addToExcursionsDB(excursionToAdd: ExcursionData): void {
@@ -72,7 +73,7 @@ export class ExcursionsDataManagerService implements OnDestroy {
     currentExcursionsData.push(excursionToAdd)
     this.excursionsData$.next(currentExcursionsData)
 
-    this.updateMinMaxPrice(this.getExcursionsData())
+    this.updateMinMaxPrice()
   }
 
   public setExcursionsData(newExcursionsData: ExcursionData[]): void {
@@ -143,19 +144,19 @@ export class ExcursionsDataManagerService implements OnDestroy {
     return inStock >= 0
   }
 
-  private validateDescription(description: string): boolean {
+  private validateDescription(_: string): boolean {
     return true
   }
 
-  private validateImg(imgs: string[]): boolean {
+  private validateImg(_: string[]): boolean {
     return true
   }
 
-  private updateMinMaxPrice(excursionsData: ExcursionData[]) {
+  public updateMinMaxPrice() {
     let minPrice: number = Infinity
     let maxPrice: number = 0
 
-    for (let excursion of excursionsData) {
+    for (let excursion of this.filterExcursionsService.filterExcursions(this.getExcursionsData())) {
       minPrice = Math.min(minPrice, excursion.unitPrice)
       maxPrice = Math.max(maxPrice, excursion.unitPrice)
     }
