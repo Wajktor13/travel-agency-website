@@ -21,14 +21,23 @@ header {
     z-index: 4;
 }
 
-#logo {
+#logo-wrapper {
     display: none;
+}
+
+#logo-img-1 {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+}
+
+#logo-text {
     font-size: 40px;
     font-family: Brush Script MT, Brush Script Std, cursive;
     color: white;
     text-align: center;
     position: absolute;
-    left: 20px;
+    left: 100px;
     top: -10px;
 }
 
@@ -288,7 +297,7 @@ header {
 
     /* navigation */
 
-    #logo {
+    #logo-wrapper {
         display: block;
     }
 

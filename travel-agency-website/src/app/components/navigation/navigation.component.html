@@ -1,9 +1,13 @@
 <header>
     <div id="nav-wrapper">
 
-        <h1 id="logo">
-            <a (click)="navigateToHome()">Wonderful Excursions</a>
-        </h1>
+        <div id="logo-wrapper" (click)="navigateToHome()">
+            <img id="logo-img-1" src="../../../favicon.ico" alt="logo" width="60px" height="60px">
+
+            <h1 id="logo-text">
+                Wonderful Excursions
+            </h1>
+        </div>
 
         <input type="checkbox" id="nav-btn-checkbox">
         <label for="nav-btn-checkbox">
@@ -17,7 +21,7 @@
         <nav id="nav-flex-container">
 
             <input type="radio" name="nav-tile-radio" class="nav-tile-radio" id="radio-home">
-            <label class="nav-tile" for="radio-home">
+            <label id="home-nav-tile" class="nav-tile" for="radio-home">
                 <a (click)="navigateToHome()">HOME</a>
             </label>
 
