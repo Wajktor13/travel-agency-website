@@ -32,6 +32,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { UpdateExcursionFormComponent } from './components/update-excursion-form/update-excursion-form.component';
 import { NotificationsService } from './services/notifications/notifications.service';
 import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { ContactUsFormComponent } from './components/contact-us-form/contact-us-
     LoginRegisterComponent,
     AdminPanelComponent,
     UpdateExcursionFormComponent,
-    ContactUsFormComponent
+    ContactUsFormComponent,
+    NavigationComponent
   ],
 
   imports: [
