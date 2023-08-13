@@ -39,7 +39,7 @@
             <label for="country-input">country:</label>
             <select id="country-input" (input)="changeSelectedCountry($event)">
                 <option value="all">all</option>
-                <option *ngFor="let country of dataManager.getCountries()" value={{country}}>{{country}}</option>
+                <option *ngFor="let country of excursionDataManager.getCountries()" value={{country}}>{{country}}</option>
             </select>
         </div>
     
