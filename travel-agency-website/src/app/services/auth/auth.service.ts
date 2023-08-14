@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false)
   public currentUser$: BehaviorSubject<UserData> = new BehaviorSubject({ uid:"",banned: true, roles: {} as UserRoles, inCart: [], reservations: [], email: "", nickname: ""} as UserData)
-  public keepLoggedIn: boolean = false
+  public keepLoggedIn: boolean = true
 
   constructor(
     private fireAuth: AngularFireAuth,
