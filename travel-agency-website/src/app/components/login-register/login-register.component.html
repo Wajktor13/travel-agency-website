@@ -48,17 +48,17 @@
             <img src="../../../assets/images/x.png" alt="close popup" width="30px" height="30px">
         </button>
 
-        <button class="login-as-button">
+        <button class="login-as-button" (click)="loginWithTestAccount('customer1@mail.com', 'password')">
             <img src="../../../assets/images/customer_account.png" alt="customer account" width="30px" height="30px">
             <p>LOG IN AS CUSTOMER</p>
         </button>
 
-        <button class="login-as-button">
+        <button class="login-as-button" (click)="loginWithTestAccount('manager@mail.com', 'password')">
             <img src="../../../assets/images/manager_account.png" alt="manager account" width="30px" height="30px">
             <p>LOG IN AS MANAGER</p>
         </button>
 
-        <button class="login-as-button">
+        <button class="login-as-button" (click)="loginWithTestAccount('admin@mail.com', 'password')">
             <img src="../../../assets/images/admin_account.png" alt="admin account" width="30px" height="30px">
             <p>LOG IN AS ADMIN</p>
         </button>

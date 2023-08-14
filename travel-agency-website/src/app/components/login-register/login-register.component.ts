@@ -46,4 +46,11 @@ export class LoginRegisterComponent implements OnInit {
   public togglePopup(): void {
     this.popupHidden = !this.popupHidden
   }
+
+  public async loginWithTestAccount(email: string, password: string): Promise<void> {
+    this.authService.logout()
+    if (await this.authService.login(email, password)){
+      this.router.navigate(['home'])
+    }
+  }
 }
