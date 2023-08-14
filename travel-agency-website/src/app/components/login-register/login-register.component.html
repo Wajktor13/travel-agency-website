@@ -23,12 +23,45 @@
         </div>
 
         <button class="submit-button" id="login-button" type="submit" *ngIf="radioLoginChecked" (click)="loginButtonClicked()">LOG IN</button>
-        <button id="google-login-button" *ngIf="radioLoginChecked" (click)="authService.logInWithGoogle()">
+
+        <button class="submit-button" id="google-login-button" *ngIf="radioLoginChecked" (click)="authService.logInWithGoogle()">
             <img src="../../../assets/images/google_logo.png" alt="google logo" width="30px" height="30px">
             <p>LOG IN WITH GOOGLE</p>
         </button>
+
+        <button class="submit-button" id="test-acc-login-button" *ngIf="radioLoginChecked" (click)="togglePopup()">
+            <img src="../../../assets/images/admin_account.png" alt="test account" width="30px" height="30px">
+            <p>LOG IN WITH TEST ACCOUNT</p>
+        </button>
+
         <!-- <button id="facebook-login-button" *ngIf="radioLoginChecked" (click)="authService.logInWithFacebook()">LOG IN WITH FACEBOOK</button> -->
+
         <button class="submit-button" id="register-button" type="submit" *ngIf="!radioLoginChecked" (click)="registerButtonClicked()">REGISTER</button>
     </form>
 
 </section>
+
+<div id="popup-wrapper" *ngIf="!popupHidden">
+    <div id="popup">
+
+        <button id="close-popup-btn" (click)="togglePopup()">
+            <img src="../../../assets/images/x.png" alt="close popup" width="30px" height="30px">
+        </button>
+
+        <button class="login-as-button" (click)="loginWithTestAccount('customer1@mail.com', 'password')">
+            <img src="../../../assets/images/customer_account.png" alt="customer account" width="30px" height="30px">
+            <p>LOG IN AS CUSTOMER</p>
+        </button>
+
+        <button class="login-as-button" (click)="loginWithTestAccount('manager@mail.com', 'password')">
+            <img src="../../../assets/images/manager_account.png" alt="manager account" width="30px" height="30px">
+            <p>LOG IN AS MANAGER</p>
+        </button>
+
+        <button class="login-as-button" (click)="loginWithTestAccount('admin@mail.com', 'password')">
+            <img src="../../../assets/images/admin_account.png" alt="admin account" width="30px" height="30px">
+            <p>LOG IN AS ADMIN</p>
+        </button>
+
+    </div>
+</div>
