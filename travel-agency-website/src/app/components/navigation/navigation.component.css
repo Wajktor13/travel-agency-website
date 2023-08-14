@@ -28,17 +28,17 @@ header {
 #logo-img-1 {
     position: absolute;
     left: 20px;
-    top: 10px;
+    top: 20px;
 }
 
 #logo-text {
-    font-size: 40px;
+    font-size: 32px;
     font-family: Brush Script MT, Brush Script Std, cursive;
     color: white;
     text-align: center;
     position: absolute;
-    left: 100px;
-    top: -10px;
+    left: 80px;
+    top: 0px;
 }
 
 #nav-cart {
