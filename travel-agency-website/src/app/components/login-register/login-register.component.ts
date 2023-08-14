@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 
 export class LoginRegisterComponent implements OnInit {
   public radioLoginChecked: boolean = true
+  public popupHidden: boolean = true
   public nickname: string = ''
   public email: string = ''
   public password: string = ''
@@ -40,5 +41,9 @@ export class LoginRegisterComponent implements OnInit {
 
   public registerButtonClicked(): void {
     this.authService.register(this.email, this.password, this.nickname)
+  }
+
+  public togglePopup(): void {
+    this.popupHidden = !this.popupHidden
   }
 }
