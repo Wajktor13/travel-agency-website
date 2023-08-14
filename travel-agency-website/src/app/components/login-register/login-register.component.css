@@ -11,32 +11,33 @@
     justify-content: space-evenly;
     align-items: center;
     width: 400px;
-    height: 400px;
+    height: 450px;
 }
 
 .login-register-input {
-    height: 12%;
+    height: 55px;
     width: 100%;
+    font-size: 15px;
 }
 
 .submit-button {
+    width: 280px;
+    height: 50px;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+#login-button,
+#test-acc-login-button,
+#register-button {
     background-color: rgb(68, 59, 54);
     color: white;
-    width: 250px;
-    height: 50px;
-    margin-top: 20px;
-    border-radius: 8px;
     border: 1px solid black;
     transition: transform 0.4s;
 }
 
-.submit-button:hover {
-    transform: scale(1.15);
-    cursor: pointer;
-}
-
-.submit-button:active {
-    filter: brightness(0.8);
+#login-button {
+    margin-top: 30px;
 }
 
 #keep-logged-in {
@@ -52,20 +53,27 @@
 }
 
 #google-login-button {
-    width: 250px;
-    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     border-radius: 8px;
-    border: 1px solid black;
-    transition: transform 0.4s;
 }
 
-#google-login-button:hover {
+#test-acc-login-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.submit-button:hover {
     transform: scale(1.15);
     cursor: pointer;
+}
+
+.submit-button:active {
+    filter: brightness(0.85);
 }
   
 /* switch */
@@ -86,7 +94,7 @@
   
 .switch {
     display: inline-block;
-    font-size: 20px; /* 1 */
+    font-size: 20px;
     height: 1em;
     width: 2.5em;
     background: #867465;
@@ -105,6 +113,4 @@
   
 .switch input:checked + div {
     transform: translate3d(150%, 0, 0);
-  }
-  
-  
+  }  
