@@ -55,9 +55,11 @@ export class ExcursionsDataManagerService implements OnDestroy {
   public removeFromExcursionsDB(toRemove: ExcursionData): void {
 
     /*
-      comment below line to disable permanent deletion from database
+      uncomment below line to enable permanent deletion from database
     */
-    this.db.collection('excursions').doc(toRemove.id.toString()).delete()
+    // this.db.collection('excursions').doc(toRemove.id.toString()).delete()
+
+    alert("permanent deletion from database is disabled")
 
     let currentExcursionsData: ExcursionData[] = this.getExcursionsData()
     currentExcursionsData = currentExcursionsData.filter(e => e.id != toRemove.id)
