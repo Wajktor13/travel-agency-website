@@ -15,6 +15,7 @@ export class LoginRegisterComponent implements OnInit {
   public nickname: string = ''
   public email: string = ''
   public password: string = ''
+  public repeatedPassword: string = ''
 
   constructor(
     public authService: AuthService,
