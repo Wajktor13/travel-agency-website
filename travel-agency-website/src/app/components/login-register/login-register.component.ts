@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginRegisterComponent implements OnInit {
   public radioLoginChecked: boolean = true
   public popupHidden: boolean = true
+  public passwordVisible = false
   public nickname: string = ''
   public email: string = ''
   public password: string = ''
@@ -53,5 +54,17 @@ export class LoginRegisterComponent implements OnInit {
     if (await this.authService.login(email, password)){
       this.router.navigate(['home'])
     }
+  }
+
+  public togglePasswordVisibility(event: Event, inputID: string): void {
+    let visibilityToggleImg: HTMLImageElement = event.target as HTMLImageElement
+    let input: HTMLInputElement = document.getElementById(inputID) as HTMLInputElement
+      if(input.type === 'password') {
+        input.type = 'text'
+        visibilityToggleImg.src = '../../../assets/images/hide_password_icon.png'
+      } else {
+        input.type = 'password'
+        visibilityToggleImg.src = '../../../assets/images/show_password_icon.png'
+      }
   }
 }

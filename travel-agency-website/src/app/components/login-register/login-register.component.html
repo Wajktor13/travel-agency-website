@@ -13,10 +13,20 @@
     </div>
 
     <form>
-        <input class="login-register-input" type="text" placeholder="nickname" name="nickname" *ngIf="!radioLoginChecked" [(ngModel)]="nickname">
-        <input class="login-register-input" type="email" placeholder="email" name="email" [(ngModel)]="email">
-        <input class="login-register-input" type="password" placeholder="password" name="password" [(ngModel)]="password">
-        <input class="login-register-input" type="password" placeholder="repeat password" name="repeat-password" *ngIf="!radioLoginChecked" [(ngModel)]="repeatedPassword">
+        <div class="login-register-input-wrapper">
+            <input class="login-register-input" type="text" placeholder="nickname" name="nickname" *ngIf="!radioLoginChecked" [(ngModel)]="nickname">
+        </div>
+        <div class="login-register-input-wrapper">
+            <input class="login-register-input" type="email" placeholder="email" name="email" [(ngModel)]="email">
+        </div>
+        <div class="login-register-input-wrapper">
+            <input class="login-register-input" id="password-input" type="password" placeholder="password" name="password" [(ngModel)]="password">
+            <img id="password-input-toggle-img" src="../../../assets/images/show_password_icon.png" alt="show password" width="30px" (click)="togglePasswordVisibility($event, 'password-input')">
+        </div>
+        <div class="login-register-input-wrapper" *ngIf="!radioLoginChecked">
+            <input class="login-register-input" id="repeat-password-input" type="password" placeholder="repeat password" name="repeat-password"[(ngModel)]="repeatedPassword">
+            <img id="repeat-password-input-toggle-img" src="../../../assets/images/show_password_icon.png" alt="show password" width="30px" (click)="togglePasswordVisibility($event, 'repeat-password-input')">
+        </div>
 
         <div id="keep-logged-in-wrapper" *ngIf="radioLoginChecked">
             <input id="keep-logged-in" type="checkbox" name="keep-logged-in" [(ngModel)]="authService.keepLoggedIn">
