@@ -28,7 +28,11 @@ export class ReservationsHistoryComponent implements OnInit, OnDestroy {
 
     this.reservationHistorySub = this.reservationHistory.reservationsHistory$.subscribe(
       {
-        next: (historyData: ReservationData[]) => { this.history = historyData },
+        next: (historyData: ReservationData[]) => { 
+          this.history = historyData.sort((r1, r2) => {
+            return r1.excursionData.startDate > r2.excursionData.startDate ? 1 : -1
+          })
+         },
         error: (err: any) => console.log(err)
       }
     )
