@@ -20,7 +20,7 @@
             <input class="login-register-input" type="email" placeholder="email" name="email" [(ngModel)]="email">
         </div>
         <div class="login-register-input-wrapper">
-            <input class="login-register-input" id="password-input" type="password" placeholder="password" name="password" [(ngModel)]="password">
+            <input class="login-register-input" id="password-input" type="password" placeholder="password" name="password" [(ngModel)]="password" (input)="checkPasswordRequirements($event)">
             <img id="password-input-toggle-img" src="../../../assets/images/show_password_icon.png" alt="show password" width="30px" (click)="togglePasswordVisibility($event, 'password-input')">
         </div>
         <div class="login-register-input-wrapper" *ngIf="!radioLoginChecked">
@@ -44,6 +44,31 @@
             <img src="../../../assets/images/admin_account.png" alt="test account" width="30px" height="30px">
             <p>LOG IN WITH TEST ACCOUNT</p>
         </button>
+
+        <div id="password-requirements" *ngIf="!radioLoginChecked">
+            <p>password requirements:</p>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-chars-requirement-img">
+                <p>at least 8 characters</p>
+            </div>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-special-chars-requirement-img">
+                <p>at least 1 special character</p>
+            </div>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-uppercase-chars-requirement-img">
+                <p>at least 1 capital letter</p>
+            </div>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-digits-requirement-img">
+                <p>at least 1 digit</p>
+            </div>
+
+        </div>
 
         <button class="submit-button" id="register-button" type="submit" *ngIf="!radioLoginChecked" (click)="registerButtonClicked()">REGISTER</button>
     </form>
