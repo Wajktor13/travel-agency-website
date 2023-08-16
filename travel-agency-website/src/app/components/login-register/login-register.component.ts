@@ -85,31 +85,23 @@ export class LoginRegisterComponent implements OnInit {
     let password: string = (event.target as HTMLInputElement).value
 
     this.minCharsRequirement.status = password.length >= this.minCharsRequirement.required
-    if (this.minCharsRequirement.status) {
-      document.getElementById(this.minCharsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_fulfilled_icon.png')
-    } else {
-      document.getElementById(this.minCharsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_not_fulfilled_icon.png')
-    }
+    this.changeRequirementIcon(this.minCharsRequirement.status, this.minCharsRequirement.statusImgElementID)
 
     this.minSpecialCharsRequirement.status = password.match(/[^a-zA-Z0-9]/g)!?.length >= this.minSpecialCharsRequirement.required
-    if (this.minSpecialCharsRequirement.status) {
-      document.getElementById(this.minSpecialCharsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_fulfilled_icon.png')
-    } else {
-      document.getElementById(this.minSpecialCharsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_not_fulfilled_icon.png')
-    }
+    this.changeRequirementIcon(this.minSpecialCharsRequirement.status, this.minSpecialCharsRequirement.statusImgElementID)
 
     this.minDigitsRequirement.status = password.match(/[0-9]/g)!?.length >= this.minDigitsRequirement.required
-    if (this.minDigitsRequirement.status) {
-      document.getElementById(this.minDigitsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_fulfilled_icon.png')
-    } else {
-      document.getElementById(this.minDigitsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_not_fulfilled_icon.png')
-    }
+    this.changeRequirementIcon(this.minDigitsRequirement.status, this.minDigitsRequirement.statusImgElementID)
 
     this.minUppercaseCharsRequirement.status = password.match(/[A-Z]/g)!?.length >= this.minUppercaseCharsRequirement.required
-    if (this.minUppercaseCharsRequirement.status) {
-      document.getElementById(this.minUppercaseCharsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_fulfilled_icon.png')
+    this.changeRequirementIcon(this.minUppercaseCharsRequirement.status, this.minUppercaseCharsRequirement.statusImgElementID)
+  }
+
+  public changeRequirementIcon(status: boolean, statusImgElementID: string): void {
+    if (status) {
+      document.getElementById(statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_fulfilled_icon.png')
     } else {
-      document.getElementById(this.minUppercaseCharsRequirement.statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_not_fulfilled_icon.png')
+      document.getElementById(statusImgElementID)?.setAttribute('src', '../../../assets/images/requirement_not_fulfilled_icon.png')
     }
   }
 }
