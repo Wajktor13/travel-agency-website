@@ -13,9 +13,20 @@
     </div>
 
     <form>
-        <input class="login-register-input" type="text" placeholder="nickname" name="nickname" *ngIf="!radioLoginChecked" [(ngModel)]="nickname">
-        <input class="login-register-input" type="email" placeholder="email" name="email" [(ngModel)]="email">
-        <input class="login-register-input" type="password" placeholder="password" name="password" [(ngModel)]="password">
+        <div class="login-register-input-wrapper">
+            <input class="login-register-input" type="text" placeholder="nickname" name="nickname" *ngIf="!radioLoginChecked" [(ngModel)]="nickname">
+        </div>
+        <div class="login-register-input-wrapper">
+            <input class="login-register-input" type="email" placeholder="email" name="email" [(ngModel)]="email">
+        </div>
+        <div class="login-register-input-wrapper">
+            <input class="login-register-input" id="password-input" type="password" placeholder="password" name="password" [(ngModel)]="password" (input)="checkPasswordRequirements($event)">
+            <img id="password-input-toggle-img" src="../../../assets/images/show_password_icon.png" alt="show password" width="30px" (click)="togglePasswordVisibility($event, 'password-input')">
+        </div>
+        <div class="login-register-input-wrapper" *ngIf="!radioLoginChecked">
+            <input class="login-register-input" id="repeat-password-input" type="password" placeholder="repeat password" name="repeat-password"[(ngModel)]="repeatedPassword">
+            <img id="repeat-password-input-toggle-img" src="../../../assets/images/show_password_icon.png" alt="show password" width="30px" (click)="togglePasswordVisibility($event, 'repeat-password-input')">
+        </div>
 
         <div id="keep-logged-in-wrapper" *ngIf="radioLoginChecked">
             <input id="keep-logged-in" type="checkbox" name="keep-logged-in" [(ngModel)]="authService.keepLoggedIn">
@@ -34,7 +45,30 @@
             <p>LOG IN WITH TEST ACCOUNT</p>
         </button>
 
-        <!-- <button id="facebook-login-button" *ngIf="radioLoginChecked" (click)="authService.logInWithFacebook()">LOG IN WITH FACEBOOK</button> -->
+        <div id="password-requirements" *ngIf="!radioLoginChecked">
+            <p>password requirements:</p>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-chars-requirement-img">
+                <p>at least 8 characters</p>
+            </div>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-special-chars-requirement-img">
+                <p>at least 1 special character</p>
+            </div>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-uppercase-chars-requirement-img">
+                <p>at least 1 capital letter</p>
+            </div>
+
+            <div class="requirement">
+                <img src="../../../assets/images/requirement_not_fulfilled_icon.png" id="min-digits-requirement-img">
+                <p>at least 1 digit</p>
+            </div>
+
+        </div>
 
         <button class="submit-button" id="register-button" type="submit" *ngIf="!radioLoginChecked" (click)="registerButtonClicked()">REGISTER</button>
     </form>
