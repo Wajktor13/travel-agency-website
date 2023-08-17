@@ -1,6 +1,6 @@
 # Travel Agency Website
 
-This is my final project for the Introduction To Web Development course at AGH Univeristy.
+This is my final project for the Introduction To Web Development course at AGH University.
 
 ## Technologies used
 * HTML
