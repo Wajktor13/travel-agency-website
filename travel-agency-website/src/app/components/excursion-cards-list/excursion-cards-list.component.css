@@ -10,3 +10,8 @@
 .excursion-cards-list {
     margin: auto;
 }
+
+#no-excursions-p {
+    font-size: 20px;
+    margin-top: 50px;
+}

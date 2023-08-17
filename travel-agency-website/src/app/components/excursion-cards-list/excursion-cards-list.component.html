@@ -6,6 +6,10 @@
         <app-excursion-card class="excursion-cards-list" (removeExcursionCardEvent)="removeExcursionCard($event)"
             *ngFor="let exc of excursionsData | filterExcursions: {minPrice: selectedMinPrice, maxPrice: selectedMaxPrice, fromDate: filterService.getSelectedFromDate(), toDate: filterService.getSelectedToDate(), country: filterService.getSelectedCountry(), minStars: filterService.getSelectedMinStars(), maxStars: filterService.getSelectedMaxStars(), noReviews: filterService.getSelectedNoReviews()}"
             [excursion]=exc></app-excursion-card>
+
+        <p id="no-excursions-p" *ngIf="this.filterService.filterExcursions(excursionsData).length == 0">
+            No excursions matching the selected filters have been found.
+        </p>
     </div>
     
 </section>
