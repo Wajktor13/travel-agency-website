@@ -8,6 +8,7 @@ This is my final project for the Introduction To Web Development course at AGH U
 * TypeScript
 * Angular2
 * Firebase
+* EmailJS
 
 ## Live Demo
 <a href="https://wonderful-excursions.netlify.app" target="_blank">https://wonderful-excursions.netlify.app</a>
