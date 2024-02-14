@@ -1,8 +1,24 @@
 # Travel Agency Website
 
-![image](https://github.com/Wajktor13/travel-agency-website/assets/76243064/6cb13146-d7ea-4eca-8ee8-d0d1e8657cd6)
+![image](https://github.com/Wajktor13/travel-agency-website/assets/76243064/17194fa9-2cd4-4bfe-8a3b-ebd3209d264c)
 
-This is my final project for the Introduction To Web Development course at AGH University.
+This is my final project for Introduction To Web Development course at AGH University.
+
+## Features
+* functional account system with roles (customer, manager, admin)
+* backend for data persistence and user authentication - Firebase
+* logging in with google
+* contact form (EmailJS)
+* filtering excursions
+* reviewing excursions
+* upcoming reservation notifications
+* manager panel for adding, removing and editting excursions
+* admin panel for managing registered users
+
+![image](https://github.com/Wajktor13/travel-agency-website/assets/76243064/7f886ad1-db31-41ba-a3ff-4395dc98e648)
+
+![image](https://github.com/Wajktor13/travel-agency-website/assets/76243064/fe10f422-b9cb-4024-86c1-09da03cd77ec)
+
 
 ## Technologies used
 
@@ -16,3 +32,11 @@ This is my final project for the Introduction To Web Development course at AGH U
 
 ## Live Demo
 <a href="https://wonderful-excursions.netlify.app" target="_blank">https://wonderful-excursions.netlify.app</a>
+
+No need to create account in order to test the website. Just click ***LOG IN WITH TEST ACCOUNT*** and select role you want to test.
+<br><br>
+***NOTE***: some features, like deleting excursions, are disabled for safety reasons.
+
+![image](https://github.com/Wajktor13/travel-agency-website/assets/76243064/d057144c-bad6-43e8-8f7e-4d57b2b7f186)
+
+![image](https://github.com/Wajktor13/travel-agency-website/assets/76243064/8a80220d-515b-4ff0-97db-10843182d9b3)
